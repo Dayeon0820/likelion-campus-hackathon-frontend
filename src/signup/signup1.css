@@ -1,0 +1,50 @@
+#signup_header {
+  display: flex;
+  align-items: center;
+}
+
+#signup_header h1 {
+  font-size: 18px;
+  font-weight: 550;
+}
+
+.signup_header-devider {
+  width: 33.3%;
+  margin: 25px 15px;
+}
+
+.signup_header-devider:first-child {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.signup_header-devider:nth-child(2) {
+  display: flex;
+  justify-content: center;
+}
+
+#signup-form {
+  height: 80%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+#signup-inputBox {
+  display: flex;
+  flex-direction: column;
+}
+
+footer {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.submitBtn {
+  position: absolute;
+  bottom: 50px;
+  margin-right: 30px;
+}
