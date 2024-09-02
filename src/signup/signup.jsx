@@ -47,9 +47,58 @@ function Signup1() {
       }
     }
   };
-  const onSignup = (e) => {
+  const onSignup = async (e) => {
     e.preventDefault();
-    console.log(passW, email, rePassW, Verif);
+    const passwordPattern =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()]).{8,}$/;
+    const baseURL = "http://sangsang2.kr:8080/api/member/signup";
+
+    if (!passW || !email || !rePassW || !Verif) {
+      alert("모든 입력칸은 채워주십시오");
+      return;
+    } else if (!passwordPattern.test(passW)) {
+      alert(
+        "비밀번호는 최소 8자 이상이어야 하며, 대문자, 소문자, 숫자, 특수문자를 포함해야 합니다."
+      );
+      return;
+    } else if (passW !== rePassW) {
+      alert("비밀번호가 일치하지 않습니다");
+      return;
+    } else {
+      const signupDTO = {
+        email: email,
+        password: passW,
+        checkPassword: rePassW,
+        verification: Verif,
+      };
+      console.log(signupDTO);
+      try {
+        const response = await fetch(baseURL, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(signupDTO),
+        });
+        if (!response.ok) {
+          if (response.status === 400) {
+            alert("인증코드가 일치하지 않습니다");
+            return;
+          } else {
+            alert("회원가입에 실패했습니다.");
+            return;
+          }
+        }
+
+        const data = await response.json();
+        console.log("response received", data);
+        alert("회원가입 되었습니다. 다시 로그인해 주세요");
+        navigate("/");
+      } catch (error) {
+        console.error("Error occurred during signup:", error);
+        alert("Error occurred" + error.message);
+      }
+    }
   };
   return (
     <div id="mobile-view">
