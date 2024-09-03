@@ -14,7 +14,36 @@ function Signup1() {
   const [email, setEmail] = useState("");
   const [rePassW, setRePassW] = useState("");
   const [Verif, setVerif] = useState("");
+  const [buttonTxt, setButtonTxt] = useState("인증코드 받기");
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+  const [count, setCount] = useState(30);
+  const [isCounting, setIsCounting] = useState(false);
+
+  useEffect(() => {
+    //30초 카운트 다운
+    let intervalId;
+    if (isCounting) {
+      intervalId = setInterval(() => setCount((current) => current - 1), 1000);
+    }
+    if (count === 0) {
+      clearInterval(intervalId);
+      setIsCounting(false);
+      setButtonTxt("인증 번호 재발급");
+      setIsButtonDisabled(false);
+      setCount(30);
+    }
+    return () => clearInterval(intervalId);
+  }, [isCounting, count]);
+
+  useEffect(() => {
+    // count가 변할 때마다 버튼 텍스트 업데이트
+    if (isCounting && count > 0) {
+      setButtonTxt(`${count}초 후 재발급 가능`);
+    }
+  }, [count, isCounting]);
+
   const getVerifEmail = async (e) => {
+    //인증번호 api 불러오기
     e.preventDefault();
     const baseURL = "http://sangsang2.kr:8080/api/member/send-verification";
     if (!email) {
@@ -25,6 +54,9 @@ function Signup1() {
         email: email,
       };
       console.log(verifDTO);
+      setIsButtonDisabled(true); // 버튼 비활성화
+      setIsCounting(true);
+
       try {
         const response = await fetch(baseURL, {
           method: "POST",
@@ -48,6 +80,7 @@ function Signup1() {
     }
   };
   const onSignup = async (e) => {
+    //회원가입 api 불러오기
     e.preventDefault();
     const passwordPattern =
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()]).{8,}$/;
@@ -90,7 +123,7 @@ function Signup1() {
           }
         }
 
-        const data = await response.json();
+        const data = await response.text();
         console.log("response received", data);
         alert("회원가입 되었습니다. 다시 로그인해 주세요");
         navigate("/");
@@ -148,8 +181,12 @@ function Signup1() {
             onChange={(e) => setVerif(e.target.value)}
           />
         </div>
-        <button id="verification_btn" onClick={getVerifEmail}>
-          인증코드 받기
+        <button
+          id="verification_btn"
+          onClick={getVerifEmail}
+          disabled={isButtonDisabled}
+        >
+          {buttonTxt}
         </button>
 
         <button type="submit" className="submitBtn">
