@@ -6,6 +6,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import "../App.css";
 import "./signup1.css";
+import "../login/login.css";
 
 function Signup1() {
   const navigate = useNavigate();
@@ -14,7 +15,7 @@ function Signup1() {
   const [email, setEmail] = useState("");
   const [rePassW, setRePassW] = useState("");
   const [Verif, setVerif] = useState("");
-  const [buttonTxt, setButtonTxt] = useState("인증코드 받기");
+  const [buttonTxt, setButtonTxt] = useState("인증하기");
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const [count, setCount] = useState(30);
   const [isCounting, setIsCounting] = useState(false);
@@ -135,64 +136,77 @@ function Signup1() {
   };
   return (
     <div id="mobile-view">
-      <div id="signup_header">
-        <div className="signup_header-devider" onClick={goBack}>
-          <FontAwesomeIcon icon={faChevronLeft} />
-        </div>
-        <div className="signup_header-devider">
-          <h1>회원가입</h1>
-        </div>
-        <div className="signup_header-devider"></div>
-      </div>
-      <form id="signup-form" onSubmit={onSignup}>
-        <div id="signup-inputBox">
-          <span className="input_txt">이메일</span>
-          <input
-            className="signup-input"
-            type="email"
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </div>
-        <div id="signup-inputBox">
-          <span className="input_txt">비밀번호</span>
-          <input
-            className="signup-input"
-            onChange={(e) => setpassW(e.target.value)}
-            type="password"
-            required
-          />
-        </div>
-        <div id="signup-inputBox">
-          <span className="input_txt">비밀번호 확인</span>
-          <input
-            className="signup-input"
-            type="password"
-            onChange={(e) => setRePassW(e.target.value)}
-            required
-          />
-        </div>
-        <div id="signup-inputBox">
-          <span className="input_txt">인증번호</span>
-          <input
-            className="signup-input"
-            type="text"
-            required
-            onChange={(e) => setVerif(e.target.value)}
-          />
-        </div>
-        <button
-          id="verification_btn"
-          onClick={getVerifEmail}
-          disabled={isButtonDisabled}
-        >
-          {buttonTxt}
-        </button>
+      <div id="login-container">
+        <form onSubmit={onSignup} id="login_Box">
+          <img src="/logo.png" id="logo" />
 
-        <button type="submit" className="submitBtn">
-          <FontAwesomeIcon icon={faCheck} />
-        </button>
-      </form>
+          <div class="input_divider ">
+            <h1 id="greetingTxt">
+              모먼트 클래스의
+              <br /> 회원이 되어주세요.
+            </h1>
+
+            <div class="login-inputBox">
+              <span class="inputBox_txt">이메일</span>
+              <input
+                type="email"
+                required
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="이메일을 입력하세요"
+                class="inputBox_input"
+              />
+              <button
+                id="verification_btn"
+                onClick={getVerifEmail}
+                disabled={isButtonDisabled}
+              >
+                {buttonTxt}
+              </button>
+            </div>
+            <div class="login-inputBox">
+              <span class="inputBox_txt">비밀번호</span>
+              <input
+                type="password"
+                required
+                onChange={(e) => setpassW(e.target.value)}
+                placeholder="대문자, 소문자, 숫자, 특수문자 포함 8자리 이상"
+                class="inputBox_input"
+              />
+            </div>
+            <div class="login-inputBox">
+              <span class="inputBox_txt">비밀번호 확인</span>
+              <input
+                type="password"
+                required
+                onChange={(e) => setRePassW(e.target.value)}
+                placeholder="비밀번호를 다시 한번 입력해주세요"
+                class="inputBox_input"
+              />
+            </div>
+            <div class="login-inputBox">
+              <span class="inputBox_txt">인증번호</span>
+              <input
+                type="text"
+                required
+                onChange={(e) => setVerif(e.target.value)}
+                class="inputBox_input"
+                placeholder="전송된 인증번호를 입력해주세요"
+              />
+            </div>
+          </div>
+          <div class="input_divider divider2">
+            <button type="submit" class="submitBTN">
+              회원가입
+            </button>
+            <footer id="login-footer">
+              <span id="login-footerTxt">이미 회원이신가요?</span>
+              <Link to="/" id="login-footerLink">
+                로그인하기
+              </Link>
+            </footer>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }

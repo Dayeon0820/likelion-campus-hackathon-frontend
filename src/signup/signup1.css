@@ -1,51 +1,15 @@
-#signup_header {
-  display: flex;
-  align-items: center;
-}
+#verification_btn {
+  height: 32.59px;
 
-#signup_header h1 {
-  font-size: 18px;
-  font-weight: 550;
+  border-radius: 5px;
+  border: rgba(231, 231, 231, 1) 0.74px solid;
+  background-color: rgba(0, 0, 0, 0);
+  font-size: 10px;
+  width: 100px;
+  height: 25px;
+  margin-bottom: 10px;
 }
-
-.signup_header-devider {
-  width: 33.3%;
-  margin: 25px 15px;
-}
-
-.signup_header-devider:first-child {
-  display: flex;
-  justify-content: flex-start;
-}
-
-.signup_header-devider:nth-child(2) {
-  display: flex;
-  justify-content: center;
-}
-
-#signup-form {
-  height: 80%;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-evenly;
+.divider2 {
   position: relative;
-}
-
-#signup-inputBox {
-  display: flex;
-  flex-direction: column;
-}
-
-footer {
-  width: 100%;
-  display: flex;
-  justify-content: flex-end;
-}
-
-.submitBtn {
-  position: absolute;
-  bottom: 0px;
-  right: 20px;
+  top: -65px;
 }
