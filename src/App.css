@@ -12,6 +12,7 @@ main {
   /* 모든 페이지 공통되는 양쪽에 여백 */
   width: 90%;
   height: 100%;
+  position: relative;
 }
 #mobile-view {
   border: 1px solid #ccc;

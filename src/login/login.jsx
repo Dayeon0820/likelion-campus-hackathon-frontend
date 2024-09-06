@@ -34,12 +34,23 @@ function Login() {
         });
 
         if (!response.ok) {
+          const data = await response.json();
           if (response.status === 400) {
-            alert("아이디 또는 패스워드가 틀렸습니다.");
+            if (data.error === "비밀번호가 일치하지 않음") {
+              alert("비밀번호가 일치하지 않습니다. 다시 확인해주세요.");
+            } else {
+              alert("회원가입에 실패했습니다."); // 다른 400 에러 처리
+            }
+          } else if (response.status === 404) {
+            if (data.error === "사용자 찾을 수 없음") {
+              alert("사용자를 찾을 수 없습니다");
+            } else {
+              alert("회원가입에 실패했습니다."); // 다른 400 에러 처리
+            }
           } else {
             alert("로그인에 실패했습니다.");
           }
-          const data = await response.json();
+
           console.log("response received", data);
           return;
         }

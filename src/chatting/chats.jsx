@@ -13,7 +13,6 @@ function Chats() {
       <main>
         <header id="chats_header">
           <img id="chats_myImg" src="/user.png" />
-          <img id="pencil" src="/Pencil.png" />
         </header>
         <div id="chats_title">
           <h1>Chats</h1>
