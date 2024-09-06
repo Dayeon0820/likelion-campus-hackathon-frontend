@@ -1,0 +1,36 @@
+@import url('../../App.css');
+
+#mobile-view{
+    position: relative;
+}
+
+#navBar{
+    width: 100%;
+    height: 12%;
+    position: absolute;
+    bottom: 0;
+    border-top: 1px solid #f5f0f5;
+    display: flex;
+    justify-content: space-around;
+    padding: 7px 10px;
+    
+}
+
+#navBar > a{
+    display: inline-block;
+   /*  background: #7b7b7b; */
+    width: 60px;
+    height: 100%;
+}
+
+#navBar > a > span{
+    display: inline-block;
+    background: #ededed;
+    width: 50px;
+    height: 70%;
+}
+#navBar > a > p{
+    height: 20%;
+    font-size: 12px;
+    color: #333;
+}

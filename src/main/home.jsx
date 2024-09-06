@@ -1,10 +1,23 @@
-import React from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
-import { useEffect } from "react";
-import "../App.css";
+import {React, useState, useEffect} from "react";
+import { Link, useNavigate, NavLink } from "react-router-dom";
+import Navbar from "./navbar"
+import "./css/navbar.css";
+
+
 function Home() {
-  return <div id="mobile-view">홈화면</div>;
+  const [navItem, setNavItem] = useState([
+    {text: 'Search', className: 'search'},
+    {text: 'Map', className: 'map'},
+    {text: 'Home', className: 'home'},
+    {text: 'Chat', className: 'chat'},
+    {text: 'Profile', className: 'myPage'},
+])
+
+  return (
+  <div id="mobile-view">
+    <Navbar/>
+  </div>
+  );
 }
 
 export default Home;
