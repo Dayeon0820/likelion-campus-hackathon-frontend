@@ -1,0 +1,12 @@
+.background {
+  border: 1px solid #ccc;
+  overflow: hidden;
+  background: linear-gradient(
+      180deg,
+      rgba(255, 248, 252, 0.95) 0%,
+      rgba(255, 254, 248, 0.95) 52.5%,
+      rgba(248, 251, 255, 0.95) 100%
+    ),
+    url("../background.png") no-repeat center center;
+  background-size: cover;
+}

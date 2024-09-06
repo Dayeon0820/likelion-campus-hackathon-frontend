@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import "../App.css";
 import "./login.css";
 import "./input.css";
+import styles from "./background.module.css";
 
 function Login() {
   const navigate = useNavigate();
@@ -54,7 +55,7 @@ function Login() {
     }
   };
   return (
-    <div id="mobile-view">
+    <div id="mobile-view" className={styles.background}>
       <div id="login-container">
         <form onSubmit={onLogin} id="login_Box">
           <img src="/logo.png" id="logo" />
@@ -85,7 +86,7 @@ function Login() {
             </div>
             <a href="#">비밀번호 찾기</a>
           </div>
-          <div class="input_divider">
+          <div class="input_divider ">
             <button type="submit" class="submitBTN">
               로그인
             </button>

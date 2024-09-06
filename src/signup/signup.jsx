@@ -1,12 +1,13 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronLeft, faCheck } from "@fortawesome/free-solid-svg-icons";
+
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useEffect } from "react";
 import "../App.css";
-import "./signup1.css";
 import "../login/login.css";
+import "./signup1.css";
+import styles from "../login/background.module.css";
 
 function Signup1() {
   const navigate = useNavigate();
@@ -135,7 +136,7 @@ function Signup1() {
     }
   };
   return (
-    <div id="mobile-view">
+    <div id="mobile-view" className={styles.background}>
       <div id="login-container">
         <form onSubmit={onSignup} id="login_Box">
           <img src="/logo.png" id="logo" />
@@ -148,20 +149,32 @@ function Signup1() {
 
             <div class="login-inputBox">
               <span class="inputBox_txt">이메일</span>
+              <div id="email-input">
+                <input
+                  type="email"
+                  required
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="이메일을 입력하세요"
+                  class="inputBox_input"
+                />
+                <button
+                  id="verification_btn"
+                  onClick={getVerifEmail}
+                  disabled={isButtonDisabled}
+                >
+                  {buttonTxt}
+                </button>
+              </div>
+            </div>
+            <div class="login-inputBox">
+              <span class="inputBox_txt">인증번호</span>
               <input
-                type="email"
+                type="text"
                 required
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="이메일을 입력하세요"
+                onChange={(e) => setVerif(e.target.value)}
                 class="inputBox_input"
+                placeholder="전송된 인증번호를 입력해주세요"
               />
-              <button
-                id="verification_btn"
-                onClick={getVerifEmail}
-                disabled={isButtonDisabled}
-              >
-                {buttonTxt}
-              </button>
             </div>
             <div class="login-inputBox">
               <span class="inputBox_txt">비밀번호</span>
@@ -181,16 +194,6 @@ function Signup1() {
                 onChange={(e) => setRePassW(e.target.value)}
                 placeholder="비밀번호를 다시 한번 입력해주세요"
                 class="inputBox_input"
-              />
-            </div>
-            <div class="login-inputBox">
-              <span class="inputBox_txt">인증번호</span>
-              <input
-                type="text"
-                required
-                onChange={(e) => setVerif(e.target.value)}
-                class="inputBox_input"
-                placeholder="전송된 인증번호를 입력해주세요"
               />
             </div>
           </div>

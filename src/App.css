@@ -7,17 +7,18 @@ body {
   height: 100vh;
   background-color: #f0f0f0;
 }
+
+main {
+  /* 모든 페이지 공통되는 양쪽에 여백 */
+  width: 90%;
+  height: 100%;
+}
 #mobile-view {
   border: 1px solid #ccc;
   overflow: hidden;
-  background: linear-gradient(
-      180deg,
-      rgba(255, 248, 252, 0.95) 0%,
-      rgba(255, 254, 248, 0.95) 52.5%,
-      rgba(248, 251, 255, 0.95) 100%
-    ),
-    url("background.png") no-repeat center center;
-  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 @media screen and (max-width: 768px) {
