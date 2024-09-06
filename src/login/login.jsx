@@ -36,11 +36,12 @@ function Login() {
         if (!response.ok) {
           if (response.status === 400) {
             alert("아이디 또는 패스워드가 틀렸습니다.");
-            return;
           } else {
             alert("로그인에 실패했습니다.");
-            return;
           }
+          const data = await response.json();
+          console.log("response received", data);
+          return;
         }
 
         const data = await response.json();
@@ -48,6 +49,7 @@ function Login() {
         localStorage.setItem("token", data.access_token);
         localStorage.setItem("refresh_token", data.refresh_token);
         alert("추카포카^^&&~**% 로그인 성공");
+        navigate("/home");
       } catch (error) {
         console.error("Error occurred during login:", error);
         alert("Error occurred " + error.message);

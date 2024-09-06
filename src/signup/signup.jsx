@@ -117,12 +117,19 @@ function Signup1() {
         });
         if (!response.ok) {
           if (response.status === 400) {
-            alert("인증코드가 일치하지 않습니다");
-            return;
+            if (response.error === "이메일 중복") {
+              alert("이미 사용 중인 이메일입니다. 다른 이메일을 입력하세요.");
+            } else if (response.error === "비밀번호 일치하지 않음") {
+              alert("비밀번호가 일치하지 않습니다. 다시 확인해주세요.");
+            } else {
+              alert("회원가입에 실패했습니다."); // 다른 400 에러 처리
+            }
           } else {
             alert("회원가입에 실패했습니다.");
-            return;
           }
+          const data = await response.json();
+          console.log("response received", data);
+          return;
         }
 
         const data = await response.text();

@@ -5,6 +5,8 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Login from "./login/login";
 import Signup1 from "./signup/signup";
 import Chats from "./chatting/chats";
+import Chatting from "./chatting/chatting";
+import Home from "./main/home";
 
 function App() {
   return (
@@ -13,6 +15,8 @@ function App() {
         <Route path="/" element={<Login />} />
         <Route path="/signup1" element={<Signup1 />} />
         <Route path="/chats" element={<Chats />} />
+        <Route path="/chatting" element={<Chatting />} />
+        <Route path="/home" element={<Home />} />
       </Routes>
     </Router>
   );

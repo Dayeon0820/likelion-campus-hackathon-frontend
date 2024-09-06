@@ -37,7 +37,7 @@ function Chats() {
               <img className="chats_li-img" src="/user.png" />
             </div>
             <div className="chats_li-column">
-              <h2 id="chats_li-title">The Art</h2>
+              <h2 id="chats_li-title">The Swim</h2>
               <h4 id="chats_li-subtitle">hello everyone nice to meet you</h4>
             </div>
           </div>
