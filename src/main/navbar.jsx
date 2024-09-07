@@ -4,11 +4,11 @@ import "./css/navbar.css"
 
 const Navbar = () => {
     const [navItem, setNavItem] = useState([
-        {text: '검색', className: 'search'},
-        {text: '지도', className: 'map'},
-        {text: '홈', className: 'home'},
-        {text: '채팅', className: 'chat'},
-        {text: '내 정보', className: 'myPage'},
+        {text: 'Search', className: 'search'},
+        {text: 'Map', className: 'map'},
+        {text: 'Home', className: 'home'},
+        {text: 'Chat', className: 'chat'},
+        {text: 'Profile', className: 'profile'},
     ])
   
     return( 
