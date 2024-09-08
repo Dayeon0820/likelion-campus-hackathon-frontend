@@ -192,7 +192,7 @@ function Signup1() {
                 type="password"
                 required
                 onChange={(e) => setpassW(e.target.value)}
-                placeholder="대문자, 소문자, 숫자, 특수문자 포함 8자리 이상"
+                placeholder="대.소문자, 숫자, 특수문자 포함 8자리 이상"
                 class="inputBox_input"
               />
             </div>

@@ -13,7 +13,7 @@ function Chatting() {
   return (
     <div id="mobile-view" className={styles.chattingBG}>
       <main>
-        <header id="chatting-header">
+        <header className="app-header">
           <img src="/arrow.png" id="header-arrowIcon" />
           <div id="chatting-title">
             <h1>beginner piano class</h1>
