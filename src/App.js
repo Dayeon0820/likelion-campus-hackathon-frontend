@@ -8,6 +8,7 @@ import Chats from "./chatting/chats";
 import Chatting from "./chatting/chatting";
 import Home from "./main/home";
 import ClassMap from "./map/map";
+import Profile from "./profile/profile";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/chatting" element={<Chatting />} />
         <Route path="/home" element={<Home />} />
         <Route path="/map" element={<ClassMap />} />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
     </Router>
   );
