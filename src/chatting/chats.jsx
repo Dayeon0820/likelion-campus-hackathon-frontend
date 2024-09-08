@@ -1,9 +1,8 @@
-import React from "react";
+import {React, useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
-import { useEffect } from "react";
+import Navbar from "../main/navbar";
 import "../App.css";
 import "./chats.css";
 
@@ -42,6 +41,7 @@ function Chats() {
           </div>
         </div>
       </main>
+      <Navbar></Navbar>
     </div>
   );
 }

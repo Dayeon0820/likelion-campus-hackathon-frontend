@@ -6,10 +6,10 @@
 
 #navBar{
     width: 100%;
-    height: 11%;
+    height: 10%;
     position: absolute;
     bottom: 0;
-    border-top: 1px solid #eae4ea;
+    border-top: 1px solid #F5F0F5;
     display: flex;
     justify-content: space-around;
     padding: 12px 10px;
@@ -26,12 +26,12 @@
     align-items: center;
 }
 
-#navBar > a > span{
+#navBar > .navLink > .navbarIcon{
     display: inline-block;
-    /* background: #ededed; */
+   /*  background: #ededed; */
     width: 50px;
     height: 70%;
-    background-size: cover;
+    /* background-size: cover; */
 }
 
 #navBar > a > p{
@@ -41,6 +41,18 @@
     /* border: 1px solid #333; */
 }
 
-#navBar > a > .searchIcon{
-    background: url("../img/search_icon.png") no-repeat center;
+#navBar > .navLink > .searchIcon{
+    background: url("../img/search_icon.svg") no-repeat center center;
+}
+#navBar > .navLink > .mapIcon{
+    background: url("../img/map_icon.svg") no-repeat center center;
+}
+#navBar > .navLink > .homeIcon{
+    background: url("../img/home_icon.svg") no-repeat center center;
+}
+#navBar > .navLink > .chatsIcon{
+    background: url("../img/chat_icon.svg") no-repeat center center;
+}
+#navBar > .navLink > .profileIcon{
+    background: url("../img/profile_icon.svg") no-repeat center center;
 }
