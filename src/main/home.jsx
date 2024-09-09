@@ -27,9 +27,21 @@ function Home() {
         <section className="classTypeContainer">
           <h4 className="classTxt">클래스 유형</h4>
           <div className="classTypeBox">
-            <div className="typeContent"><p>전체</p></div>
-            <div className="typeContent"><p>정규</p></div>
-            <div className="typeContent"><p>원데이</p></div>
+            <Link 
+              className = "typeContent allType"
+              to = "/home/class_list"
+            ><p>전체</p>
+            </Link>
+            <Link 
+              className="typeContent regularType"
+              to = "/home/class_list"
+            ><p>정규</p>
+            </Link>
+            <Link 
+              className="typeContent onedayType"
+              to = "/home/class_list"
+            ><p>원데이</p>
+            </Link>
           </div>
         </section>
         <section className="bestClassContainer">
@@ -41,7 +53,7 @@ function Home() {
           <ul className="categoryBox">
             {category.map((item, i) => {
               return(
-                  <li className={`${item.className} categoryList`} key={i}>{item.text}</li>
+                  <li className={`${item.className} categoryHomeList`} key={i}>{item.text}</li>
               )
             })}
             </ul>
