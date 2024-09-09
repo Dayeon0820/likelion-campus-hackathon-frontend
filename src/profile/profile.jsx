@@ -41,6 +41,7 @@ function Profile() {
 
         alert("계정에서 로그아웃 되었습니다.");
         localStorage.removeItem("token");
+        localStorage.removeItem("refresh_token");
         navigate("/");
       } catch (error) {
         console.error("Error occurred during delete:", error);
