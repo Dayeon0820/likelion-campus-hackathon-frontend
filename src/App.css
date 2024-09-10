@@ -6,6 +6,7 @@
 a {
   color: #000;
   text-decoration: none;
+  display: inline-block;
 }
 ul {
   list-style: none;
@@ -31,14 +32,15 @@ main {
 }
 
 .app-header {
-  /*거의 모든 페이지 공통되는 상단 헤더 부분*/
-  width: 100%;
-  height: 35px;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  margin: 20px 0;
+    /*거의 모든 페이지 공통되는 상단 헤더 부분*/
+    width: 100%;
+    height: 7%;
+    /* display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin: 20px 0; */  /* 이거 공통파일 말고 해당되는 페이지 파일 css 에서 재선언해주세여 */
 }
+
 #mobile-view {
   border: 1px solid #ccc;
   overflow: hidden;

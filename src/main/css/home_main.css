@@ -1,0 +1,120 @@
+.homeHeader{
+    /* border-bottom: 1px solid #333; */
+    width: 100%;
+    height: 7%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.homeHeader > h3{
+    font-size: 18px;
+}
+
+.mainContent{
+    /* background: #ededed; */
+    width: 100%;
+    height: 83%;
+    padding: 25px 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    gap: 4%;
+}
+
+.classTypeContainer{
+  /*   border: 1px solid #333; */
+    width: 100%;
+    height: 20%;
+}
+.classTxt{
+    font-size: 14px;
+    /* height: 18%; */
+    /* font-weight: bold; */
+    /* border-bottom: 1px solid #333; */
+}
+.classTypeContainer > .classTypeBox{
+    width: 100%;
+    height: 82%;
+    padding-top: 10px;
+    /* background: #fff; */
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+.classTypeBox > .typeContent{
+    width: 30%;
+    height: 65px;
+    background: #ededed;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+.classTypeBox > .typeContent::after{
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255,255,255,0.5);
+    z-index: 1;
+    border-radius: 8px;
+}
+.classTypeBox > .allType{
+    background: url("../img/class_type_all.png") no-repeat center center;
+    background-size: cover;
+}
+.classTypeBox > .regularType{
+    background: url("../img/class_type_regular.png") no-repeat center center;
+    background-size: cover;
+}
+.classTypeBox > .onedayType{
+    background: url("../img/class_type_oneday.png") no-repeat center center;
+    background-size: cover;
+}
+
+.typeContent > p {
+    font-size: 14px;
+    z-index : 2;
+}
+
+
+.bestClassContainer{
+  /*   border: 1px solid #333; */
+    width: 100%;
+    height: 38%;
+}
+.banner{
+    height: 80%;
+    margin-top: 10px;
+    background: #ededed;
+    border-radius: 8px;
+}
+
+.categoryContainer{
+ /*    border: 1px solid #333; */
+    width: 100%;
+    height: 28%;
+}
+.categoryBox{
+    background: #ededed;
+    height: 70%;
+    margin-top: 10px;
+    border-radius: 8px;
+    padding: 8px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px; 
+}
+.categoryHomeList{
+    background: #fff;
+    font-size: 12px;
+    width: 90%;
+    height: 100%;
+    text-align: center;
+    border-radius: 6px;
+    cursor: pointer;
+}
