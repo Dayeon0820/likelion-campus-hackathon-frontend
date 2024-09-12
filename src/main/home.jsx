@@ -19,7 +19,7 @@ function Home() {
 
   return (
   <div id="mobile-view">
-    <main>
+    <div id="default-padding">
       <header className="homeHeader">
         <h3>MOMENT CLASS</h3>
       </header>
@@ -59,7 +59,7 @@ function Home() {
             </ul>
         </section>
       </div>
-    </main>
+    </div>
     <Navbar/>
   </div>
   );
