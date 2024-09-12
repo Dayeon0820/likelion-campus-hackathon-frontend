@@ -11,7 +11,8 @@ import ClassMap from "./map/map";
 import Profile_USER from "./profile/profile_user";
 import Profile from "./profile/profile";
 import Profile_CREATOR from "./profile/profile-creator";
-import EditProfile from "./profile/edit-profile";
+import EditProfile from "./profile/edit_profile/edit-profile";
+import EditProfile2 from "./profile/edit_profile/edit-profile2";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
         <Route path="/map" element={<ClassMap />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/edit_profile" element={<EditProfile />} />
+        <Route path="/edit_profile2" element={<EditProfile2 />} />
       </Routes>
     </Router>
   );
