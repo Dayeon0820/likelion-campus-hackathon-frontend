@@ -14,7 +14,7 @@ function Profile_CREATOR(props) {
   const nickname = userInfo.nickname;
   const introduction = userInfo.introduction;
 
-  const imageurl = userInfo.imageurl;
+  const imageurl = userInfo.imageUrl;
   const [userImg, setUserImg] = useState("");
 
   useEffect(() => {
@@ -23,6 +23,7 @@ function Profile_CREATOR(props) {
     } else {
       setUserImg("/user.png");
     }
+    console.log(userImg);
   }, [imageurl]);
 
   const onConfirm = async (e) => {
@@ -75,13 +76,11 @@ function Profile_CREATOR(props) {
           <span></span>
         </header>
         <div id="profile-info">
-          <img src={userImg} id="profile-img" />
+          <img src={userImg} id="profile-img" alt="Profile Image" />
           <div id="username-box">
             <h2 id="profile-username">{nickname}</h2>
-            <h6 id="profile-usertype">참가자</h6>
+            <h6 id="profile-usertype">개최자</h6>
           </div>
-
-          <span id="profile-introduction">{introduction}</span>
         </div>
         <div id="profile-bthBox">
           <button
@@ -97,7 +96,9 @@ function Profile_CREATOR(props) {
           </button>
         </div>
         <button id="create-btn">클래스 개최</button>
-        <div id="profile-emptyBox"></div>
+        <div id="profile-emptyBox">
+          <span id="profile-introduction">{introduction}</span>
+        </div>
         <button id="logoutBtn" onClick={onConfirm}>
           로그아웃
         </button>
