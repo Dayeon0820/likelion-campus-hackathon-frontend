@@ -100,3 +100,17 @@
   background-color: rgba(54, 158, 255, 1);
   color: rgba(255, 255, 255, 1);
 }
+
+.header_3components {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin: 20px 0;
+}
+
+.header_1components {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin: 20px 0 0 0;
+}

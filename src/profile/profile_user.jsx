@@ -69,7 +69,7 @@ function Profile_USER(props) {
   return (
     <div id="mobile-view">
       <div id="default-padding">
-        <header className="app-header">
+        <header className="app-header header_3components">
           <img src="/arrow.png" id="header-arrowIcon" onClick={gobackHome} />
           <div id="chatting-title">
             <h1>마이프로필</h1>
@@ -86,7 +86,14 @@ function Profile_USER(props) {
           <span id="profile-introduction">{introduction}</span>
         </div>
         <div id="profile-bthBox">
-          <button className="profile-btn">프로필 수정</button>
+          <button
+            className="profile-btn"
+            onClick={() => {
+              navigate("/edit_profile");
+            }}
+          >
+            프로필 수정
+          </button>
           <button className="profile-btn" id="myClass">
             나의 클래스
           </button>
