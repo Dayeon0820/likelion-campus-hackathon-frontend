@@ -68,7 +68,7 @@ function Profile_USER(props) {
   };
   return (
     <div id="mobile-view">
-      <main>
+      <div id="default-padding">
         <header className="app-header">
           <img src="/arrow.png" id="header-arrowIcon" onClick={gobackHome} />
           <div id="chatting-title">
@@ -95,7 +95,7 @@ function Profile_USER(props) {
         <button id="logoutBtn" onClick={onConfirm}>
           로그아웃
         </button>
-      </main>
+      </div>
       <Navbar></Navbar>
     </div>
   );

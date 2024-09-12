@@ -23,7 +23,7 @@ body {
   background-color: #f0f0f0;
 }
 
-main {
+#default-padding {
   /* 모든 페이지 공통되는 양쪽에 여백 */
   width: 90%;
   height: 100%;

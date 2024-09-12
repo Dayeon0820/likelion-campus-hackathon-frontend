@@ -1,4 +1,4 @@
-import {React, useState, useEffect } from "react";
+import { React, useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { Link, useNavigate } from "react-router-dom";
@@ -9,7 +9,7 @@ import "./chats.css";
 function Chats() {
   return (
     <div id="mobile-view">
-      <main>
+      <div id="default-padding">
         <header id="chats_header">
           <img id="chats_myImg" src="/user.png" />
         </header>
@@ -40,7 +40,7 @@ function Chats() {
             </div>
           </div>
         </div>
-      </main>
+      </div>
       <Navbar></Navbar>
     </div>
   );
