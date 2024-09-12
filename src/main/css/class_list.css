@@ -1,53 +1,115 @@
+/* header--start */
 .classListHeader{
     width: 100%;
-    height: 7%;
+    height: 13vh;
     /* background: #ededed; */
+    position: absolute;  /* 나중에 fixed로 수정 */
+    top: 0;
+    z-index: 2;
+}
+.classListHeader > .headerTop{
+    width: 100%;
+    height: 54%;
+    margin: 0 auto;
+    background: #fff;
     display: flex;
     justify-content: center;
+    position: relative;
 }
-
-.classListHeader > span{
+.headerTop > span{
     display: inline-block;
     width: 40px;
     height: 40px;
     background: #333;
     position: absolute;
-    left: 0;
+    left: 6%;
 }
 
-.classListHeader > .classSelect{
+.headerTop > .classSelect{
     height: 100%;
     border: none;
     border-radius: 0;
 }
 
-.categorySection{
+.classListHeader > .headerCategories{
     /* border: 1px solid #333; */
     background: #edededed;
     width: 100%;
-    height: 5%;
+    height: 46%;
     display: flex;
     align-items: center;
 }
-.categorySection > P{
+.headerCategories > P{
     /* background: #333; */
-    width: 18%;
-    height: 70%;
-    padding: 8px;
-    border-right: 1px solid #333;
+    width: auto;
+    height: 40%;
+    padding: 0 3%;
+    border-right: 1px solid #898989;
     display: flex;
     align-items: center;
     justify-content: center;
 }
-.categorySection > ul{
+.headerCategories > ul{
     width: 82%;
     height: 70%;
-    padding: 8px;
+    padding: 0 2%;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
 }
-
 .categoryTxt{
     font-size: 10px;
 }
+/* header--end */
+
+/* main -- start */
+.classListMain{
+    width: 100%;
+    padding: 13vh 0 10vh;
+    overflow-y: auto;
+}
+
+.classListContainer{
+    width: 90%;
+    margin: 20px auto;
+    /* border: 1px solid #333; */
+    overflow-y: auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* 그리드의 각 아이템 크기를 150px 이상으로 유지 */
+    grid-gap: 15px; /* 그리드 항목들 사이의 간격 */
+}
+
+.classItem {
+    /* height: 140px; */
+    border-radius: 12px;
+    /* overflow: hidden; */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 6px;
+    background: #ededed;
+}
+
+.classImage {
+    width: 100%;
+    height: 100px;
+    object-fit: cover; /* 이미지를 박스에 맞게 채워줌 */
+    border-radius: 8px;
+    background: #fff;
+}
+
+.classInfo {
+    margin: 6px 0 0 8px;
+    text-align: start;
+}
+
+.classTitle {
+    font-size: 12px;
+    font-weight: bold;
+    margin: 4px 0;
+}
+
+.classPrice {
+    font-size: 10px;
+    color: #555;
+}
+
+/* main -- end */

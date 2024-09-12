@@ -12,7 +12,7 @@ const Navbar = () => {
     ])
   
     return( 
-      <div id="navBar">
+      <div id="navBar" className='navBar'>
       {navItem.map((item,i) => {
         return(
           <NavLink
