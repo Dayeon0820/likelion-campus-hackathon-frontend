@@ -12,8 +12,8 @@ function Chatting() {
   const gobackHome = () => navigate("/home");
   return (
     <div id="mobile-view" className={styles.chattingBG}>
-      <main>
-        <header className="app-header">
+      <div id="default-padding">
+        <header className="app-header  header_3components">
           <img src="/arrow.png" id="header-arrowIcon" />
           <div id="chatting-title">
             <h1>beginner piano class</h1>
@@ -63,7 +63,7 @@ function Chatting() {
             <img src="/send.png" id="input-sendingIcon" />
           </div>
         </div>
-      </main>
+      </div>
     </div>
   );
 }

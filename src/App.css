@@ -24,7 +24,7 @@ body {
   background-color: #f0f0f0;
 }
 
-main {
+#default-padding {
   /* 모든 페이지 공통되는 양쪽에 여백 */
   width: 90%;
   height: 100%;
@@ -35,10 +35,6 @@ main {
     /*거의 모든 페이지 공통되는 상단 헤더 부분*/
     width: 100%;
     height: 7%;
-    /* display: flex;
-    align-items: center;
-    justify-content: space-around;
-    margin: 20px 0; */  /* 이거 공통파일 말고 해당되는 페이지 파일 css 에서 재선언해주세여 */
 }
 
 #mobile-view {
