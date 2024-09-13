@@ -1,8 +1,10 @@
 import {React, useState, useEffect } from "react-dom";
-import Navbar from "./navbar"
+import { useNavigate } from "react-router-dom";
+import Navbar from "./navbar";
 import "./css/class_list.css";
 
 const ClassList = () =>{
+    const navigate = useNavigate();
     const categories = ["전체", "요리", "미술", "공예", "플라워", "뷰티", "음악", "운동"];
     const classData = [/* API 호출 전에 그리드 확인용 */
         { id: 1, title: "요리 클래스", price: "₩30,000", image: "https://via.placeholder.com/100" },
@@ -15,7 +17,11 @@ const ClassList = () =>{
         { id: 6, title: "음악 클래스", price: "₩35,000", image: "https://via.placeholder.com/100" },
         { id: 6, title: "음악 클래스", price: "₩35,000", image: "https://via.placeholder.com/100" },
         { id: 6, title: "음악 클래스", price: "₩35,000", image: "https://via.placeholder.com/100" },
-    ]
+    ];
+    const handleClassItemClick = (id) => {
+        // 선택한 클래스를 ID로 URL을 구성
+        navigate(`/home/class_application?id=${id}`);
+    };
 
     return(
         <div id="mobile-view">
@@ -44,7 +50,11 @@ const ClassList = () =>{
             <main className="classListMain">
                 <section className="classListContainer">
                     {classData.map((classItem) => (
-                        <div key={classItem.id} className="classItem">
+                        <div 
+                        key={classItem.id} 
+                        className="classItem"
+                        onClick={() => handleClassItemClick(classItem.id)}
+                        >
                             <img src={classItem.image} className="classImage" />
                             <div className="classInfo">
                                 <h4 className="classTitle">{classItem.title}</h4>
