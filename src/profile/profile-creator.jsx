@@ -95,7 +95,9 @@ function Profile_CREATOR(props) {
             나의 클래스
           </button>
         </div>
-        <button id="create-btn">클래스 개최</button>
+        <button id="create-btn" onClick={() => navigate("/create_class")}>
+          클래스 개최
+        </button>
         <div id="profile-emptyBox">
           <span id="profile-introduction">{introduction}</span>
         </div>

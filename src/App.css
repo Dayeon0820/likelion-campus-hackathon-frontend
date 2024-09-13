@@ -26,15 +26,30 @@ body {
 
 #default-padding {
   /* 모든 페이지 공통되는 양쪽에 여백 */
-  width: 90%;
+  width: 85%;
   height: 100%;
   position: relative;
 }
 
 .app-header {
-    /*거의 모든 페이지 공통되는 상단 헤더 부분*/
-    width: 100%;
-    height: 7%;
+  /*거의 모든 페이지 공통되는 상단 헤더 부분*/
+  width: 100%;
+  height: 7%;
+}
+
+.nextBtn {
+  /*공통되는 다음 버튼*/
+  width: 100%;
+  height: 35px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 21px;
+  text-align: center;
+  position: absolute;
+  bottom: 25px;
+  background-color: rgba(54, 158, 255, 1);
+  color: rgba(255, 255, 255, 1);
 }
 
 #mobile-view {
@@ -81,9 +96,10 @@ body {
     border: none;
     box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
   }
-   /* 헤더와 네비게이션 바도 mobile-view의 고정된 크기에 맞춰 조정 */
-   .classListHeader, #navBar {
-       width: 375px; /* 고정된 너비에 맞게 설정 */
-       /* left: calc(50% - 187.5px); */
-   }
+  /* 헤더와 네비게이션 바도 mobile-view의 고정된 크기에 맞춰 조정 */
+  .classListHeader,
+  #navBar {
+    width: 375px; /* 고정된 너비에 맞게 설정 */
+    /* left: calc(50% - 187.5px); */
+  }
 }

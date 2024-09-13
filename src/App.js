@@ -14,6 +14,10 @@ import Profile from "./profile/profile";
 import Profile_CREATOR from "./profile/profile-creator";
 import EditProfile from "./profile/edit_profile/edit-profile";
 import EditProfile2 from "./profile/edit_profile/edit-profile2";
+import CreateClass from "./createClass/createclass";
+import CreateOnedayClass from "./createClass/oneday";
+import CreateRegularClass from "./createClass/regular";
+import CreateClass2 from "./createClass/createclass2";
 
 function App() {
   return (
@@ -29,6 +33,10 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/edit_profile" element={<EditProfile />} />
         <Route path="/edit_profile2" element={<EditProfile2 />} />
+        <Route path="/create_class" element={<CreateClass />} />
+        <Route path="/create_class2" element={<CreateClass2 />} />
+        <Route path="/create_class/oneday" element={<CreateOnedayClass />} />
+        <Route path="/create_class/regular" element={<CreateRegularClass />} />
       </Routes>
     </Router>
   );

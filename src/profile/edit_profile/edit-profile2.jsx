@@ -15,6 +15,14 @@ function EditProfile2() {
   const permission = location.state.permission;
   const [nickname, setNickname] = useState("");
   const [introduction, setIntroduction] = useState("");
+  useEffect(() => {
+    // 컴포넌트가 언마운트될 때 URL 해제
+    return () => {
+      if (previewUrl) {
+        URL.revokeObjectURL(previewUrl);
+      }
+    };
+  }, [previewUrl]);
   const handleImageChange = (e) => {
     const file = e.target.files[0]; // 첫 번째 파일을 가져옴
     setImage(file); // 파일 객체를 상태에 저장
@@ -48,6 +56,23 @@ function EditProfile2() {
       });
 
       const data = await response.json();
+      if (!response.ok) {
+        if (response.status === 404) {
+          if (data.error === "사용자 찾을 수 없음") {
+            alert("사용자를 찾을 수 없습니다.");
+          } else if (data.error === "사용자 정보 찾을 수 없음") {
+            alert("사용자 정보를 찾을 수 없습니다.");
+          } else if (data.error === "업데이트 사용자 정보 불러오기 실패") {
+            alert("업데이트된 사용자 정보를 불러올 수 없습니다.");
+          } else {
+            alert("회원 정보 불러오기에 실패했습니다."); // 다른 404 에러 처리
+          }
+        } else {
+          alert("회원 정보 불러오기에 실패했습니다.");
+        }
+        return;
+      }
+
       console.log("Success:", data);
       navigate("/profile");
     } catch (error) {
@@ -77,7 +102,7 @@ function EditProfile2() {
         </div>
 
         <h2 id="profile-questionTxt">2단계: 내 정보 입력하기</h2>
-        <img id="profile-humanImg" src="/person.png" />
+        <img id="profile-humanImg" src={previewUrl || "/person.png"} />
         <form onSubmit={onSubmit}>
           <input
             type="file"
