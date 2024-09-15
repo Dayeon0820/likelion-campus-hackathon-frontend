@@ -31,27 +31,34 @@
     <meta
       http-equiv="Content-Security-Policy"
       content="
-      default-src 'self' 'unsafe-inline' https://dapi.kakao.com http://*.daumcdn.net;
-      script-src 'self' 'unsafe-inline' https://dapi.kakao.com http://*.daumcdn.net;
-      style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
-      font-src 'self' https://fonts.gstatic.com;
-      img-src 'self' 'unsafe-inline' blob: https://dapi.kakao.com http://*.daumcdn.net http://sangsang2.kr:8080;
-      connect-src 'self' http://sangsang2.kr:8080 https://dapi.kakao.com http://*.daumcdn.net;
-    "
+    default-src 'self' https://dapi.kakao.com http://*.daumcdn.net;
+    script-src 'self' 'unsafe-inline' https://dapi.kakao.com http://*.daumcdn.net;
+    style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+    font-src 'self' https://fonts.gstatic.com;
+    img-src 'self' 'unsafe-inline' blob: https://dapi.kakao.com http://*.daumcdn.net http://sangsang2.kr:8080;
+    connect-src 'self' http://sangsang2.kr:8080 https://dapi.kakao.com http://*.daumcdn.net;
+    frame-src https://t1.daumcdn.net http://postcode.map.daum.net; /* Add this line */
+    child-src https://t1.daumcdn.net http://postcode.map.daum.net; /* Add this line */
+  "
     />
 
     <meta
       http-equiv="X-Content-Security-Policy"
-      content="default-src 'self' 'unsafe-inline' https://dapi.kakao.com http://*.daumcdn.net; 
-               script-src 'self' 'unsafe-inline' https://dapi.kakao.com http://*.daumcdn.net; 
-               img-src 'self' 'unsafe-inline' https://dapi.kakao.com http://*.daumcdn.net;
-               connect-src 'self' http://sangsang2.kr:8080 https://dapi.kakao.com http://*.daumcdn.net;"
+      content="
+    default-src 'self' 'unsafe-inline' https://dapi.kakao.com http://*.daumcdn.net;
+    script-src 'self' 'unsafe-inline' https://dapi.kakao.com http://*.daumcdn.net;
+    img-src 'self' 'unsafe-inline' https://dapi.kakao.com http://*.daumcdn.net;
+    connect-src 'self' http://sangsang2.kr:8080 https://dapi.kakao.com http://*.daumcdn.net https://t1.daumcdn.net;
+    frame-src https://t1.daumcdn.net http://postcode.map.daum.net; /* Add this line */
+    child-src https://t1.daumcdn.net http://postcode.map.daum.net; /* Add this line */
+  "
     />
 
     <script
       type="text/javascript"
       src="https://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=31ab0c2dde1e7c5f97a4aba8000bfd13"
     ></script>
+    <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
     <title>React App</title>
   </head>

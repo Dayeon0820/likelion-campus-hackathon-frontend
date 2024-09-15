@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useState } from "react";
 import { useEffect } from "react";
 import "../../App.css";
@@ -8,8 +8,14 @@ import "../profile.css";
 
 function EditProfile() {
   const navigate = useNavigate();
+  const location = useLocation();
   const [check, setCheck] = useState(false);
   const [permission, setPermission] = useState("");
+
+  const token = localStorage.getItem("token");
+  const originalIntro = location.state?.introduction || "";
+  const originalName = location.state?.nickname || "";
+  const image = location.state?.userImg;
   const onCheck = () => {
     setCheck((current) => !current);
   };
@@ -24,6 +30,7 @@ function EditProfile() {
   useEffect(() => {
     console.log(permission);
   }, [permission]);
+
   return (
     <div id="mobile-view">
       <div id="profile-padding">
@@ -40,24 +47,13 @@ function EditProfile() {
             수정하기
           </h2>
         </div>
-        <div className="process-dot-box">
-          <span className="process-dot blue-dot"></span>
-          <span className="process-dot"></span>
-        </div>
 
-        <h2 id="profile-questionTxt">1단계: 역할 결정하기</h2>
+        <h2 id="profile-questionTxt">권한 변경하기</h2>
         <div id="profile-quesionBox">
           <h4>클래스 개최자이신가요? . . .</h4>
           <input type="checkbox" id="checkBox" onClick={onCheck} />
         </div>
-        <button
-          className="profileBtn"
-          onClick={() => {
-            navigate("/edit_profile2", { state: { permission } });
-          }}
-        >
-          다음
-        </button>
+        <button className="profileBtn">변경하기</button>
       </div>
     </div>
   );

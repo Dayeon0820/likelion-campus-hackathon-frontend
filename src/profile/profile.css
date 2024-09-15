@@ -89,7 +89,7 @@
   padding: 10px 20px;
 }
 
-#logoutBtn {
+.logoutBtn {
   width: 100%;
   height: 35px;
   border-radius: 20px;
@@ -102,7 +102,11 @@
   background-color: rgba(54, 158, 255, 1);
   color: rgba(255, 255, 255, 1);
 }
-
+.permissionBtn {
+  bottom: 18.5%;
+  background: rgba(255, 255, 255, 1);
+  color: black;
+}
 .header_3components {
   display: flex;
   align-items: center;
