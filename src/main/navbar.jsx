@@ -19,7 +19,6 @@ const Navbar = () => {
             key={i}
             to={`/${item.className}`}
             className={`${item.className}Link navLink`}
-            activeClassName="activeNav"
           >
             <span className={`${item.className}Icon navbarIcon`}></span>
             <p className={`${item.className}Txt`}>{item.text}</p>

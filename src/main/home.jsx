@@ -1,8 +1,11 @@
 import {React, useState, useEffect} from "react";
 import { Link, useNavigate, NavLink } from "react-router-dom";
 import Navbar from "./navbar"
+import Slider from "react-slick";
 import "./css/navbar.css";
-import "./css/home_main.css"
+import "./css/home_main.css";
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
 
 function Home() {
@@ -16,6 +19,16 @@ function Home() {
     {text: '음악' , className: 'music'},
     {text: '운동' , className: 'exercise'},
   ]
+
+  const settings = {//배너 세팅
+    dots: true,        // 아래에 도트 네비게이션
+    infinite: true,    // 무한 슬라이드
+    speed: 500,        // 슬라이드 전환 속도
+    slidesToShow: 1,   // 한 번에 보여줄 슬라이드 개수
+    slidesToScroll: 1, // 한 번에 넘어가는 슬라이드 개수
+    autoplay: true,    // 자동 재생
+    autoplaySpeed: 2500 // 자동 재생 속도
+  };
 
   return (
   <div id="mobile-view">
@@ -46,7 +59,18 @@ function Home() {
         </section>
         <section className="bestClassContainer">
           <h4 className="classTxt">인기 클래스</h4>
-          <div className="banner">배너</div>
+          {/* <div className="banner">배너</div> */}
+          <Slider {...settings} className="banner">
+              <div>
+                <img src="https://via.placeholder.com/338x150" alt="배너 1" />
+              </div>
+              <div>
+                <img src="https://via.placeholder.com/338x150" alt="배너 2" />
+              </div>
+              <div>
+                <img src="https://via.placeholder.com/338x150" alt="배너 3" />
+              </div>
+            </Slider>
         </section>
         <section className="categoryContainer">
           <h4 className="classTxt">카테고리</h4>

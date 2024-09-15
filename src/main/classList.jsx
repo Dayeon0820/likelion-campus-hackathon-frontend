@@ -1,5 +1,5 @@
 import {React, useState, useEffect } from "react-dom";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate, NavLink } from "react-router-dom";
 import Navbar from "./navbar";
 import "./css/class_list.css";
 
@@ -13,10 +13,10 @@ const ClassList = () =>{
         { id: 4, title: "플라워 클래스", price: "₩60,000", image: "https://via.placeholder.com/100" },
         { id: 5, title: "뷰티 클래스", price: "₩25,000", image: "https://via.placeholder.com/100" },
         { id: 6, title: "음악 클래스", price: "₩35,000", image: "https://via.placeholder.com/100" },
-        { id: 6, title: "음악 클래스", price: "₩35,000", image: "https://via.placeholder.com/100" },
-        { id: 6, title: "음악 클래스", price: "₩35,000", image: "https://via.placeholder.com/100" },
-        { id: 6, title: "음악 클래스", price: "₩35,000", image: "https://via.placeholder.com/100" },
-        { id: 6, title: "음악 클래스", price: "₩35,000", image: "https://via.placeholder.com/100" },
+        { id: 7, title: "음악 클래스", price: "₩35,000", image: "https://via.placeholder.com/100" },
+        { id: 8, title: "음악 클래스", price: "₩35,000", image: "https://via.placeholder.com/100" },
+        { id: 9, title: "음악 클래스", price: "₩35,000", image: "https://via.placeholder.com/100" },
+        { id: 10, title: "음악 클래스", price: "₩35,000", image: "https://via.placeholder.com/100" },
     ];
     const handleClassItemClick = (id) => {
         // 선택한 클래스를 ID로 URL을 구성
@@ -27,9 +27,10 @@ const ClassList = () =>{
         <div id="mobile-view">
             <header className="classListHeader">
                 {/* <span class="material-symbols-outlined">arrow_back</span> */}
-                <div className="headerTop">
-                    <span></span> {/* 구글폰트 안먹어서 임시로 위치 잡는 태그임 */}                        
-                    {/* <span class="material-symbols-outlined">arrow_back_ios</span> */}
+                <div className="headerTop"> 
+                    <Link to="/home">
+                        <span class="material-symbols-outlined">arrow_back_ios</span>
+                    </Link>                   
                     <select name="" className="classSelect">
                         <option value="allClass" className="allClass">전체</option>
                         <option value="regularClass" className="regularClass">정규</option>

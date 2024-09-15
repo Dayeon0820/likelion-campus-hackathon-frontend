@@ -3,12 +3,20 @@ import { Link, useNavigate, NavLink } from "react-router-dom";
 import "./css/class_application.css";
 
 const ClassApplication = () => {
-
+    const navigate = useNavigate();
+    const handleApplicationClick = () => {
+        navigate('/home/class_application/detail')
+    }
+    const handleChatClick = () => {
+        navigate('/chats')
+    }
 
     return(
         <div id="mobile-view">
-            <header className="app-header applicationHeader">
-                <span className="material-symbols-outlined">arrow_back</span>
+            <header className="app-header applicationHeader defaultHeader">
+                <Link to="/home/class_list">
+                    <span className="material-symbols-outlined">arrow_back_ios</span>
+                </Link>
             </header>
             <main id="classApplicationMain">
                 <div className="classBanner">
@@ -20,9 +28,11 @@ const ClassApplication = () => {
                 </div>
                 <section className="classApplicationSection">
                     <div className="titleContainer">
-                        <div className="classRating">
+                        <Link
+                        to="/home/class_application/review" 
+                        className="classRating">
                             <span className="star">⭐</span> 4.5 (1,500)
-                        </div>
+                        </Link>
                         <h3 className="classTitle">수채화로 풍경화 그리기! 내 그림을 액자로 만들어 보자~</h3>
                         <p className="classDate">Sat, Dec 24, 2022 · 5:00 PM PST</p>
                         <p className="classDescription">
@@ -45,8 +55,8 @@ const ClassApplication = () => {
                 </section>
             </main>
             <div className="applicationBtnBox">
-                <button className="applicationBtn">신청하기</button>
-                <button className="chatBtn"></button>
+                <button className="applicationBtn" onClick = {handleApplicationClick}>신청하기</button>
+                <button className="chatBtn" onClick = {handleChatClick}></button>
             </div>
         </div>
     )
