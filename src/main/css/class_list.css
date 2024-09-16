@@ -67,6 +67,11 @@
 }
 .categoryTxt{
     font-size: 10px;
+    cursor: pointer;
+}
+.categoryTxt.active {
+    color: #369EFF; 
+    font-weight: bold; 
 }
 /* header--end */
 
@@ -91,9 +96,8 @@
     /* height: 140px; */
     border-radius: 12px;
     /* overflow: hidden; */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     padding: 6px;
-    background: #ededed;
+   /*  background: #ededed; */
 }
 
 .classImage {
@@ -118,6 +122,13 @@
 .classPrice {
     font-size: 10px;
     color: #555;
+}
+
+.noClassMessage{
+    width: 100%;
+    /* background: #333; */
+    text-align: center;
+    font-size: 12px;
 }
 
 /* main -- end */

@@ -34,7 +34,7 @@ function App() {
         <Route path="/chatting" element={<Chatting />} />
         <Route path="/home" element={<Home />} />
         <Route path="/home/class_list" element={<ClassList />} />
-        <Route path="/home/class_application" element={<ClassApplication />} />
+        <Route path="/home/class_application/:id" element={<ClassApplication />} />
         <Route path="/home/class_application/detail" element={<ApplicationDetail />} />
         <Route path="/home/class_application/completed" element={<CompletedApplication />} />
         <Route path="/home/class_application/review" element={<ReviewInquiry />} />

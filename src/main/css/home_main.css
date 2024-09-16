@@ -63,15 +63,15 @@
     z-index: 1;
     border-radius: 8px;
 }
-.classTypeBox > .allType{
+.classTypeBox > .allClass{
     background: url("../img/class_type_all.png") no-repeat center center;
     background-size: cover;
 }
-.classTypeBox > .regularType{
+.classTypeBox > .Regular{
     background: url("../img/class_type_regular.png") no-repeat center center;
     background-size: cover;
 }
-.classTypeBox > .onedayType{
+.classTypeBox > .OneDay{
     background: url("../img/class_type_oneday.png") no-repeat center center;
     background-size: cover;
 }

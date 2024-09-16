@@ -41,7 +41,7 @@ const SearchPage = () => {
         <div id="mobile-view">
             <header className="app-header reviewHeader defaultHeader">
                 <Link to="/home/class_application">
-                    <span class="material-symbols-outlined">arrow_back_ios</span>
+                    <span className="material-symbols-outlined">arrow_back_ios</span>
                 </Link>
                 <h3>검색</h3>
             </header>
