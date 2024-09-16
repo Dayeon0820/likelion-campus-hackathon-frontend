@@ -83,6 +83,7 @@ function CreateClass() {
               }}
               value={category} // 선택된 값을 유지하기 위해 value 속성 추가
             >
+              <option value="" disabled></option>
               <option value="COOK">요리</option>
               <option value="ART">미술</option>
               <option value="CRAFT">공예</option>
