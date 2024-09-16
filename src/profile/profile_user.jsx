@@ -97,7 +97,13 @@ function Profile_USER(props) {
           >
             프로필 수정
           </button>
-          <button className="profile-btn" id="myClass">
+          <button
+            className="profile-btn"
+            id="myClass"
+            onClick={() => {
+              navigate("/myClass");
+            }}
+          >
             나의 클래스
           </button>
         </div>

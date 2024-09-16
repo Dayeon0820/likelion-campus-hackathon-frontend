@@ -1,0 +1,19 @@
+#review-starBox {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 25px;
+}
+
+#review-starBox h1 {
+  font-size: 50px;
+  margin-bottom: 15px;
+}
+
+.secondBtn {
+  background-color: rgba(240, 242, 245, 1);
+  color: black;
+  position: absolute;
+  bottom: 70px;
+}
