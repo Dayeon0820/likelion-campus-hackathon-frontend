@@ -229,7 +229,7 @@
   color: rgba(61, 77, 92, 1);
 }
 
-.editProfile-input textarea:focus {
+.editProfile-textarea textarea:focus {
   outline: none;
 }
 

@@ -12,6 +12,7 @@ function Profile_CREATOR(props) {
   const gobackHome = () => navigate("/home");
   const token = localStorage.getItem("token");
   const userInfo = props.userInfo;
+  const tag = userInfo.tag;
   const nickname = userInfo.nickname;
   const introduction = userInfo.introduction;
   const permission = userInfo.permission;
@@ -88,7 +89,7 @@ function Profile_CREATOR(props) {
             className="profile-btn"
             onClick={() => {
               navigate("/edit_profile2", {
-                state: { nickname, userImg, introduction, permission },
+                state: { nickname, userImg, introduction, permission, tag },
               });
             }}
           >
@@ -104,17 +105,8 @@ function Profile_CREATOR(props) {
         <div id="profile-emptyBox">
           <span id="profile-introduction">{introduction}</span>
         </div>
-        <button
-          className="logoutBtn permissionBtn"
-          onClick={() =>
-            navigate("/edit_profile", {
-              state: { nickname, introduction },
-            })
-          }
-        >
-          권한 변경하기
-        </button>
-        <button id="logoutBtn" onClick={onConfirm}>
+
+        <button className="logoutBtn" onClick={onConfirm}>
           로그아웃
         </button>
       </div>

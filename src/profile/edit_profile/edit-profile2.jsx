@@ -12,7 +12,8 @@ function EditProfile2() {
   const navigate = useNavigate();
   const location = useLocation();
   const token = localStorage.getItem("token");
-  const permission = location.state.permission;
+  const permission = location.state?.permission || "";
+  const tag = location.state?.tag || "";
   const originalIntro = location.state?.introduction || "";
   const [nickname, setNickname] = useState("");
   const [introduction, setIntroduction] = useState("");
@@ -35,10 +36,19 @@ function EditProfile2() {
     const formData = new FormData();
     const baseUrl = "http://sangsang2.kr:8080/api/member-info/edit";
     const info = {
-      nickname: nickname,
-      introduction: introduction || "",
       permission: permission,
     };
+    // 값이 존재하는 경우에만 info 객체에 추가
+    if (nickname) {
+      info.nickname = nickname;
+    } else {
+      info.nickname = originalName;
+    }
+    if (introduction) {
+      info.introduction = introduction;
+    } else {
+      info.introduction = originalIntro;
+    }
     console.log(info);
 
     formData.append(
@@ -108,7 +118,7 @@ function EditProfile2() {
             </div>
           </label>
           <h4>{originalName}</h4>
-          <h6>#code</h6>
+          <h6>{tag}</h6>
         </div>
 
         <form onSubmit={onSubmit}>
@@ -132,7 +142,6 @@ function EditProfile2() {
           <div className=" editProfile-input">
             <input
               placeholder="닉네임 변경하기"
-              required
               type="text"
               onChange={(e) => {
                 setNickname(e.target.value);

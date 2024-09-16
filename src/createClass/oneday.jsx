@@ -52,8 +52,9 @@ function CreateOnedayClass() {
     date: date,
     startTime: startTime,
     endTime: finTime,
-    location: address,
+    address: address,
     detailAddress: detailAddress,
+    category: category,
   };
   useEffect(() => {
     console.log("requestDTO: ", requestDTO);

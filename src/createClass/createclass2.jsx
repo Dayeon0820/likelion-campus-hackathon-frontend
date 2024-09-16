@@ -42,7 +42,7 @@ function CreateClass2() {
   }, [price]);
 
   const goNext = () => {
-    if (type === "" || price === "" || address === "") {
+    if (type === "" || price === "" || address === "" || detailAddress === "") {
       alert("클래스 종류, 가격, 주소를 입력해주세요");
     } else if (type === "regular") {
       navigate("/create_class/regular", { state: { classInfo2 } });

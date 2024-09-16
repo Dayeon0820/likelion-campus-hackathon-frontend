@@ -15,7 +15,7 @@ function CreateRegularClass() {
   const [startTime, setStartTime] = useState("");
   const [finTime, setFinTime] = useState("");
   const [number, setNumber] = useState(0);
-  const [daysOfWeek, setDaysOfWeek] = useState("MONDAY");
+  const [daysOfWeek, setDaysOfWeek] = useState([]);
   const title = classInfo2?.title || "";
   const category = classInfo2?.category || "";
   const image = classInfo2?.image || "";
@@ -24,6 +24,10 @@ function CreateRegularClass() {
   const price = classInfo2?.price || "";
   const address = classInfo2?.address || "";
   const detailAddress = classInfo2?.detailAddress || "";
+  const [isOpen, setIsOpen] = useState(false); // 드롭다운 열림 상태
+  const toggleDropdown = () => {
+    setIsOpen(!isOpen); // 드롭다운 열고 닫기
+  };
 
   // 한국 시간대로  내일 날짜를 가져오기
   const getTomorrowDateKST = () => {
@@ -44,6 +48,26 @@ function CreateRegularClass() {
     return `${year}-${month}-${day}`; // 공백 없이 YYYY-MM-DD 형식으로 반환
   };
 
+  const handleCheckboxChange = (e) => {
+    const value = e.target.value;
+    setDaysOfWeek(
+      (prevDays) =>
+        prevDays.includes(value)
+          ? prevDays.filter((day) => day !== value) // 이미 선택된 경우 제거
+          : [...prevDays, value] // 선택되지 않은 경우 추가
+    );
+  };
+
+  const options = [
+    { value: "MONDAY", label: "월" },
+    { value: "TUESDAY", label: "화" },
+    { value: "WEDNESDAY", label: "수" },
+    { value: "THURSDAY", label: "목" },
+    { value: "FRIDAY", label: "금" },
+    { value: "SATURDAY", label: "토" },
+    { value: "SUNDAY", label: "일" },
+  ];
+
   const requestDTO = {
     name: title,
     description: subtitle,
@@ -53,9 +77,10 @@ function CreateRegularClass() {
     endDate: finDate,
     startTime: startTime,
     endTime: finTime,
-    location: address,
+    address: address,
     detailAddress: detailAddress,
     daysOfWeek: daysOfWeek,
+    category: category,
   };
 
   useEffect(() => {
@@ -67,7 +92,7 @@ function CreateRegularClass() {
         setFinTime(startTime);
       }
     }
-  }, [startDate, finDate, startTime, finTime]);
+  }, [daysOfWeek]);
   useEffect(() => {
     console.log(classInfo2);
   }, []);
@@ -175,21 +200,30 @@ function CreateRegularClass() {
           </div>
           <span className="createclass-txt">반복 요일 설정하기</span>
           <div className="createInput-box">
-            <select
-              id="createclass-date-input"
-              required
-              onChange={(e) => {
-                setDaysOfWeek(e.target.value);
-              }}
-            >
-              <option value="MONDAY">월요일</option>
-              <option value="TUESDAYt">화요일</option>
-              <option value="WEDNESDAY">수요일</option>
-              <option value="THURSDAY">목요일</option>
-              <option value="FRIDAY">금요일</option>
-              <option value="SATURDAY">토요일</option>
-              <option value="SUNDAY">일요일</option>
-            </select>
+            <div className="dropdown-header" onClick={toggleDropdown}>
+              <span className="dropdown-header-txt">요일 선택</span>
+              <span style={{ cursor: "pointer" }}>
+                {isOpen ? "▲" : "▼"}
+              </span>{" "}
+              {/* 화살표 아이콘 */}
+            </div>
+            {isOpen && (
+              <ul className="dropdown-list">
+                {options.map((option) => (
+                  <li key={option.value}>
+                    <label>
+                      {option.label}
+                      <input
+                        type="checkbox"
+                        value={option.value}
+                        checked={daysOfWeek.includes(option.value)}
+                        onChange={handleCheckboxChange}
+                      />
+                    </label>
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
 
           <div className="regular-Box">
@@ -228,6 +262,7 @@ function CreateRegularClass() {
               type="number"
               className="createclass-input"
               placeholder="참가 인원"
+              onChange={(e) => setNumber(e.target.value)}
             />
           </div>
           <button className="nextBtn">클래스 개최하기</button>

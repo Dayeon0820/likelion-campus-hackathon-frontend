@@ -14,6 +14,7 @@ function Profile_USER(props) {
   const userInfo = props.userInfo;
   const nickname = userInfo.nickname;
   const introduction = userInfo.introduction;
+  const tag = userInfo.tag;
   const permission = userInfo.permission;
   const imageurl = userInfo.imageUrl;
   const [userImg, setUserImg] = useState("");
@@ -90,7 +91,7 @@ function Profile_USER(props) {
             className="profile-btn"
             onClick={() => {
               navigate("/edit_profile2", {
-                state: { nickname, userImg, introduction, permission },
+                state: { nickname, userImg, introduction, permission, tag },
               });
             }}
           >

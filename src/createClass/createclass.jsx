@@ -79,15 +79,13 @@ function CreateClass() {
                 setCategory(e.target.value);
               }}
             >
-              <option value="" disabled></option>
-              <option value="cooking">요리</option>
-              <option value="art">미술</option>
-              <option value="crafts">공예</option>
-              <option value="gardening">원예</option>
-              <option value="beauty">뷰티</option>
-              <option value="music">음악</option>
-              <option value="sports">운동</option>
-              <option value="others">기타</option>
+              <option value="COOK">요리</option>
+              <option value="ART">미술</option>
+              <option value="CRAFT">공예</option>
+              <option value="GARDENING">원예</option>
+              <option value="BEAUTY">뷰티</option>
+              <option value="MUSIC">음악</option>
+              <option value="EXERCISE">운동</option>
             </select>
           </div>
           <div className="createInput-box createInput-box_image">
