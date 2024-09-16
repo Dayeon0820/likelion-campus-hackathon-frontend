@@ -2,7 +2,7 @@
 /* 버튼 컨테이너 배치 수정 */
 /* 배너 윗부분 깨짐; */
 
-/* .applicationHeader{
+.applicationHeader{
     height: 7%;
     position: absolute;
     display: flex;
@@ -12,17 +12,18 @@
     background: #fff;
     z-index: 1;
 }
- */
+
 
 #classApplicationMain{
     width: 100%;
-    height: 100%;
-    margin-top: 7vh;
+    margin: 7vh 0 8vh;
+    overflow-y: auto;
 }
 
 .classBanner{
     width: 100%;
-    height: 30%;
+    height: 26vh;
+    /* height: 30%; */
     background: #ededed;
 }
 .classBanner > img{
@@ -74,14 +75,14 @@
 
 /* 버튼 배열 수정 필요 */
 .applicationBtnBox{
-    width: 100%;
+    /* width: 100%; */
     height: 8%;
     background: #fff;
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
-    position: absolute;
+    position: fixed;
     bottom: 0;
 }
 .applicationBtnBox > * {

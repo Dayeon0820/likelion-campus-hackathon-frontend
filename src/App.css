@@ -80,6 +80,9 @@ body {
     box-shadow: none;
     overflow-wrap: break-word;
   }
+  .applicationBtnBox{
+    width: 100%;
+  }
 }
 
 @media screen and (min-width: 769px) {
@@ -103,5 +106,8 @@ body {
   #navBar {
     width: 375px; /* 고정된 너비에 맞게 설정 */
     /* left: calc(50% - 187.5px); */
+  }
+  .applicationBtnBox{
+    width: 375px;
   }
 }

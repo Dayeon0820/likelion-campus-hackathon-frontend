@@ -73,8 +73,8 @@ const ReviewInquiry = () => {
     return(
         <div id="mobile-view">
             <header className="app-header reviewHeader defaultHeader">
-                <Link to="/home/class_application">
-                    <span class="material-symbols-outlined">arrow_back_ios</span>
+                <Link to="/home"> {/* /home/class_application/i 로 고치기 */}
+                    <span className="material-symbols-outlined">arrow_back_ios</span>
                 </Link>
                 <h3>클래스 리뷰</h3>
             </header>

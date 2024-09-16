@@ -1,4 +1,4 @@
-import { React } from "react";
+import { React, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Slider from "react-slick";
 import Navbar from "./navbar";
@@ -9,22 +9,21 @@ import 'slick-carousel/slick/slick-theme.css';
 import { categoryMap, classTypeMap } from "../utils/mappings";
 
 function Home() {
-  // const categoryMap = {
-  //   "전체": "ALL",
-  //   "요리": "COOK",
-  //   "미술": "ART",
-  //   "공예": "CRAFT",
-  //   "원예": "GARDENING",
-  //   "뷰티": "BEAUTY",
-  //   "음악": "MUSIC",
-  //   "운동": "EXERCISE"
-  // };
+  const [banners, setBanners] = useState([]);
 
-  // const classTypeMap = {
-  //   "전체": "allClass",
-  //   "정규": "Regular",
-  //   "원데이": "OneDay"
-  // };
+  useEffect(() => {
+    const fetchBanners = async () => {
+      try {
+        const response = await fetch("http://sangsang2.kr:8080/api/lecture/banner");
+        const data = await response.json();
+        setBanners(data);
+      } catch (error) {
+        console.error("Error fetching banners:", error);
+      }
+    };
+
+    fetchBanners();
+  }, []);
 
   const settings = {
     dots: true,
@@ -61,15 +60,18 @@ function Home() {
           <section className="bestClassContainer">
             <h4 className="classTxt">인기 클래스</h4>
             <Slider {...settings} className="banner">
-              <div>
-                <img src="https://via.placeholder.com/338x150" alt="배너 1" />
-              </div>
-              <div>
-                <img src="https://via.placeholder.com/338x150" alt="배너 2" />
-              </div>
-              <div>
-                <img src="https://via.placeholder.com/338x150" alt="배너 3" />
-              </div>
+              {banners.length > 0 ? (
+                banners.map((banner) => (
+                  <div key={banner.id}>
+                    <img
+                      src={banner.imageUrl || "https://via.placeholder.com/338x150"}
+                      alt={banner.name || "Banner"}
+                    />
+                  </div>
+                ))
+              ) : (
+                <div>null</div>
+              )}
             </Slider>
           </section>
           <section className="categoryContainer">

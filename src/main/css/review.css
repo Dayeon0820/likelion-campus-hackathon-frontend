@@ -1,6 +1,6 @@
 /* header --start */
 .defaultHeader{
-    border-bottom: 1px solid #333;
+    /* border-bottom: 1px solid #333; */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -31,15 +31,15 @@
 /* main -- start */
 #reviewInner{
     width: 90%;
-    margin: 7vh 0;
-    height: auto;
+    margin: 7vh 0 0;
     position: relative;
+    overflow-y: auto;
 }
  
 .reviewAverage{
     height: 170px;
     margin: 0 0 20px;
-    background: #ededed;
+   /*  background: #ededed; */
     display: flex;
 }
 .reviewAverage > .averageTitleBox{
@@ -75,7 +75,7 @@
     width: 90%;
     display: flex;
     align-items: center;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
 }
 
 .ratingLabel {
@@ -108,7 +108,15 @@
     font-size: 12px;
 }
 
-
+.reviewBtnBox{
+    position: sticky;
+    top: 0;
+    z-index: 1; 
+}
+#reviewList{
+    position: sticky;
+    top: 40px;
+}
 
 
 
@@ -127,8 +135,6 @@
 
 /* reviewList */
 #reviewList{
-    border: 1px solid #333;
-    height: auto;
     padding-top: 5px;
 }
 .reviewItem{
@@ -162,6 +168,6 @@
     margin-bottom: 5px;
 }
 .reviewComment{
-    font-size: 14px;
+    font-size: 13px;
 }
 /* main--end */
