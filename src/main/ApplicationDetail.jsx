@@ -60,10 +60,12 @@ const ApplicationDetail = () =>{
                     >   
                     </Calendar>
                 </section>
-                {classTime && ( //선택한 날짜에 해당하는 수강 시간이 있는 경우만 표시 
+                {date && ( //선택한 날짜에 해당하는 수강 시간이 있는 경우만 표시 
                     <section id="selectTimeBox">
                         <h5>수강 시간</h5>
-                        <p>{classTime}</p>
+                        <p style={{ fontSize: classTime ? "16px" : "12px", }}>
+                        {classTime ? classTime : "해당 날짜에 등록된 클래스가 없습니다."}
+                        </p>
                     </section>
                 )}
                 <div id="personnelApplication">

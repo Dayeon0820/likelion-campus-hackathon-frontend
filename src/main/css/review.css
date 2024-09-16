@@ -65,7 +65,53 @@
     width: 57%;
     height: 100%;
     border: 1px solid #333;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
+.ratingBarWrapper {
+    width: 90%;
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.ratingLabel {
+    width: 20px;
+    text-align: center;
+    margin-right: 10px;
+    font-size: 13px;
+}
+
+.ratingBar {
+    width: 80%;
+    height: 7px;
+    background-color: #e0e0e0;
+    border-radius: 10px;
+    position: relative;
+}
+
+.ratingBarFill {
+    height: 100%;
+    background-color: #369EFF;
+    border-radius: 10px;
+    transition: width 0.3s;
+}
+
+.ratingPercentage {
+    width: 40px;
+    text-align: center;
+    margin-left: 10px;
+    color: #3D4D5C;
+    font-size: 12px;
+}
+
+
+
+
+
 
 .reviewBtnBox{
     

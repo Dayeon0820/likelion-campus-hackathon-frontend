@@ -16,13 +16,24 @@
 
     <meta
       http-equiv="Content-Security-Policy"
+      content="
+      default-src 'self' 'unsafe-inline' https://dapi.kakao.com http://*.daumcdn.net;
+      script-src 'self' 'unsafe-inline' https://dapi.kakao.com http://*.daumcdn.net;
+      style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+      font-src 'self' https://fonts.gstatic.com;
+      img-src 'self' 'unsafe-inline' blob: https://dapi.kakao.com http://*.daumcdn.net http://sangsang2.kr:8080 https://via.placeholder.com;
+      connect-src 'self' http://sangsang2.kr:8080 https://dapi.kakao.com http://*.daumcdn.net;
+    "
+    />
+
+    <meta
+      http-equiv="X-Content-Security-Policy"
       content="default-src 'self' 'unsafe-inline' https://dapi.kakao.com http://*.daumcdn.net; 
                script-src 'self' 'unsafe-inline' https://dapi.kakao.com http://*.daumcdn.net; 
-               img-src 'self' 'unsafe-inline' https://dapi.kakao.com http://*.daumcdn.net https://via.placeholder.com;
-               connect-src 'self' http://sangsang2.kr:8080 https://dapi.kakao.com http://*.daumcdn.net;
-               style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
-               font-src 'self' https://fonts.gstatic.com;"
+               img-src 'self' 'unsafe-inline' https://dapi.kakao.com http://*.daumcdn.net;
+               connect-src 'self' http://sangsang2.kr:8080 https://dapi.kakao.com http://*.daumcdn.net;"
     />
+
     <script
       type="text/javascript"
       src="https://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=31ab0c2dde1e7c5f97a4aba8000bfd13"

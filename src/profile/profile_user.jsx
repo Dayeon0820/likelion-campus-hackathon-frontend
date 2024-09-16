@@ -14,7 +14,7 @@ function Profile_USER(props) {
   const nickname = userInfo.nickname;
   const introduction = userInfo.introduction;
 
-  const imageurl = userInfo.imageurl;
+  const imageurl = userInfo.imageUrl;
   const [userImg, setUserImg] = useState("");
 
   useEffect(() => {
@@ -24,6 +24,7 @@ function Profile_USER(props) {
     } else {
       setUserImg("/user.png");
     }
+    console.log(userImg);
   }, [imageurl]);
 
   const onConfirm = async (e) => {
@@ -82,8 +83,6 @@ function Profile_USER(props) {
             <h2 id="profile-username">{nickname}</h2>
             <h6 id="profile-usertype">참가자</h6>
           </div>
-
-          <span id="profile-introduction">{introduction}</span>
         </div>
         <div id="profile-bthBox">
           <button
@@ -98,7 +97,9 @@ function Profile_USER(props) {
             나의 클래스
           </button>
         </div>
-        <div id="profile-emptyBox"></div>
+        <div id="profile-emptyBox">
+          <span id="profile-introduction">{introduction}</span>
+        </div>
         <button id="logoutBtn" onClick={onConfirm}>
           로그아웃
         </button>

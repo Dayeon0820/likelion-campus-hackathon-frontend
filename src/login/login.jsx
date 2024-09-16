@@ -73,34 +73,33 @@ function Login() {
         <form onSubmit={onLogin} id="login_Box">
           <img src="/logo.png" id="logo" />
 
-          <div class="input_divider ">
+          <div className="input_divider ">
             <h1 id="greetingTxt">
               모먼트 클래스에
               <br /> 오신걸 환영합니다.
             </h1>
-
-            <div class="login-inputBox">
-              <span class="inputBox_txt">이메일</span>
+            <div className="login-inputBox">
+              <span className="inputBox_txt">이메일</span>
               <input
                 type="email"
                 required
                 onChange={(e) => setEmail(e.target.value)}
-                class="inputBox_input"
+                className="inputBox_input"
               />
             </div>
-            <div class="login-inputBox">
-              <span class="inputBox_txt">비밀번호</span>
+            <div className="login-inputBox">
+              <span classNames="inputBox_txt">비밀번호</span>
               <input
                 type="password"
                 required
                 onChange={(e) => setPassword(e.target.value)}
-                class="inputBox_input"
+                className="inputBox_input"
               />
             </div>
             <a href="#">비밀번호 찾기</a>
           </div>
-          <div class="input_divider ">
-            <button type="submit" class="submitBTN">
+          <div className="input_divider ">
+            <button type="submit" className="submitBTN">
               로그인
             </button>
             <footer id="login-footer">
