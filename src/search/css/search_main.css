@@ -1,0 +1,84 @@
+.searchMain{
+    margin-top: 7vh;
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
+    gap: 5%;
+    padding: 30px 0;
+}
+/* .searchMain > *{
+    margin-bottom: 15px;
+
+} */
+/* 검색 인풋 */
+.search-form{
+    background: #F5F0F5;
+    width: 100%;
+    height: 35px;
+    border-radius: 8px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+}
+.search-form > input {
+    width: 90%;
+    height: 30px;
+    background: #F5F0F5;
+    border: none;
+}
+.search-form > button{
+    width: 10%;
+    height: 30px;
+    color: #8C5E82;
+    text-align: center;
+    background: none;
+}
+.search-form > button > span{
+    line-height: 30px;
+}
+
+/* 최근 검색 section */
+.recent-searches{
+    /* border: 1px solid #333; */
+    width: 100%;
+    height: auto;
+}
+.recent-searches > .recentHeader{
+    display: flex;
+    justify-content: flex-start;
+}
+.recent-searches > .recentHeader > h4 {
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+.recent-searches > .recentHeader > span{
+    font-size: 20px;
+    color: #8C5E82;
+    padding-left: 10px;
+    cursor: pointer;
+}
+.recent-searches > .recent-tags{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px; 
+}
+.search-tag{
+    background: #F5F0F5;
+    /* width: auto; */
+    display: inline-flex;
+    padding: 5px 10px;
+    border-radius: 15px;
+    gap: 8px;
+}
+.search-tag > p {
+    font-size: 14px;
+}
+
+
+
+/* 인기 컨텐츠 section */
+.popularContent{
+    border: 1px solid #333;
+    width: 100%;
+    height: 40%;
+}
