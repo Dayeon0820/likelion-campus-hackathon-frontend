@@ -1,0 +1,6 @@
+.background {
+  border: 1px solid #ccc;
+  overflow: hidden;
+  background: url("./mypageBG.png") no-repeat center center;
+  background-size: cover;
+}

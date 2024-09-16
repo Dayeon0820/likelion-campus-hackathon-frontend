@@ -74,6 +74,7 @@
   line-height: 21px;
   text-align: center;
   margin-bottom: 15px;
+  margin-top: -10px;
 }
 
 #myClass {
@@ -84,12 +85,13 @@
 #profile-emptyBox {
   width: 100%;
   height: 16%;
-  border: 1px solid rgba(219, 224, 229, 1);
+  border: 2px solid rgba(219, 224, 229, 0.5);
   border-radius: 20px;
   padding: 10px 20px;
+  background-color: rgba(255, 255, 255, 0.5);
 }
 
-#logoutBtn {
+.logoutBtn {
   width: 100%;
   height: 35px;
   border-radius: 20px;
@@ -102,7 +104,11 @@
   background-color: rgba(54, 158, 255, 1);
   color: rgba(255, 255, 255, 1);
 }
-
+.permissionBtn {
+  bottom: 18.5%;
+  background: rgba(255, 255, 255, 1);
+  color: black;
+}
 .header_3components {
   display: flex;
   align-items: center;

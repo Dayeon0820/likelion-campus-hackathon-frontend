@@ -5,15 +5,17 @@ import { useEffect } from "react";
 import "../App.css";
 import Navbar from "../main/navbar";
 import "./profile.css";
+import styles from "./profile.module.css";
 
 function Profile_CREATOR(props) {
   const navigate = useNavigate();
   const gobackHome = () => navigate("/home");
   const token = localStorage.getItem("token");
   const userInfo = props.userInfo;
+  const tag = userInfo.tag;
   const nickname = userInfo.nickname;
   const introduction = userInfo.introduction;
-
+  const permission = userInfo.permission;
   const imageurl = userInfo.imageUrl;
   const [userImg, setUserImg] = useState("");
 
@@ -66,7 +68,7 @@ function Profile_CREATOR(props) {
     }
   };
   return (
-    <div id="mobile-view">
+    <div id="mobile-view" className={styles.background}>
       <div id="default-padding">
         <header className="app-header  header_3components">
           <img src="/arrow.png" id="header-arrowIcon" onClick={gobackHome} />
@@ -86,7 +88,9 @@ function Profile_CREATOR(props) {
           <button
             className="profile-btn"
             onClick={() => {
-              navigate("/edit_profile");
+              navigate("/edit_profile2", {
+                state: { nickname, userImg, introduction, permission, tag },
+              });
             }}
           >
             프로필 수정
@@ -101,7 +105,8 @@ function Profile_CREATOR(props) {
         <div id="profile-emptyBox">
           <span id="profile-introduction">{introduction}</span>
         </div>
-        <button id="logoutBtn" onClick={onConfirm}>
+
+        <button className="logoutBtn" onClick={onConfirm}>
           로그아웃
         </button>
       </div>

@@ -14,17 +14,14 @@ function CreateOnedayClass() {
   const [startTime, setStartTime] = useState("");
   const [finTime, setFinTime] = useState("");
   const [number, setNumber] = useState(0);
-  const title = classInfo2.title;
-  const category = classInfo2.category;
-  const image = classInfo2.image;
-  const subtitle = classInfo2.subtitle;
-  const type = classInfo2.type;
-  const price = classInfo2.price;
-  const address = classInfo2.address;
-  const dateTimeString = date && startTime ? `${date}T${startTime}:00` : ""; // 기본값 처리
-  const dateObject = dateTimeString ? new Date(dateTimeString) : null;
-
-  const isoDateTime = dateObject ? dateObject.toISOString() : ""; // Date 객체가 null일 수 있음
+  const title = classInfo2?.title || "";
+  const category = classInfo2?.category || "";
+  const image = classInfo2?.image || "";
+  const subtitle = classInfo2?.subtitle || "";
+  const type = classInfo2?.type || "";
+  const price = classInfo2?.price || "";
+  const address = classInfo2?.address || "";
+  const detailAddress = classInfo2?.detailAddress || "";
 
   // 한국 시간대로  내일 날짜를 가져오기
   const getTomorrowDateKST = () => {
@@ -51,19 +48,25 @@ function CreateOnedayClass() {
     name: title,
     description: subtitle,
     price: price,
-    type: type,
     member_limit: number,
-    dateTime: isoDateTime,
-    location: address,
+    date: date,
+    startTime: startTime,
+    endTime: finTime,
+    address: address,
+    detailAddress: detailAddress,
+    category: category,
   };
   useEffect(() => {
     console.log("requestDTO: ", requestDTO);
+    if (finTime < startTime) {
+      setFinTime(startTime);
+    }
   }, [Date, startTime, finTime]);
   // 클래스 생성 API 호출
   const onSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
-    const baseUrl = "http://sangsang2.kr:8080/api/lecture/create";
+    const baseUrl = "http://sangsang2.kr:8080/api/lecture/create/oneday";
 
     formData.append(
       "lecture",
@@ -89,15 +92,25 @@ function CreateOnedayClass() {
             alert("사용자를 찾을 수 없습니다.");
           } else if (data.error === "접근 권한 없음") {
             alert("클래스 생성 권한이 없습니다.");
+          } else if (data.error === "위도 정보 찾을 수 없음") {
+            alert("강의실의 위도 정보 찾을 수 없습니다.");
+          } else if (data.error === "경도 정보 찾을 수 없음") {
+            alert("강의실의 경도 정보 찾을 수 없습니다.");
           } else {
-            alert("회원 정보 불러오기에 실패했습니다."); // 다른 404 에러 처리
+            alert("클래스 생성에 실패했습니다."); // 다른 404 에러 처리
+          }
+        } else if (response.status === 500) {
+          if (data.error === "JSON 파싱 중 오류 발생") {
+            alert("JSON 파싱 중 오류 발생.");
+          } else {
+            alert("서버에 오류가 발생했습니다."); // 다른 404 에러 처리
           }
         } else {
-          alert("회원 정보 불러오기에 실패했습니다.");
+          alert("클래스 생성에 실패했습니다.");
         }
+        console.log(data.error);
         return;
       }
-
       console.log("Success:", data);
       navigate("/profile");
     } catch (error) {
@@ -143,6 +156,7 @@ function CreateOnedayClass() {
             <input
               type="time"
               id="createclass-time-input"
+              value={startTime}
               onChange={(e) => {
                 setStartTime(e.target.value);
               }}
@@ -158,6 +172,7 @@ function CreateOnedayClass() {
             <input
               type="time"
               id="createclass-time-input"
+              value={finTime}
               onChange={(e) => {
                 setFinTime(e.target.value);
               }}

@@ -12,14 +12,16 @@ function EditProfile2() {
   const navigate = useNavigate();
   const location = useLocation();
   const token = localStorage.getItem("token");
-  const permission = location.state.permission;
+  const permission = location.state?.permission || "";
+  const tag = location.state?.tag || "";
+  const originalIntro = location.state?.introduction || "";
   const [nickname, setNickname] = useState("");
   const [introduction, setIntroduction] = useState("");
-
+  const originalName = location.state?.nickname || "모맨트 클래스";
   useEffect(() => {
     // 컴포넌트가 언마운트될 때 URL 해제
     return () => {
-      if (previewUrl) {
+      if (previewUrl !== "") {
         URL.revokeObjectURL(previewUrl);
       }
     };
@@ -34,10 +36,20 @@ function EditProfile2() {
     const formData = new FormData();
     const baseUrl = "http://sangsang2.kr:8080/api/member-info/edit";
     const info = {
-      nickname: nickname,
-      introduction: introduction || "",
       permission: permission,
     };
+    // 값이 존재하는 경우에만 info 객체에 추가
+    if (nickname) {
+      info.nickname = nickname;
+    } else {
+      info.nickname = originalName;
+    }
+    if (introduction) {
+      info.introduction = introduction;
+    } else {
+      info.introduction = originalIntro;
+    }
+    console.log(info);
 
     console.log("Request DTO:", info);
 
@@ -86,49 +98,71 @@ function EditProfile2() {
   return (
     <div id="mobile-view">
       <div id="profile-padding">
-        <header className="app-header header_1components">
+        <header className="app-header header_3components">
           <img
             src="/arrow.png"
             id="header-arrowIcon"
-            onClick={() => navigate("/edit_profile")}
+            onClick={() => navigate("/profile")}
           />
+          <div id="chatting-title">
+            <h1>프로필 수정하기</h1>
+          </div>
+          <span></span>
         </header>
-        <div id="header-title">
-          <h2>
-            나의 프로필 <br />
-            수정하기
-          </h2>
-        </div>
-        <div className="process-dot-box">
-          <span className="process-dot "></span>
-          <span className="process-dot blue-dot"></span>
+        <div id="profile-humanImg">
+          <label htmlFor="profile-imgInput">
+            <img
+              src={previewUrl || "/person.png"}
+              id="profile-humanImg-lable"
+            />
+            <div id="profile-humanImg-img">
+              <img src="/image.png" />
+            </div>
+          </label>
+          <h4>{originalName}</h4>
+          <h6>{tag}</h6>
         </div>
 
-        <h2 id="profile-questionTxt">2단계: 내 정보 입력하기</h2>
-        <img id="profile-humanImg" src={previewUrl || "/person.png"} />
         <form onSubmit={onSubmit}>
+          <div id="edit-nicknameBox">
+            <div id="edit-nicnameBox-img">
+              <img src="/smalluser.png" />
+            </div>
+            <div id="edit-nicknameBox-txt">
+              <h4>닉네임 변경</h4>
+              <h6>{originalName}</h6>
+            </div>
+          </div>
+          <span id="edit-prifile2-span">닉네임</span>
+
           <input
             type="file"
             accept="image/*"
             id="profile-imgInput"
             onChange={handleImageChange}
           />
-          <input
-            placeholder="닉네임"
-            required
-            type="text"
-            onChange={(e) => {
-              setNickname(e.target.value);
-            }}
-          />
-          <input
-            type="text"
-            placeholder="소개글"
-            onChange={(e) => {
-              setIntroduction(e.target.value);
-            }}
-          />
-          <button type="submit">수정하기</button>
+          <div className=" editProfile-input">
+            <input
+              placeholder="닉네임 변경하기"
+              type="text"
+              onChange={(e) => {
+                setNickname(e.target.value);
+              }}
+            />
+          </div>
+          <span id="edit-prifile2-span">소개글</span>
+          <div className=" editProfile-textarea">
+            <textarea
+              type="text"
+              placeholder={originalIntro}
+              onChange={(e) => {
+                setIntroduction(e.target.value);
+              }}
+            />
+          </div>
+          <button type="submit" className="profileBtn btnwhite">
+            수정하기
+          </button>
         </form>
       </div>
     </div>

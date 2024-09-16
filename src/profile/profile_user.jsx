@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import "../App.css";
 import Navbar from "../main/navbar";
 import "./profile.css";
+import styles from "./profile.module.css";
 
 function Profile_USER(props) {
   const navigate = useNavigate();
@@ -13,7 +14,8 @@ function Profile_USER(props) {
   const userInfo = props.userInfo;
   const nickname = userInfo.nickname;
   const introduction = userInfo.introduction;
-
+  const tag = userInfo.tag;
+  const permission = userInfo.permission;
   const imageurl = userInfo.imageUrl;
   const [userImg, setUserImg] = useState("");
 
@@ -68,7 +70,7 @@ function Profile_USER(props) {
     }
   };
   return (
-    <div id="mobile-view">
+    <div id="mobile-view" className={styles.background}>
       <div id="default-padding">
         <header className="app-header header_3components">
           <img src="/arrow.png" id="header-arrowIcon" onClick={gobackHome} />
@@ -88,7 +90,9 @@ function Profile_USER(props) {
           <button
             className="profile-btn"
             onClick={() => {
-              navigate("/edit_profile");
+              navigate("/edit_profile2", {
+                state: { nickname, userImg, introduction, permission, tag },
+              });
             }}
           >
             프로필 수정
@@ -100,7 +104,18 @@ function Profile_USER(props) {
         <div id="profile-emptyBox">
           <span id="profile-introduction">{introduction}</span>
         </div>
-        <button id="logoutBtn" onClick={onConfirm}>
+        <button
+          className="logoutBtn permissionBtn"
+          onClick={() =>
+            navigate("/edit_profile", {
+              state: { nickname, introduction },
+            })
+          }
+        >
+          권한 변경하기
+        </button>
+
+        <button className="logoutBtn" onClick={onConfirm}>
           로그아웃
         </button>
       </div>
