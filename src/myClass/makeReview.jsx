@@ -11,10 +11,16 @@ import { faStar } from "@fortawesome/free-solid-svg-icons";
 
 function MakeReview() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const courseId = queryParams.get("id");
   const [rating, setRating] = useState(0); // 선택한 별점
   const handleClick = (index) => {
     setRating(index);
   };
+  useEffect(() => {
+    console.log(courseId);
+  }, []);
 
   return (
     <div id="mobile-view">
@@ -65,7 +71,7 @@ function MakeReview() {
         <button
           className="nextBtn secondBtn"
           onClick={() => {
-            navigate("/makeReview2");
+            navigate("/makeReview2", { state: { rating, courseId } });
           }}
         >
           사진, 글 추가하러 가기

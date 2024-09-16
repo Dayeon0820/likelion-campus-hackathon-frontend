@@ -9,10 +9,25 @@ import "./makeReview.css";
 
 function MakeReview2() {
   const navigate = useNavigate();
-  const [rating, setRating] = useState(0); // 선택한 별점
-  const handleClick = (index) => {
-    setRating(index);
+  const location = useLocation();
+  const rate = location.state?.rating || 0;
+  const courseId = location.state?.courseId || null;
+  const [image, setImage] = useState(null);
+  const [previewUrl, setPreviewUrl] = useState("");
+  const handleImageChange = (e) => {
+    const file = e.target.files[0]; // 첫 번째 파일을 가져옴
+    setImage(file); // 파일 객체를 상태에 저장
+    setPreviewUrl(URL.createObjectURL(file)); // 미리보기 위해 URL로 변환
   };
+  useEffect(() => {
+    // 컴포넌트가 언마운트될 때 URL 해제
+    return () => {
+      if (previewUrl) {
+        URL.revokeObjectURL(previewUrl);
+      }
+    };
+  }, [previewUrl]);
+  useEffect(() => console.log(rate, courseId), []);
 
   return (
     <div id="mobile-view">
@@ -37,13 +52,28 @@ function MakeReview2() {
         </div>
         <h2 id="profile-questionTxt">2단계: 사진 추가하기</h2>
         <div id="profile-quesionBox">
-          <h4>리뷰 사진을 추가해주세요.</h4>
+          <h4 className="review-sub-title">리뷰 사진을 추가해주세요.</h4>
+        </div>
+        <div className="createInput-box createInput-box_image">
+          <input
+            type="file"
+            accept="image/*"
+            id="create-imgFile"
+            className="create-imgFile-input"
+            onChange={handleImageChange}
+          />
+          <label htmlFor="create-imgFile" className="create-imgFile-lable">
+            <img
+              src={previewUrl || "/image.png"}
+              id={previewUrl ? "preview" : undefined}
+            />
+          </label>
         </div>
 
         <button
           className="nextBtn secondBtn"
           onClick={() => {
-            navigate("/makeReview");
+            navigate("/makeReview3", { state: { image, rate, courseId } });
           }}
         >
           리뷰 작성하러 가기

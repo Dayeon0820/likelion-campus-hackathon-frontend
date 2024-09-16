@@ -89,7 +89,7 @@ function Myclass() {
                 <button
                   className="myclass-reviewBtn"
                   onClick={() => {
-                    navigate("/makeReview");
+                    navigate(`/makeReview?id=${course.id}`);
                   }}
                 >
                   리뷰 작성하기

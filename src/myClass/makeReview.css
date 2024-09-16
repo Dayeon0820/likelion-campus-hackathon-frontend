@@ -11,9 +11,17 @@
   margin-bottom: 15px;
 }
 
+.review-sub-title {
+  margin-bottom: 30px;
+}
+
 .secondBtn {
   background-color: rgba(240, 242, 245, 1);
   color: black;
   position: absolute;
   bottom: 70px;
+}
+
+.review-textarea {
+  height: 150px;
 }
