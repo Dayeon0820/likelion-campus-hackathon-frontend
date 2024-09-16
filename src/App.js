@@ -23,6 +23,10 @@ import CreateOnedayClass from "./createClass/oneday";
 import CreateRegularClass from "./createClass/regular";
 import CreateClass2 from "./createClass/createclass2";
 import SearchPage from "./search/search";
+import Myclass from "./myClass/myclass";
+import MakeReview from "./myClass/makeReview";
+import MakeReview2 from "./myClass/makeReview2";
+import MakeReview3 from "./myClass/makeReview3";
 
 function App() {
   return (
@@ -40,6 +44,10 @@ function App() {
         <Route path="/home/class_application/review" element={<ReviewInquiry />} />
         <Route path="/map" element={<ClassMap />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/myclass" element={<Myclass />} />
+        <Route path="/makeReview" element={<MakeReview />} />
+        <Route path="/makeReview2" element={<MakeReview2 />} />
+        <Route path="/makeReview3" element={<MakeReview3 />} />
         <Route path="/edit_profile" element={<EditProfile />} />
         <Route path="/edit_profile2" element={<EditProfile2 />} />
         <Route path="/create_class" element={<CreateClass />} />
