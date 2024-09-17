@@ -25,7 +25,7 @@ function MakeReview2() {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    console.log(requestDTO);
+    console.log("review3", requestDTO);
     const formData = new FormData();
     const baseUrl = "http://sangsang2.kr:8080/api/lecture/review/write";
 

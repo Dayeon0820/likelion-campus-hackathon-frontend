@@ -86,7 +86,7 @@ function Profile_CREATOR(props) {
         </div>
         <div id="profile-bthBox">
           <button
-            className="profile-btn"
+            className="profile-btn creatorBtn"
             onClick={() => {
               navigate("/edit_profile2", {
                 state: { nickname, userImg, introduction, permission, tag },
@@ -96,7 +96,15 @@ function Profile_CREATOR(props) {
             프로필 수정
           </button>
           <button
-            className="profile-btn"
+            className="profile-btn creatorBtn"
+            onClick={() => {
+              navigate("/myClass");
+            }}
+          >
+            신청 클래스
+          </button>
+          <button
+            className="profile-btn creatorBtn"
             id="myClass"
             onClick={() => {
               navigate("/myClass");
