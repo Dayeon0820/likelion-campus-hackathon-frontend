@@ -44,7 +44,7 @@ function App() {
           element={<ClassApplication />}
         />
         <Route
-          path="/home/class_application/detail"
+          path="/home/class_application/detail/:id"
           element={<ApplicationDetail />}
         />
         <Route
