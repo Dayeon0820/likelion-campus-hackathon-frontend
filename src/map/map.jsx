@@ -87,11 +87,11 @@ const ClassMap = () => {
                         { lat: 37.3235, lng: 126.8219, name: '안산 고잔' },     // 안산 고잔
                         { lat: 37.3299, lng: 126.8257, name: '안산 상록수' },   // 안산 상록수
                         { lat: 37.33118253419755, lng: 126.81438472991468, name: '안산 화랑유원지' },
-                        // { lat: 37.4565, lng: 126.7070, name: '서울 마포' },     // 서울 마포구
-                        // { lat: 37.5817, lng: 127.0057, name: '서울 종로' },     // 서울 종로구
-                        // { lat: 37.5610, lng: 126.9836, name: '서울 중구' },     // 서울 중구
-                        // { lat: 37.4953, lng: 127.0384, name: '서울 강남' },     // 서울 강남구
-                        // { lat: 37.4900, lng: 126.9170, name: '서울 영등포' },   // 서울 영등포구
+                        { lat: 37.4565, lng: 126.7070, name: '서울 마포' },     // 서울 마포구
+                        { lat: 37.5817, lng: 127.0057, name: '서울 종로' },     // 서울 종로구
+                        { lat: 37.5610, lng: 126.9836, name: '서울 중구' },     // 서울 중구
+                        { lat: 37.4953, lng: 127.0384, name: '서울 강남' },     // 서울 강남구
+                        { lat: 37.4900, lng: 126.9170, name: '서울 영등포' },   // 서울 영등포구
                     ];
 
                     // 각 클래스 위치에 마커 표시
@@ -100,21 +100,43 @@ const ClassMap = () => {
                         const marker = new kakao.maps.Marker({
                             position: markerPosition
                         });
+                        console.log(location)
 
                         // 마커를 지도에 추가
                         marker.setMap(map);
 
                         // 마커에 마우스 오버 시 클래스명을 표시하는 인포윈도우
                         const infowindow = new kakao.maps.InfoWindow({
-                            content: `<div style="padding:5px;font-size:12px;">${location.name}</div>`
+                            content: `<div style="padding:5px;font-size:12px;">${location.name} <br/><a href="https://map.kakao.com/link/to/${location.name},${location.lat},${location.lng}" style="color:blue" target="_blank">길찾기</a> </div>`
                         });
 
                         // 마커에 이벤트 등록
-                        kakao.maps.event.addListener(marker, 'mouseover', () => {
-                            infowindow.open(map, marker);
+                        let isOpen = false; // 인포윈도우가 열린 상태를 추적할 변수
+
+                        // 마우스 오버 시 인포윈도우 열기
+                        // kakao.maps.event.addListener(marker, 'mouseover', () => {
+                        //     if (!isOpen) {
+                        //         infowindow.open(map, marker);
+                        //         isOpen = true;
+                        //     }
+                        // });
+
+                        // 마커 클릭 시 인포윈도우 열기 및 닫기
+                        kakao.maps.event.addListener(marker, 'click', () => {
+                            if (isOpen) {
+                                infowindow.close();
+                                isOpen = false;
+                            } else {
+                                infowindow.open(map, marker);
+                                isOpen = true;
+                            }
                         });
-                        kakao.maps.event.addListener(marker, 'mouseout', () => {
-                            infowindow.close();
+                        // 지도의 클릭 이벤트를 추가하여 인포윈도우 닫기
+                        kakao.maps.event.addListener(map, 'click', () => {
+                            if (isOpen) {
+                                infowindow.close();
+                                isOpen = false;
+                            }
                         });
                     });
 
@@ -152,102 +174,3 @@ const ClassMap = () => {
 };
 
 export default ClassMap;
-
-
-
-
-
-// import React, { useState, useEffect } from "react";
-// import Navbar from "../main/navbar";
-// import "./map.css";
-
-// const getCachedPosition = () => {
-//     const cachedPosition = localStorage.getItem('position');
-//     return cachedPosition ? JSON.parse(cachedPosition) : null;
-// };
-
-// const cachePosition = (position) => {
-//     localStorage.setItem('position', JSON.stringify(position));
-// };
-
-// const ClassMap = () => {
-//     const [currentPosition, setCurrentPosition] = useState(getCachedPosition());
-//     const [map, setMap] = useState(null);
-//     const [loading, setLoading] = useState(true);
-
-//     const loadScript = src => {
-//         return new Promise((resolve, reject) => {
-//             const script = document.createElement("script");
-//             script.src = src;
-//             script.async = true; // 비동기 로딩
-//             script.onload = () => resolve();
-//             script.onerror = () => reject(new Error(`Script load error: ${src}`));
-//             document.head.appendChild(script);
-//         });
-//     }; 
-
-//     const getCurrentPosition = () => {
-//         return new Promise((resolve, reject) => {
-//             if (navigator.geolocation) {
-//                 navigator.geolocation.getCurrentPosition(
-//                     position => {
-//                         const { latitude, longitude } = position.coords;
-//                         const pos = { lat: latitude, lng: longitude };
-//                         cachePosition(pos); // 위치 정보를 캐시
-//                         resolve(pos);
-//                     },
-//                     error => reject(error),
-//                     { enableHighAccuracy: true, timeout: 4000, maximumAge: 0 }
-//                 );
-//             } else {
-//                 reject(new Error("Geolocation not supported"));
-//             }
-//         });
-//     };
-
-//     useEffect(() => {
-//         const initializeMap = async () => {
-//             try {
-//                 await loadScript('https://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=31ab0c2dde1e7c5f97a4aba8000bfd13');
-//                 const kakao = window['kakao'];
-
-//                 const position = await getCurrentPosition();
-//                 setCurrentPosition(position);
-
-//                 kakao.maps.load(() => {
-//                     const mapContainer = document.getElementById('map');
-//                     const mapOptions = {
-//                         center: new kakao.maps.LatLng(position.lat, position.lng),
-//                         level: 3
-//                     };
-//                     const mapInstance = new kakao.maps.Map(mapContainer, mapOptions);
-//                     setMap(mapInstance);
-
-//                     const marker = new kakao.maps.Marker({
-//                         position: new kakao.maps.LatLng(position.lat, position.lng)
-//                     });
-//                     marker.setMap(mapInstance);
-//                 });
-
-//                 setLoading(false);
-//             } catch (error) {
-//                 console.error("Error initializing map: ", error);
-//                 setLoading(false);
-//             }
-//         };
-
-//         initializeMap();
-//     }, []);
-
-//     return (
-//         <div id="mobile-view">
-//             <header className=".app-header mapHeader"></header>
-//             <div id="map" className="map">
-//                 {loading && <p>Loading map...</p>}
-//             </div>
-//             <Navbar />
-//         </div>
-//     );
-// };
-
-// export default ClassMap;

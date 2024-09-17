@@ -71,58 +71,57 @@ function Profile_USER(props) {
   };
   return (
     <div id="mobile-view" className={styles.background}>
-      <div id="default-padding">
-        <header className="app-header reviewHeader defaultHeader">
-          <Link to="/home"> {/* /home/class_application/i 로 고치기 */}
+        <header className="app-header profileHeader defaultHeader">
+          <Link to="/home">
             <span className="material-symbols-outlined">arrow_back_ios</span>              </Link>
             <h3>마이 프로필</h3>
         </header>
-        <div id="profile-info">
-          <img src={userImg} id="profile-img" />
-          <div id="username-box">
-            <h2 id="profile-username">{nickname}</h2>
-            <h6 id="profile-usertype">참가자</h6>
+        <main id="default-padding" className="profileMain">
+          <div id="profile-info">
+            <img src={userImg} id="profile-img" />
+            <div id="username-box">
+              <h2 id="profile-username">{nickname}</h2>
+              <h6 id="profile-usertype">참가자</h6>
+            </div>
           </div>
-        </div>
-        <div id="profile-bthBox">
+          <div id="profile-bthBox">
+            <button
+              className="profile-btn"
+              onClick={() => {
+                navigate("/edit_profile2", {
+                  state: { nickname, userImg, introduction, permission, tag },
+                });
+              }}
+            >
+              프로필 수정
+            </button>
+            <button
+              className="profile-btn"
+              id="myClass"
+              onClick={() => {
+                navigate("/myClass");
+              }}
+            >
+              나의 클래스
+            </button>
+          </div>
+          <div id="profile-emptyBox">
+            <span id="profile-introduction">{introduction}</span>
+          </div>
           <button
-            className="profile-btn"
-            onClick={() => {
-              navigate("/edit_profile2", {
-                state: { nickname, userImg, introduction, permission, tag },
-              });
-            }}
+            className="logoutBtn permissionBtn"
+            onClick={() =>
+              navigate("/edit_profile", {
+                state: { nickname, introduction },
+              })
+            }
           >
-            프로필 수정
+            권한 변경하기
           </button>
-          <button
-            className="profile-btn"
-            id="myClass"
-            onClick={() => {
-              navigate("/myClass");
-            }}
-          >
-            나의 클래스
+          <button className="logoutBtn" onClick={onConfirm}>
+            로그아웃
           </button>
-        </div>
-        <div id="profile-emptyBox">
-          <span id="profile-introduction">{introduction}</span>
-        </div>
-        <button
-          className="logoutBtn permissionBtn"
-          onClick={() =>
-            navigate("/edit_profile", {
-              state: { nickname, introduction },
-            })
-          }
-        >
-          권한 변경하기
-        </button>
-
-        <button className="logoutBtn" onClick={onConfirm}>
-          로그아웃
-        </button>
-      </div>
+        </main>
       <Navbar></Navbar>
     </div>
   );
