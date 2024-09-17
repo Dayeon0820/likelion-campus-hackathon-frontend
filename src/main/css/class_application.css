@@ -54,6 +54,9 @@
 .titleContainer > h3{
     font-size: 18px;
 }
+.titleContainer > .classDate{
+    font-size: 12px;
+}
 .titleContainer > p{
     font-size: 14px;
 }

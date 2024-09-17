@@ -7,12 +7,8 @@ const ClassApplication = () => {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const [classData, setClassData] = useState(null);
-  const [loading, setLoading] = useState(true);
   const { id } = useParams(); // URL에서 id 가져오기
 
-  useEffect(() => {
-    console.log(id);
-  }, []);
   useEffect(() => {
     const fetchClassData = async () => {
       try {
@@ -27,21 +23,15 @@ const ClassApplication = () => {
         );
         console.log("Response status:", response.status); // 응답 상태 확인
         const data = await response.json();
-        console.log("Fetched data:", data); // 응답 데이터 확인
         setClassData(data);
-        setLoading(false);
+        console.log(classData,'classData')
       } catch (error) {
         console.error("Error fetching class data:", error);
-        setLoading(false);
       }
     };
 
     fetchClassData();
   }, [id]);
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
 
   if (!classData) {
     return <div>No data available</div>;
@@ -95,7 +85,9 @@ const ClassApplication = () => {
             </Link>
             <h3 className="classTitle">{name}</h3>
             <p className="classDate">
-              {type === "Regular" ? date : `${startDate} - ${endDate}`}
+                {type === "Regular" ? `${startDate} - ${endDate}  ${daysOfWeek}` : date}<br/>
+            {/*     {type === "Regular" ? `${daysOfWeek}` : ""}<br/> */}
+                {`${startTime} - ${endTime}`}
             </p>
             <p className="classDescription">{description}</p>
           </div>
@@ -111,7 +103,11 @@ const ClassApplication = () => {
           </div>
           <div className="classParkingBox classInfoBox">
             <p className="parkingTxt">가격</p>
-            <p>{price}</p>
+            <p>$ {price}</p>
+          </div>
+          <div className="classParkingBox classInfoBox">
+            <p className="parkingTxt">클래스 유형</p>
+            <p>{type}</p>
           </div>
         </section>
       </main>
