@@ -61,7 +61,7 @@ const SearchPage = () => {
                 <section className="recent-searches">
                     <div className="recentHeader">
                         <h4>최근 검색</h4>
-                        <span onClick={clearRecentSearches} class="material-symbols-outlined">delete</span>
+                        <span onClick={clearRecentSearches} className="material-symbols-outlined">delete</span>
                     </div>
                     <div className="recent-tags">
                         {recentSearches.map((search, index) => (

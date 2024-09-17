@@ -1,7 +1,6 @@
-import {React, useState, useEffect} from "react";
-import { Link, useNavigate, NavLink } from "react-router-dom";
-import Navbar from "../main/navbar"
-import "./map.css"
+import { React, useState, useEffect } from "react";
+import Navbar from "../main/navbar";
+import "./map.css";
 
 const ClassMap = () => {
     const [currentPosition, setCurrentPosition] = useState(null); // 현재 위치
@@ -21,7 +20,7 @@ const ClassMap = () => {
         });
     };
 
-    const fetchCurrentPosition = () => { //Geolocation API 현재 위치 가져옴
+    const fetchCurrentPosition = () => { // Geolocation API 현재 위치 가져옴
         return new Promise((resolve, reject) => {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(
@@ -68,19 +67,31 @@ const ClassMap = () => {
                     const mapContainer = document.getElementById('map');
                     const options = {
                         center: new kakao.maps.LatLng(position.lat, position.lng), // 현재 위치로 좌표 설정
-                        level: 5 // 줌 레벨 변경
+                        level: 6 // 줌 레벨 변경
                     };
                     const map = new kakao.maps.Map(mapContainer, options); // 맵 생성
                     setMap(map);
 
+                    // 줌 컨트롤 추가
+                    const zoomControl = new kakao.maps.ZoomControl();
+                    map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+
+
                     // 등록된 클래스 위치 리스트 (서울, 경기 지역 임의 좌표)
                     const classLocations = [
-                        { lat: 37.5665, lng: 126.9780, name: '서울' }, // 서울시청
-                        { lat: 37.4835, lng: 126.9014, name: '서울 강서' }, // 서울 강서구
-                        { lat: 37.4563, lng: 126.7052, name: '인천' }, // 인천
-                        { lat: 37.5469, lng: 127.0959, name: '서울 강동' }, // 서울 강동구
-                        { lat: 37.2752, lng: 127.0095, name: '경기 성남' }, // 경기 성남
-                        { lat: 37.3942, lng: 126.9568, name: '경기 안양' }, // 경기 안양
+                        { lat: 37.5665, lng: 126.9780, name: '서울' },        // 서울시청
+                        { lat: 37.4835, lng: 126.9014, name: '서울 강서' },     // 서울 강서구
+                        { lat: 37.4563, lng: 126.7052, name: '인천' },         // 인천
+                        { lat: 37.5469, lng: 127.0959, name: '서울 강동' },     // 서울 강동구
+                        { lat: 37.3219, lng: 126.8309, name: '안산 중앙' },     // 안산 중앙
+                        { lat: 37.3235, lng: 126.8219, name: '안산 고잔' },     // 안산 고잔
+                        { lat: 37.3299, lng: 126.8257, name: '안산 상록수' },   // 안산 상록수
+                        { lat: 37.33118253419755, lng: 126.81438472991468, name: '안산 화랑유원지' },
+                        // { lat: 37.4565, lng: 126.7070, name: '서울 마포' },     // 서울 마포구
+                        // { lat: 37.5817, lng: 127.0057, name: '서울 종로' },     // 서울 종로구
+                        // { lat: 37.5610, lng: 126.9836, name: '서울 중구' },     // 서울 중구
+                        // { lat: 37.4953, lng: 127.0384, name: '서울 강남' },     // 서울 강남구
+                        // { lat: 37.4900, lng: 126.9170, name: '서울 영등포' },   // 서울 영등포구
                     ];
 
                     // 각 클래스 위치에 마커 표시
@@ -120,7 +131,7 @@ const ClassMap = () => {
                     marker.setMap(map); 
                 });
             } catch (error) {
-                console.error("Error loading map or position: ", error);
+                console.error("현재 위치를 불러오지 못했습니다 ", error);
             }
         };
 

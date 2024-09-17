@@ -30,3 +30,20 @@
    background: #fff;
    border: 1px solid #333;
 }
+
+
+/* 카카오맵 기본 css 수정란 */
+/* map.css 파일에 추가 */
+/* .custom-zoom-control {
+  width: 20px; 
+  height: 60px; 
+}
+
+.custom-zoom-control .kakao-mc {
+  font-size: 14px; 
+}
+
+.custom-zoom-control .kakao-mc-btn {
+  width: 20px; 
+  height: 30px; 
+} */
