@@ -88,7 +88,7 @@ function SearchList() {
             </option>
           </select>
         </div>
-        <main className="myclass-main">
+        <main className="mySearchList-main">
           {" "}
           {/* 마이클래스 ui 가져옴*/}
           {courses.map((course) => (
