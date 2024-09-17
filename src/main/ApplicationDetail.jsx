@@ -18,7 +18,6 @@ const ApplicationDetail = () => {
     const [count, setCount] = useState(1);
     const [date, setDate] = useState(initialDate);
     const [classTime, setClassTime] = useState(null);
-    const [errorMessage, setErrorMessage] = useState(""); // 오류 메시지 상태
 
     useEffect(() => {
         console.log('Class Data:', classData);
@@ -59,8 +58,9 @@ const ApplicationDetail = () => {
 
     const handleApplicationClick = () => {
         const payload = {
-            lecture: id // 또는 실제로 필요한 lecture ID
+            lecture: id 
         };
+        console.log(payload)
     
         axios.post('http://sangsang2.kr:8080/api/lecture/join', payload)
             .then(response => {
@@ -84,11 +84,6 @@ const ApplicationDetail = () => {
     const increaseCount = () => {
         if (count < classData?.member_limit) {
             setCount(count + 1);
-            setErrorMessage(""); // 오류 메시지 초기화
-        } else {
-            // 오류 메시지 설정
-            setErrorMessage(`최대 인원 수는 ${classData.member_limit}명 입니다.`);
-            alert(`최대 인원 수는 ${classData.member_limit}명 입니다.`)
         }
     };
 
@@ -116,7 +111,7 @@ const ApplicationDetail = () => {
                         value={date}  // 캘린더에서 선택된 날짜를 `date`로 설정
                     />
                 </section>
-                {date && ( // 선택한 날짜에 수강 시간이 있을 경우만 표시
+                {date && ( 
                     <section id="selectTimeBox">
                         <h5>수강 시간</h5>
                         <p style={{ fontSize: classTime ? "16px" : "12px" }}>
