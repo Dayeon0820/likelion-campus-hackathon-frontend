@@ -27,7 +27,7 @@ function MakeReview2() {
     e.preventDefault();
     console.log("review3", requestDTO);
     const formData = new FormData();
-    const baseUrl = "http://sangsang2.kr:8080/api/lecture/review/write";
+    const baseUrl = "http://sangsang2.kr:8080/api/review/write";
 
     formData.append(
       "review",
@@ -66,7 +66,7 @@ function MakeReview2() {
       }
 
       console.log("Success:", data);
-      navigate("/myclass");
+      navigate("/profile");
     } catch (error) {
       console.error("Error:", error);
     }
