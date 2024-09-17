@@ -72,12 +72,10 @@ function Profile_USER(props) {
   return (
     <div id="mobile-view" className={styles.background}>
       <div id="default-padding">
-        <header className="app-header header_3components">
-          <img src="/arrow.png" id="header-arrowIcon" onClick={gobackHome} />
-          <div id="chatting-title">
-            <h1>마이프로필</h1>
-          </div>
-          <span></span>
+        <header className="app-header reviewHeader defaultHeader">
+          <Link to="/home"> {/* /home/class_application/i 로 고치기 */}
+            <span className="material-symbols-outlined">arrow_back_ios</span>              </Link>
+            <h3>마이 프로필</h3>
         </header>
         <div id="profile-info">
           <img src={userImg} id="profile-img" />

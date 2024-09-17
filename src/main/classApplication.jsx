@@ -164,8 +164,8 @@ const ClassApplication = () => {
                         <p>10/25</p>
                     </div>
                     <div className="classParkingBox classInfoBox">
-                        <p className="parkingTxt">주차 여부</p>
-                        <p>무료 주차 가능</p>
+                        <p className="parkingTxt">가격</p>
+                        <p>$ 35000</p>
                     </div>
                 </section>
             </main>

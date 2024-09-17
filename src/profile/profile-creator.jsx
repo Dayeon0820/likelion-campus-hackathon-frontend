@@ -69,14 +69,13 @@ function Profile_CREATOR(props) {
   };
   return (
     <div id="mobile-view" className={styles.background}>
-      <div id="default-padding">
-        <header className="app-header  header_3components">
-          <img src="/arrow.png" id="header-arrowIcon" onClick={gobackHome} />
-          <div id="chatting-title">
-            <h1>마이프로필</h1>
-          </div>
-          <span></span>
-        </header>
+      <header className="app-header profileHeader defaultHeader">
+        <Link to="/home"> 
+          <span className="material-symbols-outlined">arrow_back_ios</span>       
+        </Link>
+          <h3>마이 프로필</h3>        
+      </header>
+      <main id="default-padding" className="profileMain">
         <div id="profile-info">
           <img src={userImg} id="profile-img" alt="Profile Image" />
           <div id="username-box">
@@ -115,7 +114,7 @@ function Profile_CREATOR(props) {
         <button className="logoutBtn" onClick={onConfirm}>
           로그아웃
         </button>
-      </div>
+      </main>
       <Navbar></Navbar>
     </div>
   );

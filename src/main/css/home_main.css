@@ -28,6 +28,7 @@
 }
 .classTxt{
     font-size: 14px;
+    padding-left: 2px;
     /* height: 18%; */
     /* font-weight: bold; */
     /* border-bottom: 1px solid #333; */
@@ -62,6 +63,9 @@
     background: rgba(255,255,255,0.5);
     z-index: 1;
     border-radius: 8px;
+}
+.classTypeBox > .typeContent > p{
+    font-weight: 540;
 }
 .classTypeBox > .allClass{
     background: url("../img/class_type_all.png") no-repeat center center;
@@ -108,21 +112,33 @@
     height: 28%;
 }
 .categoryBox{
-    background: #ededed;
+    /* background: #ededed; */
     height: 70%;
     margin-top: 10px;
     border-radius: 8px;
-    padding: 8px;
+    padding: 7px;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 10px; 
+    gap: 12px; 
 }
 .categoryHomeList{
-    background: #fff;
+    /* background: #fff; */
     font-size: 12px;
     width: 90%;
     height: 100%;
-    text-align: center;
+    text-align: start;
     border-radius: 6px;
     cursor: pointer;
+    position: relative;
+}
+.categoryHomeList:hover{
+    color: #8e1e88;
+    font-weight: bold;
+    font-size: 13px;
+}
+.categorySubTxt{
+    position: absolute;
+    top: 50%;
+    font-size: 9px;
+    color: #8C5E8A;
 }

@@ -85,6 +85,9 @@ function Home() {
                 >
                   <li className={`${categoryMap[key]} categoryHomeList`}>
                     {key}
+                    <p className={`${categoryMap[key]}_p categorySubTxt`}>
+                      {categoryMap[key].charAt(0).toUpperCase() + categoryMap[key].slice(1).toLowerCase()}
+                    </p>
                   </li>
                 </Link>
               ))}
