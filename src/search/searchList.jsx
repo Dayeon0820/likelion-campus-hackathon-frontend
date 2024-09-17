@@ -12,15 +12,59 @@ function SearchList() {
   const location = useLocation();
   const navigate = useNavigate();
   const defaultImageUrl = "/defaultclass.png";
-  const courses = location.state?.formattedData || [];
+  const [searchInput, setSearchInput] = useState("");
+  const [courses, setCourses] = useState(location.state?.formattedData || []);
+  const handleSearch = async (e) => {
+    e.preventDefault();
+    const baseUrl = `http://sangsang2.kr:8080/api/lecture/search?keyword=${searchInput}`;
+
+    try {
+      const response = await fetch(baseUrl, {
+        method: "GET",
+      });
+      const data = await response.json();
+
+      if (!response.ok) {
+        alert("클래스 검색에 실패했습니다.");
+
+        return;
+      }
+      const formattedData = data.map((course) => ({
+        id: course.id,
+        name: course.name,
+        type: course.type,
+        price: course.price,
+        searchCount: course.searchCount, //검색 횟수
+        averageScore: course.averageScore, //리뷰 평점
+        scoreCount: course.scoreCount, //리뷰 수
+
+        imageUrls:
+          course.imageUrl.length > 0
+            ? course.imageUrl[0].imageUrl
+            : defaultImageUrl, //이미지가 있으면 한개만 추출,없으면 디폴트이미지
+      }));
+
+      setCourses(formattedData);
+      console.log(formattedData);
+    } catch (error) {
+      console.error("Error occurred during delete:", error);
+      alert("Error occurred " + error.message);
+    }
+  };
+
   return (
     <div id="mobile-view">
       <header className="app-header reviewHeader defaultHeader">
-        <form className="second_search-form search-form">
+        <form
+          className="second_search-form search-form"
+          onSubmit={handleSearch}
+        >
           <input
             type="text"
             placeholder="검색어를 입력하세요"
             className="search-input"
+            value={searchInput}
+            onChange={(e) => setSearchInput(e.target.value)}
           />
           <button type="submit" className="search-button">
             <span className="material-symbols-outlined">search</span>
