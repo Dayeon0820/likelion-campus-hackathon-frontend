@@ -111,10 +111,7 @@ function EditProfile2() {
         </header>
         <div id="profile-humanImg">
           <label htmlFor="profile-imgInput">
-            <img
-              src={previewUrl || "/person.png"}
-              id="profile-humanImg-lable"
-            />
+            <img src={previewUrl || "/user.png"} id="profile-humanImg-lable" />
             <div id="profile-humanImg-img">
               <img src="/image.png" />
             </div>
