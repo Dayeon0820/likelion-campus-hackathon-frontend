@@ -1,11 +1,11 @@
-.profileHeader{
+.profileHeader {
   background: none;
 }
-.profileHeader > h3{
+.profileHeader > h3 {
   font-weight: bold;
   font-size: 16px;
 }
-.profileMain{
+.profileMain {
   margin: 7vh 0 10vh;
 }
 
@@ -136,4 +136,15 @@
   align-items: center;
   justify-content: flex-start;
   margin: 20px 0 0 0;
+}
+
+#changePassword {
+  display: flex;
+  justify-content: center;
+  font-size: 14px;
+  position: absolute;
+  bottom: 11%;
+  width: 85%;
+
+  text-decoration: underline;
 }
