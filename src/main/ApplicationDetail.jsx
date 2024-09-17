@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate, useLocation, useParams } from "react-router-dom";
 import "./css/applicationDetail.css";
 import Calendar from "react-calendar";
@@ -59,51 +60,26 @@ const ApplicationDetail = () => {
     }
   };
 
-  const handleApplicationClick = async () => {
-    const baseUrl = `http://sangsang2.kr:8080/api/lecture/join?lecture=${id}`;
-
-    try {
-      const response = await fetch(baseUrl, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      const data = await response.json();
-
-      if (!response.ok) {
-        if (response.status === 404) {
-          if (data.error === "사용자 찾을 수 없음") {
-            alert("사용자를 찾을 수 없습니다.");
-          } else if (data.error === "강의 찾을 수 없음") {
-            alert("강의를 찾을 수 없습니다.");
-          } else {
-            alert("강의 신청에 실패했습니다."); // 다른 404 에러 처리
-          }
-        } else if (response.status === 400) {
-          if (data.error === "이미 참가한 강의") {
-            alert("이미 참가한 강의입니다.");
-          } else if (data.error === "강의 정원 가득참") {
-            alert("강의 정원이 가득 찼습니다.");
-          } else {
-            alert("강의 신청에 실패했습니다."); // 다른 400 에러 처리
-          }
-        }
-        alert("강의 신청에 실패했습니다.");
-        return;
-      }
-      //요청 성공
-      console.log(data);
-      navigate('/home/class_application/completed');
-    } catch (error) {
-      console.error("Error occurred during delete:", error);
-      alert("Error occurred " + error.message);
-    }
-  };
-
-  // const handleApplicationClick = () => {
-  //     navigate('/home/class_application/completed');
-  // };
+    const handleApplicationClick = () => {
+        const payload = {
+            lecture: id 
+        };
+        console.log(payload)
+    
+        axios.post('http://sangsang2.kr:8080/api/lecture/join', payload)
+            .then(response => {
+                navigate('/home/class_application/completed');
+            })
+            .catch(error => {
+                console.error('Error making request:', error);
+                alert('신청에 실패했습니다. 다시 시도해 주세요.');
+            });
+    };
+    
+    // const handleApplicationClick = () => {
+    //     navigate('/home/class_application/completed');
+    // };
+    
 
   const handleCancelClick = () => {
     navigate("/home/class_list");
@@ -181,6 +157,7 @@ export default ApplicationDetail;
 
 
 
+
 // import {React, useState, useEffect } from 'react';
 // import { Link, useNavigate, NavLink, useParams } from "react-router-dom";
 // import "./css/applicationDetail.css";
@@ -223,7 +200,7 @@ export default ApplicationDetail;
 //               selectedDate: moment(date).format('YYYY-MM-DD'), // 선택된 날짜 전달
 //             }),
 //           });
-    
+
 //           if (response.ok) {
 //             navigate('/home/class_application/completed');
 //           } else {
@@ -263,10 +240,10 @@ export default ApplicationDetail;
 //                     tileClassName={({ date }) => date.getDay() === 6 ? 'saturday' : null}  // 토요일이면 'saturday' 클래스 추가
 //                     onChange={handleDateChange}
 //                     value={date}
-//                     >   
+//                     >
 //                     </Calendar>
 //                 </section>
-//                 {date && ( //선택한 날짜에 해당하는 수강 시간이 있는 경우만 표시 
+//                 {date && ( //선택한 날짜에 해당하는 수강 시간이 있는 경우만 표시
 //                     <section id="selectTimeBox">
 //                         <h5>수강 시간</h5>
 //                         <p style={{ fontSize: classTime ? "16px" : "12px", }}>
@@ -284,12 +261,12 @@ export default ApplicationDetail;
 //                 </div>
 //             </main>
 //             <div className="detailApplicationBtnBox">
-//                 <button 
+//                 <button
 //                 className="payingBtn"
 //                 onClick={handleApplicationClick}
 //                 >신청하기
 //                 </button>
-//                 <button 
+//                 <button
 //                 className="cancelBtn"
 //                 onClick={handleCancelClick}
 //                 >취소하기</button>
