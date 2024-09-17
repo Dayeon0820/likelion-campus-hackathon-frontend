@@ -96,11 +96,10 @@ function Login() {
                 className="inputBox_input"
               />
             </div>
-            <a href="#">비밀번호 찾기</a>
           </div>
           <div className="input_divider ">
             <button type="submit" className="submitBTN">
-              로그인
+              <span>로그인</span>
             </button>
             <footer id="login-footer">
               <span id="login-footerTxt">아직 계정이 없으신가요?</span>

@@ -43,9 +43,9 @@ function Profile_CREATOR(props) {
             },
           }
         );
-        const data = await response.json();
 
         if (!response.ok) {
+          const data = await response.json();
           if (response.status === 400) {
             if (data.error === "사용자 찾을 수 없음") {
               alert("사용자 정보를 찾을 수 없습니다.");
@@ -57,6 +57,7 @@ function Profile_CREATOR(props) {
           }
           return;
         }
+        const data = await response.text();
         alert("계정에서 로그아웃 되었습니다.");
         localStorage.removeItem("token");
         localStorage.removeItem("refresh_token");

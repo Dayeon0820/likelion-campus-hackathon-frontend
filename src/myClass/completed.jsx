@@ -75,7 +75,7 @@ function CompletedClass() {
         <div id="myclass-header">
           <h1>참여 완료한 클래스</h1>
         </div>
-        <main id="myclass-main">
+        <main className="myclass-main">
           {courses.map((course) => (
             <div key={course.id} className="myclass-contentBox">
               <img

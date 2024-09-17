@@ -1,0 +1,37 @@
+.second_search-form {
+  background: #f5f0f5;
+  width: 85%;
+  height: 35px;
+  border-radius: 8px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  position: relative;
+  top: 2px;
+}
+
+.searchList-main {
+  margin-top: 3vh;
+  height: 95vh;
+  display: flex;
+  flex-direction: column;
+  gap: 5%;
+  padding: 30px 0;
+  width: 85%;
+}
+
+#searchList-selectBox select {
+  border: none;
+  width: 95px;
+  background-color: #f5f0f5;
+  padding: 5px;
+  border-radius: 20px;
+
+  font-size: 12px;
+}
+
+.mySearchList-main {
+  width: 100%;
+  height: calc(100% - 20px);
+  overflow-y: auto;
+}

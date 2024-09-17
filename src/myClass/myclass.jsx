@@ -76,18 +76,20 @@ function Myclass() {
         <div id="myclass-header">
           <h1>내가 생성한 클래스</h1>
         </div>
-        <main id="myclass-main">
+        <main className="myclass-main myclass-gridBox">
           {courses.map((course) => (
-            <div key={course.id} className="myclass-contentBox">
+            <div key={course.id} className="myclass-box">
               <img
                 src={course.imageUrls}
                 alt={course.name}
-                className="myclass-contentBox_img"
+                className="myclass-box_img"
               />
-              <h3>{course.name}</h3>
-              <span>${course.price.toLocaleString()}</span>
-              <div className="myclass-content_btnBox">
-                <span>정규 수업</span>
+              <h3 className="myclass-box_title">{course.name}</h3>
+              <span className="myclass-box_price">
+                ${course.price.toLocaleString()}
+              </span>
+              <div className="myclass-box_type">
+                <span>{course.type === "Regular" ? "정규" : "원데이"}</span>
               </div>
             </div>
           ))}

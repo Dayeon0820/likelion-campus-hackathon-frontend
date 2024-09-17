@@ -98,7 +98,7 @@ function EditProfile2() {
   return (
     <div id="mobile-view">
       <div id="profile-padding">
-        <header className="app-header header_3components">
+        <header className="app-header header_3components ">
           <img
             src="/arrow.png"
             id="header-arrowIcon"
@@ -157,6 +157,10 @@ function EditProfile2() {
               }}
             />
           </div>
+          <div id="changePassword" onClick={() => navigate("/password")}>
+            비밀번호 변경하기
+          </div>
+
           <button type="submit" className="profileBtn btnwhite">
             수정하기
           </button>

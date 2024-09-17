@@ -28,6 +28,9 @@ import MakeReview from "./myClass/makeReview";
 import MakeReview2 from "./myClass/makeReview2";
 import MakeReview3 from "./myClass/makeReview3";
 import CompletedClass from "./myClass/completed";
+import PassWord from "./signup/password";
+import PassWord2 from "./signup/password2";
+import SearchList from "./search/searchList";
 
 function App() {
   return (
@@ -35,6 +38,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/signup1" element={<Signup1 />} />
+        <Route path="/password" element={<PassWord />} />
+        <Route path="/password2" element={<PassWord2 />} />
         <Route path="/chats" element={<Chats />} />
         <Route path="/chatting" element={<Chatting />} />
         <Route path="/home" element={<Home />} />
@@ -69,6 +74,7 @@ function App() {
         <Route path="/create_class/oneday" element={<CreateOnedayClass />} />
         <Route path="/create_class/regular" element={<CreateRegularClass />} />
         <Route path="/search" element={<SearchPage />} />
+        <Route path="/searchList" element={<SearchList />} />
       </Routes>
     </Router>
   );

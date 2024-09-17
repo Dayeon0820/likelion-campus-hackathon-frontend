@@ -1,4 +1,4 @@
-#myclass-main {
+.myclass-main {
   width: 100%;
   height: calc(100% - 110px);
   overflow-y: auto;
@@ -72,4 +72,65 @@
   text-align: center;
   background-color: rgba(54, 158, 255, 1);
   color: rgba(255, 255, 255, 1);
+}
+
+/* 내가 생성한 클래스 */
+
+.myclass-gridBox {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 모바일에서는 한 줄에 두 개 */
+  gap: 16px;
+  height: auto;
+}
+
+.myclass-box {
+  position: relative;
+  overflow: hidden;
+  height: 100px;
+}
+
+.myclass-box_img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 15px;
+}
+
+.myclass-box_title,
+.myclass-box_price,
+.myclass-box_type {
+  position: absolute;
+  color: white;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+}
+
+.myclass-box_title {
+  top: 10px;
+  left: 10px;
+
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 16.77px;
+  text-align: left;
+}
+
+.myclass-box_price {
+  bottom: 10px;
+  left: 10px;
+  font-size: 11px;
+}
+
+.myclass-box_type {
+  bottom: 10px;
+  right: 10px;
+  font-size: 11px;
+}
+
+@media (min-width: 550px) {
+  .myclass-gridBox {
+    grid-template-columns: repeat(
+      3,
+      1fr
+    ); /* 태블릿 사이즈 이상에서는 한 줄에 세 개 */
+  }
 }
