@@ -1,5 +1,3 @@
-
-
 import {React, useState, useEffect} from "react";
 import { Link, useNavigate, NavLink } from "react-router-dom";
 import Navbar from "../main/navbar"
@@ -40,7 +38,7 @@ const ClassMap = () => {
                     },
                     {
                         enableHighAccuracy: true, // 정확도
-                        timeout: 4000, // 최대 대기 시간
+                        timeout: 5000, // 최대 대기 시간
                         maximumAge: 0 // 캐시된 위치 정보 설정
                     }
                 );
@@ -70,15 +68,54 @@ const ClassMap = () => {
                     const mapContainer = document.getElementById('map');
                     const options = {
                         center: new kakao.maps.LatLng(position.lat, position.lng), // 현재 위치로 좌표 설정
-                        level: 3
+                        level: 5 // 줌 레벨 변경
                     };
                     const map = new kakao.maps.Map(mapContainer, options); // 맵 생성
                     setMap(map);
 
-                    // 마커 설정
+                    // 등록된 클래스 위치 리스트 (서울, 경기 지역 임의 좌표)
+                    const classLocations = [
+                        { lat: 37.5665, lng: 126.9780, name: '서울' }, // 서울시청
+                        { lat: 37.4835, lng: 126.9014, name: '서울 강서' }, // 서울 강서구
+                        { lat: 37.4563, lng: 126.7052, name: '인천' }, // 인천
+                        { lat: 37.5469, lng: 127.0959, name: '서울 강동' }, // 서울 강동구
+                        { lat: 37.2752, lng: 127.0095, name: '경기 성남' }, // 경기 성남
+                        { lat: 37.3942, lng: 126.9568, name: '경기 안양' }, // 경기 안양
+                    ];
+
+                    // 각 클래스 위치에 마커 표시
+                    classLocations.forEach(location => {
+                        const markerPosition = new kakao.maps.LatLng(location.lat, location.lng);
+                        const marker = new kakao.maps.Marker({
+                            position: markerPosition
+                        });
+
+                        // 마커를 지도에 추가
+                        marker.setMap(map);
+
+                        // 마커에 마우스 오버 시 클래스명을 표시하는 인포윈도우
+                        const infowindow = new kakao.maps.InfoWindow({
+                            content: `<div style="padding:5px;font-size:12px;">${location.name}</div>`
+                        });
+
+                        // 마커에 이벤트 등록
+                        kakao.maps.event.addListener(marker, 'mouseover', () => {
+                            infowindow.open(map, marker);
+                        });
+                        kakao.maps.event.addListener(marker, 'mouseout', () => {
+                            infowindow.close();
+                        });
+                    });
+
+                    // 현재 위치에 마커 설정
                     const markerPosition = new kakao.maps.LatLng(position.lat, position.lng);
+                    const imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; // 커스텀 이미지 URL
+                    const imageSize = new kakao.maps.Size(24, 35); // 마커 이미지 크기
+                    const markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
+                    
                     const marker = new kakao.maps.Marker({
-                        position: markerPosition
+                        position: markerPosition,
+                        image: markerImage, // 커스텀 마커 이미지 설정
                     });
                     marker.setMap(map); 
                 });
@@ -103,10 +140,8 @@ const ClassMap = () => {
     );
 };
 
-
-
-
 export default ClassMap;
+
 
 
 

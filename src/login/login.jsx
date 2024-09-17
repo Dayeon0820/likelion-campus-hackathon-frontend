@@ -88,7 +88,7 @@ function Login() {
               />
             </div>
             <div className="login-inputBox">
-              <span classNames="inputBox_txt">비밀번호</span>
+              <span className="inputBox_txt">비밀번호</span>
               <input
                 type="password"
                 required
