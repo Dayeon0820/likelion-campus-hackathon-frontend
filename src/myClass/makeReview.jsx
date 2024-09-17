@@ -11,6 +11,7 @@ import { faStar } from "@fortawesome/free-solid-svg-icons";
 
 function MakeReview() {
   const navigate = useNavigate();
+  const token = localStorage.getItem("token");
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const courseId = queryParams.get("id");
@@ -21,6 +22,56 @@ function MakeReview() {
   useEffect(() => {
     console.log(courseId);
   }, []);
+  const requestDTO = {
+    reviewComment: "",
+    score: rating,
+    lectureId: courseId,
+  };
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    console.log("review2 :", requestDTO);
+    const formData = new FormData();
+    const baseUrl = "http://sangsang2.kr:8080/api/lecture/review/write";
+
+    formData.append(
+      "review",
+      new Blob([JSON.stringify(requestDTO)], { type: "application/json" })
+    );
+
+    try {
+      const response = await fetch(baseUrl, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: formData,
+      });
+
+      const data = await response.json();
+      if (!response.ok) {
+        if (response.status === 404) {
+          if (data.error === "존재하지 않는 회원입니다") {
+            alert("사용자를 찾을 수 없습니다.");
+          } else if (data.error === "존재하지 않는 클래스입니다.") {
+            alert("존재하지 않는 클래스입니다.");
+          } else if (data.error === "이미 리뷰를 작성한 회원입니다.") {
+            alert("이미 리뷰를 작성한 회원입니다.");
+          } else {
+            alert("리뷰 생성에 실패했습니다."); // 다른 404 에러 처리
+          }
+        } else {
+          alert("리뷰 생성에 실패했습니다.");
+        }
+        console.log(data.error);
+        return;
+      }
+
+      console.log("Success:", data);
+      navigate("/myclass");
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
 
   return (
     <div id="mobile-view">
@@ -77,7 +128,9 @@ function MakeReview() {
           사진, 글 추가하러 가기
         </button>
 
-        <button className="nextBtn">등록하기</button>
+        <button className="nextBtn" onClick={onSubmit}>
+          등록하기
+        </button>
       </div>
     </div>
   );

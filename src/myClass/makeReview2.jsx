@@ -10,6 +10,7 @@ import "./makeReview.css";
 function MakeReview2() {
   const navigate = useNavigate();
   const location = useLocation();
+  const token = localStorage.getItem("token");
   const rate = location.state?.rating || 0;
   const courseId = location.state?.courseId || null;
   const [image, setImage] = useState(null);
@@ -27,7 +28,61 @@ function MakeReview2() {
       }
     };
   }, [previewUrl]);
-  useEffect(() => console.log(rate, courseId), []);
+  useEffect(() => console.log("review2 :", requestDTO), []);
+  const requestDTO = {
+    reviewComment: "",
+    score: rate,
+    lectureId: courseId,
+  };
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    console.log(requestDTO, "이미지", image);
+    const formData = new FormData();
+    const baseUrl = "http://sangsang2.kr:8080/api/lecture/review/write";
+
+    formData.append(
+      "review",
+      new Blob([JSON.stringify(requestDTO)], { type: "application/json" })
+    );
+    if (image) {
+      formData.append("images", image, image.name);
+    }
+
+    try {
+      const response = await fetch(baseUrl, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: formData,
+      });
+
+      const data = await response.json();
+      if (!response.ok) {
+        if (response.status === 404) {
+          if (data.error === "존재하지 않는 회원입니다") {
+            alert("사용자를 찾을 수 없습니다.");
+          } else if (data.error === "존재하지 않는 클래스입니다.") {
+            alert("존재하지 않는 클래스입니다.");
+          } else if (data.error === "이미 리뷰를 작성한 회원입니다.") {
+            alert("이미 리뷰를 작성한 회원입니다.");
+          } else {
+            alert("리뷰 생성에 실패했습니다."); // 다른 404 에러 처리
+          }
+        } else {
+          alert("리뷰 생성에 실패했습니다.");
+        }
+        console.log(data.error);
+        return;
+      }
+
+      console.log("Success:", data);
+      navigate("/myclass");
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
 
   return (
     <div id="mobile-view">
@@ -79,7 +134,9 @@ function MakeReview2() {
           리뷰 작성하러 가기
         </button>
 
-        <button className="nextBtn">등록하기</button>
+        <button className="nextBtn" onClick={onSubmit}>
+          등록하기
+        </button>
       </div>
     </div>
   );
