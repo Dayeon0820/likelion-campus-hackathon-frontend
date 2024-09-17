@@ -23,7 +23,7 @@ function Profile_CREATOR(props) {
     if (imageurl) {
       setUserImg(imageurl);
     } else {
-      setUserImg("/user.png");
+      setUserImg("/creator.png");
     }
     console.log(userImg);
   }, [imageurl]);
@@ -70,10 +70,10 @@ function Profile_CREATOR(props) {
   return (
     <div id="mobile-view" className={styles.background}>
       <header className="app-header profileHeader defaultHeader">
-        <Link to="/home"> 
-          <span className="material-symbols-outlined">arrow_back_ios</span>       
+        <Link to="/home">
+          <span className="material-symbols-outlined">arrow_back_ios</span>
         </Link>
-          <h3>마이 프로필</h3>        
+        <h3>마이 프로필</h3>
       </header>
       <main id="default-padding" className="profileMain">
         <div id="profile-info">
@@ -97,7 +97,7 @@ function Profile_CREATOR(props) {
           <button
             className="profile-btn creatorBtn"
             onClick={() => {
-              navigate("/myClass");
+              navigate("/completedClass");
             }}
           >
             신청 클래스
@@ -118,6 +118,17 @@ function Profile_CREATOR(props) {
         <div id="profile-emptyBox">
           <span id="profile-introduction">{introduction}</span>
         </div>
+
+        <button
+          className="logoutBtn permissionBtn"
+          onClick={() =>
+            navigate("/edit_profile", {
+              state: { nickname, introduction },
+            })
+          }
+        >
+          권한 변경하기
+        </button>
 
         <button className="logoutBtn" onClick={onConfirm}>
           로그아웃

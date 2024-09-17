@@ -6,7 +6,7 @@ import "../App.css";
 import "../profile/profile.css";
 import "./myclass.css";
 import Navbar from "../main/navbar";
-function Myclass() {
+function CompletedClass() {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const [courses, setCourses] = useState([]);
@@ -15,8 +15,7 @@ function Myclass() {
     getclassList();
   }, []);
   const getclassList = async () => {
-    const baseUrl =
-      "http://sangsang2.kr:8080/api/lecture/own?permission=CREATOR";
+    const baseUrl = "http://sangsang2.kr:8080/api/lecture/own?permission=USER";
 
     try {
       const response = await fetch(baseUrl, {
@@ -74,7 +73,7 @@ function Myclass() {
           <span></span>
         </header>
         <div id="myclass-header">
-          <h1>내가 생성한 클래스</h1>
+          <h1>참여 완료한 클래스</h1>
         </div>
         <main id="myclass-main">
           {courses.map((course) => (
@@ -88,6 +87,14 @@ function Myclass() {
               <span>${course.price.toLocaleString()}</span>
               <div className="myclass-content_btnBox">
                 <span>정규 수업</span>
+                <button
+                  className="myclass-reviewBtn"
+                  onClick={() => {
+                    navigate(`/makeReview?id=${course.id}`);
+                  }}
+                >
+                  리뷰 작성하기
+                </button>
               </div>
             </div>
           ))}
@@ -97,4 +104,4 @@ function Myclass() {
   );
 }
 
-export default Myclass;
+export default CompletedClass;
