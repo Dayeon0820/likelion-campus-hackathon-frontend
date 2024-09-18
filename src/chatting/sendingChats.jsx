@@ -2,7 +2,7 @@ import React from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import "../App.css";
 import "./chatting.css";
 import styles from "./chatting.module.css";
@@ -16,8 +16,10 @@ function SendingChats() {
   const id = query.get("chatRoomId");
   const title = query.get("chatRoomName");
   const [sending, setsending] = useState("");
-  const [messages, setMessages] = useState({});
+  const [messages, setMessages] = useState([]);
+  const [date, setDate] = useState("");
   const gobackHome = () => navigate(`/home`);
+  const messageEndRef = useRef(null);
 
   const getMessage = async (e) => {
     const baseUrl = `http://sangsang2.kr:8080/api/chat/chatRoom?chatRoomId=${id}`;
@@ -36,6 +38,7 @@ function SendingChats() {
         alert("메세지 불러오기에 실패했습니다.");
 
         console.log("Error Data:", data);
+        navigate("/chats");
         return;
       }
 
@@ -54,14 +57,25 @@ function SendingChats() {
       };
 
       console.log(" get message Success:", processedData);
+      setMessages(processedData.messages);
+      setDate(processedData.createdAt);
     } catch (error) {
       console.error("Error:", error);
+      navigate("/chats");
     }
   };
 
   useEffect(() => {
-    getMessage();
-  }, []);
+    getMessage(); // 초기 호출
+    const intervalId = setInterval(getMessage, 3000); // 5초마다 호출
+
+    return () => clearInterval(intervalId); // 컴포넌트 언마운트 시 클리어
+  }, []); // 빈 배열로 초기 마운트 시만 실행되도록
+
+  useEffect(() => {
+    // 메시지가 업데이트 될 때마다 스크롤을 가장 아래로 이동
+    messageEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
 
   const sendMessage = async (e) => {
     e.preventDefault();
@@ -83,12 +97,14 @@ function SendingChats() {
       const data = await response.json();
       if (!response.ok) {
         alert("메세지 전송에 실패했습니다.");
+        navigate("/chats");
 
         console.log("Error Data:", data);
         return;
       }
 
       console.log(" sending Success:", data);
+      setsending("");
     } catch (error) {
       console.error("Error:", error);
     }
@@ -108,41 +124,56 @@ function SendingChats() {
           </div>
           <img src="/home.png" id="header-homeIcon" onClick={gobackHome} />
         </header>
+        <div id="chatting-date">
+          <span>{date}</span>
+        </div>
 
         <div id="chatting-main">
-          <div id="chatting-date">
-            <span>Today</span>
+          <div className="chat-room-messages">
+            {messages.map((message, index) => (
+              <div
+                key={index}
+                className={`message ${
+                  message.type === "Sent" ? "sent" : "received"
+                }`}
+              >
+                {message.type === "Received" ? (
+                  <>
+                    <img
+                      src={message.avatar || "/user.png"}
+                      alt="avatar"
+                      className="chatting-img"
+                    />
+                    <div className="message-content received">
+                      <div className="chattingBox_name">
+                        <span>{message.nickname}</span>
+                      </div>
+                      <div className="chattingBox-message chattingBox-message">
+                        <p>{message.content}</p>
+                      </div>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div className="message-content sent">
+                      <div className="chattingBox_name">
+                        <span>{message.nickname}</span>
+                      </div>
+                      <div className="chattingBox-message chattingBox-message sent">
+                        <p>{message.content}</p>
+                      </div>
+                    </div>
+                    <img
+                      src={message.avatar || "/user.png"}
+                      alt="avatar"
+                      className="chatting-img"
+                    />
+                  </>
+                )}
+              </div>
+            ))}
           </div>
-          <div className="chattingBox ">
-            <div className="my_chattingBox_column1">
-              <div className="chattingBox_name">
-                <span>Elia</span>
-              </div>
-              <div className="my_chattingBox-message chattingBox-message ">
-                <p>안녕 내이름은 다연이야 나는 피아노 수업이 듣고싶어</p>
-              </div>
-            </div>
-            <div className="my_chattingBox_column2">
-              <img className="chatting-img" src="/user.png" />
-            </div>
-          </div>
-          <div className="chattingBox ">
-            <div className="chattingBox_column2">
-              <img className="chatting-img" src="/user.png" />
-            </div>
-            <div className="chattingBox_column1 ">
-              <div className="chattingBox_name">
-                <span>kai</span>
-              </div>
-              <div className="chattingBox-message">
-                <p>
-                  안녕 반가와 안녕 반가와 안녕 반가와 안녕 반가와 안녕 반가와
-                  안녕 반가와안녕 반가와안녕 반가와안녕 반가와안녕 반가와안녕
-                  반가와안녕 반가와안녕 반가와
-                </p>
-              </div>
-            </div>
-          </div>
+          <div ref={messageEndRef} /> {/* 메시지 끝부분을 가리키는 div */}
         </div>
         <div id="chatting-footer">
           <img src="/user.png" id="chatting-img_footer" />
@@ -153,6 +184,7 @@ function SendingChats() {
               onChange={(e) => {
                 setsending(e.target.value);
               }}
+              value={sending}
             />
             <button>
               <img src="/send.png" id="input-sendingIcon" type="submit" />

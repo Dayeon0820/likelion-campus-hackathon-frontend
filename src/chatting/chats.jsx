@@ -54,8 +54,12 @@ function Chats() {
   };
 
   useEffect(() => {
-    getChatsList();
-  }, []);
+    getChatsList(); // 초기 호출
+    const intervalId = setInterval(getChatsList, 10000); // 5초마다 호출
+
+    return () => clearInterval(intervalId); // 컴포넌트 언마운트 시 클리어
+  }, []); // 빈 배열로 초기 마운트 시만 실행되도록
+
   return (
     <div id="mobile-view">
       <div id="default-padding">
@@ -65,10 +69,7 @@ function Chats() {
         <div id="chats_title">
           <h1>Chats</h1>
         </div>
-        <div id="chats_search">
-          <img src="/magnifyingGlass.png" id="input-glassIcon" />
-          <input id="chats_input" type="text" placeholder="Search" />
-        </div>
+
         <div id="chats_list">
           {chatRoomList.map((chatRoom) => (
             <div
@@ -89,13 +90,11 @@ function Chats() {
                 <h2 id="chats_li-title">{chatRoom.chatRoomName}</h2>
               </div>
               <div className="chats_li-column">
-                {/*
                 {chatRoom.count === 0 ? (
                   ""
                 ) : (
-                  <span id="chats-readingCount">{chatRoom.coount}</span>
-                )} */}
-                <span id="chats-readingCount">3</span>
+                  <span id="chats-readingCount">{chatRoom.count}</span>
+                )}
               </div>
             </div>
           ))}
