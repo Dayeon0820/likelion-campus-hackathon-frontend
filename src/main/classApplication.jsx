@@ -24,7 +24,7 @@ const ClassApplication = () => {
         console.log("Response status:", response.status); // 응답 상태 확인
         const data = await response.json();
         setClassData(data);
-        console.log(classData,'classData')
+        console.log(classData, "classData");
       } catch (error) {
         console.error("Error fetching class data:", error);
       }
@@ -85,9 +85,12 @@ const ClassApplication = () => {
             </Link>
             <h3 className="classTitle">{name}</h3>
             <p className="classDate">
-                {type === "Regular" ? `${startDate} - ${endDate}  ${daysOfWeek}` : date}<br/>
-            {/*     {type === "Regular" ? `${daysOfWeek}` : ""}<br/> */}
-                {`${startTime} - ${endTime}`}
+              {type === "Regular"
+                ? `${startDate} - ${endDate}  ${daysOfWeek}`
+                : date}
+              <br />
+              {/*     {type === "Regular" ? `${daysOfWeek}` : ""}<br/> */}
+              {`${startTime} - ${endTime}`}
             </p>
             <p className="classDescription">{description}</p>
           </div>
@@ -114,11 +117,18 @@ const ClassApplication = () => {
       <div className="applicationBtnBox">
         <button
           className="applicationBtn"
-          onClick={() => navigate(`/home/class_application/detail/${id}`, { state: { classData } })}
+          onClick={() =>
+            navigate(`/home/class_application/detail/${id}`, {
+              state: { classData },
+            })
+          }
         >
           신청하기
         </button>
-        <button className="chatBtn" onClick={() => navigate("/chats")}></button>
+        <button
+          className="chatBtn"
+          onClick={() => navigate("/chatting", { state: { id, name } })}
+        ></button>
       </div>
     </div>
   );

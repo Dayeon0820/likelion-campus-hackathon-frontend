@@ -2,112 +2,110 @@
 /* 버튼 컨테이너 배치 수정 */
 /* 배너 윗부분 깨짐; */
 
-.applicationHeader{
-    height: 7%;
-    position: absolute;
-    display: flex;
-    align-items: center;
-    top: 0;
-    left: 0;
-    background: #fff;
-    z-index: 1;
+.applicationHeader {
+  height: 7%;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  top: 0;
+  left: 0;
+  background: #fff;
+  z-index: 1;
 }
 
-
-#classApplicationMain{
-    width: 100%;
-    margin: 7vh 0 8vh;
-    overflow-y: auto;
+#classApplicationMain {
+  width: 100%;
+  margin: 7vh 0 8vh;
+  overflow-y: auto;
 }
 
-.classBanner{
-    width: 100%;
-    height: 26vh;
-    /* height: 30%; */
-    background: #ededed;
+.classBanner {
+  width: 100%;
+  height: 26vh;
+  /* height: 30%; */
+  background: #ededed;
 }
-.classBanner > img{
-    width: 100%;
-    height: 100%;
-    /* background: url("../img/class_application_banner.svg") no-repeat center; */
-    object-fit: cover;
-}
-
-.classApplicationSection{
-    width: 90%;
-    /* height: 68%; */
-    margin: 0 auto;
-    /* border: 1px solid #333; */
+.classBanner > img {
+  width: 100%;
+  height: 100%;
+  /* background: url("../img/class_application_banner.svg") no-repeat center; */
+  object-fit: cover;
 }
 
-.classApplicationSection > .titleContainer{
-    border-bottom: 1px solid #E5E8EB;
-    width: 100%;
-    padding: 15px 0;
-}
-.titleContainer > *{
-    margin: 0 0 15px;
-}
-.titleContainer > .classRating{
-    font-size: 14px;
-}
-.titleContainer > h3{
-    font-size: 18px;
-}
-.titleContainer > .classDate{
-    font-size: 12px;
-}
-.titleContainer > p{
-    font-size: 14px;
-}
-.titleContainer > .classDescription{
-    margin-bottom: 0;
+.classApplicationSection {
+  width: 90%;
+  /* height: 68%; */
+  margin: 0 auto;
+  /* border: 1px solid #333; */
 }
 
-.classInfoBox{
-    width: 100%;
-    border-bottom: 1px solid #E5E8EB;
-    padding: 12px 0;
-    font-size: 12px;
+.classApplicationSection > .titleContainer {
+  border-bottom: 1px solid #e5e8eb;
+  width: 100%;
+  padding: 15px 0;
 }
-.classInfoBox > p:nth-of-type(1){
-    margin-bottom: 5px;
-    font-weight: 550;
+.titleContainer > * {
+  margin: 0 0 15px;
+}
+.titleContainer > .classRating {
+  font-size: 14px;
+}
+.titleContainer > h3 {
+  font-size: 18px;
+}
+.titleContainer > .classDate {
+  font-size: 12px;
+}
+.titleContainer > p {
+  font-size: 14px;
+}
+.titleContainer > .classDescription {
+  margin-bottom: 0;
 }
 
+.classInfoBox {
+  width: 100%;
+  border-bottom: 1px solid #e5e8eb;
+  padding: 12px 0;
+  font-size: 12px;
+}
+.classInfoBox > p:nth-of-type(1) {
+  margin-bottom: 5px;
+  font-weight: 550;
+}
 
 /* 버튼 배열 수정 필요 */
-.applicationBtnBox{
-    /* width: 100%; */
-    height: 8%;
-    background: #fff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    position: fixed;
-    bottom: 0;
+.applicationBtnBox {
+  /* width: 100%; */
+  height: 8%;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  position: fixed;
+  bottom: 0;
 }
 .applicationBtnBox > * {
-    padding: 10px;
-    border: none;
-    cursor: pointer;
-    text-align: center;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+  text-align: center;
 }
-.applicationBtnBox > .applicationBtn{
-    width: 80%;
-    height: 36px;
-    background: #FA0AEB;
-    color: #fff;
-    font-weight: bold;
-    margin: 0 auto;
-    border-radius: 20px;
+.applicationBtnBox > .applicationBtn {
+  width: 80%;
+  height: 36px;
+  background: #fa0aeb;
+  color: #fff;
+  font-weight: bold;
+  margin: 0 auto;
+  border-radius: 20px;
 }
-.applicationBtnBox > .chatBtn{
-    width: 30px;
-    height: 100%;
-    position: absolute;
-    right: 2%;
-    /* background-color: #fff; */
-    background: url("../img/class_application_chat_icon.svg") no-repeat center;
+.applicationBtnBox > .chatBtn {
+  width: 30px;
+  height: 100%;
+  position: absolute;
+  right: 2%;
+  /* background-color: #fff; */
+  background: url("../img/class_application_chat_icon.svg") no-repeat center;
 }
