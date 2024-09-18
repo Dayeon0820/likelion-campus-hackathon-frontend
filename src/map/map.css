@@ -102,6 +102,7 @@
   width: 38%;
   height: 90%;
   border-radius: 10px;
+  object-fit: cover;
 }
 .clickClassInfo > .classInfoTxt{
   /* border: 1px solid #333; */
