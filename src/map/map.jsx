@@ -36,7 +36,7 @@ const ClassMap = () => {
                         });
                     },
                     (error) => {
-                        console.error("Error fetching current position: ", error);
+                        console.error("현재 위치를 가져오지 못함 ", error);
                         reject(error);
                     },
                     {
@@ -56,7 +56,7 @@ const ClassMap = () => {
         try {
             const response = await fetch("http://sangsang2.kr:8080/api/lecture/map");
             const data = await response.json();
-            console.log(data, 'fetched class data'); // 데이터 로깅
+            console.log(data, 'fetched class data'); 
             setClassLocations(data);
         } catch (error) {
             console.error("클래스 정보를 가져오지 못했음 ", error);
@@ -123,7 +123,7 @@ const ClassMap = () => {
             });
 
             const infowindow = new kakao.maps.InfoWindow({
-                content: `<div style="padding:5px;font-size:12px;">${location.name} <br/><a href="https://map.kakao.com/link/to/${location.name},${location.latitude},${location.longitude}" style="color:blue" target="_blank">길찾기</a> </div>`
+                content: `<div className="info-window-content" style="padding:5px;font-size:12px;">${location.name} <br/><a href="https://map.kakao.com/link/to/${location.name},${location.latitude},${location.longitude}" style="color:blue" target="_blank">길찾기</a> </div>`
             });
 
             let isOpen = false;
