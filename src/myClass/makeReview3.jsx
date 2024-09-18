@@ -89,9 +89,9 @@ function MakeReview2() {
           </h2>
         </div>
         <div className="process-dot-box">
-          <span className="process-dot blue-dot"></span>
           <span className="process-dot"></span>
           <span className="process-dot"></span>
+          <span className="process-dot  blue-dot"></span>
         </div>
         <h2 id="profile-questionTxt">3단계: 리뷰 작성하기</h2>
         <div id="review-questionBox">
