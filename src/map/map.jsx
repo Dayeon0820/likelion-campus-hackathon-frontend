@@ -123,7 +123,12 @@ const ClassMap = () => {
             });
 
             const infowindow = new kakao.maps.InfoWindow({
-                content: `<div className="info-window-content" style="padding:5px;font-size:12px;">${location.name} <br/><a href="https://map.kakao.com/link/to/${location.name},${location.latitude},${location.longitude}" style="color:blue" target="_blank">길찾기</a> </div>`
+                content: `
+                        <div className="info-window-content" style="padding:5px;font-size:12px;">
+                            ${location.name} <br/>
+                            <a href="https://map.kakao.com/link/to/${location.name},${location.latitude},${location.longitude}" style="color:blue" target="_blank">길찾기</a> 
+                        </div>
+                        `
             });
 
             let isOpen = false;
@@ -153,7 +158,7 @@ const ClassMap = () => {
     }, [map, classLocations]); // map과 classLocations 변경될 때마다 마커 다시 그리기
 
     const handleClassInfoClick = () => {
-        navigate(`/home/class_list`);
+        navigate(`/home/class_application/${classLocations.id}`);
     };
 
     const handleResetCenter = () => {

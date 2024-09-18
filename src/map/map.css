@@ -47,6 +47,22 @@
   left: 2px; */
 }
 
+/* .info-window-content {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 10px; 
+  padding: 10px;
+  font-size: 12px;
+}
+
+.info-window-content a {
+  color: blue;
+  text-decoration: none;
+}
+
+.info-window-content a:hover {
+  text-decoration: underline;
+} */
 
 .map > #clickModal{
     width: 100%;
