@@ -1,0 +1,173 @@
+/* header --start */
+.defaultHeader{
+    /* border-bottom: 1px solid #333; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    position: absolute;
+    top: 0;
+    background: #fff;
+    z-index: 2;
+}
+.defaultHeader > a{
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    position: absolute;
+    left: 6%;
+}
+.defaultHeader > a > span{
+    color: #141414;
+    font-size: 18px;
+}
+.defaultHeader > h3{
+    font-size: 14px;
+    font-weight: bold;
+}
+/* header --end */
+
+/* main -- start */
+#reviewInner{
+    width: 90%;
+    margin: 7vh 0 0;
+    position: relative;
+    overflow-y: auto;
+}
+ 
+.reviewAverage{
+    height: 170px;
+    margin: 0 0 20px;
+   /*  background: #ededed; */
+    display: flex;
+}
+.reviewAverage > .averageTitleBox{
+    width: 43%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 10px;
+    margin-left: 10px;
+}
+.averageTitleBox > h3{
+    font-size: 30px;
+}
+.averageTitleBox > .totalStarBox{
+    border: 1px solid #333;
+    width: 80%;
+    height: 25px;
+}
+
+.reviewAverage > .averageRatingBox{
+    width: 57%;
+    height: 100%;
+    border: 1px solid #333;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.ratingBarWrapper {
+    width: 90%;
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.ratingLabel {
+    width: 20px;
+    text-align: center;
+    margin-right: 10px;
+    font-size: 13px;
+}
+
+.ratingBar {
+    width: 80%;
+    height: 7px;
+    background-color: #e0e0e0;
+    border-radius: 10px;
+    position: relative;
+}
+
+.ratingBarFill {
+    height: 100%;
+    background-color: #369EFF;
+    border-radius: 10px;
+    transition: width 0.3s;
+}
+
+.ratingPercentage {
+    width: 40px;
+    text-align: center;
+    margin-left: 10px;
+    color: #3D4D5C;
+    font-size: 12px;
+}
+
+.reviewBtnBox{
+    position: sticky;
+    top: 0;
+    z-index: 1; 
+}
+#reviewList{
+    position: sticky;
+    top: 40px;
+}
+
+
+
+
+.reviewBtnBox{
+    
+}
+.reviewBtnBox > select{
+    width: 100px;
+    height: 30px;
+    border: none;
+    border-radius: 12px;
+    background: #F0F2F5;
+    text-align: center;
+}
+
+/* reviewList */
+#reviewList{
+    padding-top: 5px;
+}
+.reviewItem{
+    /* border: 1px solid #333; */
+    padding: 15px 0;
+}
+.reviewProfile{
+    width: 100%;
+    height: 50px;
+    /* border: 1px solid #333; */
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.reviewProfile > .reviewItemImg{
+    display: block;
+    width: 34px;
+    height: 34px;
+    background: #333;
+    border-radius: 50%;
+}
+.reviewProfile > div > h5{
+    font-weight: 500;
+}
+.reviewProfile > div > p {
+    font-size: 12px;
+    color: #3D4D5C;
+}
+
+.rating{
+    margin-bottom: 5px;
+}
+.reviewComment{
+    font-size: 13px;
+}
+/* main--end */

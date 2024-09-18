@@ -1,0 +1,59 @@
+.inputBox_txt {
+  font-family: Pretendard;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 16.71px;
+  text-align: left;
+  margin-bottom: 5px;
+}
+
+.inputBox_input {
+  border: 1px solid rgba(231, 231, 231, 1);
+  height: 32px;
+  width: 100%;
+  padding: 10px 10px;
+  margin-bottom: 10px;
+  gap: 16px;
+  border-radius: 10px;
+  border: 1px 0px 0px 0px;
+  opacity: 0px;
+  font-family: Pretendard;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16.71px;
+  text-align: left;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.inputBox_input:focus {
+  border: 1px solid rgba(254, 108, 175, 1); /* 포커스 시 테두리 색상 */
+  outline: none; /* 브라우저 기본 포커스 아웃라인 제거 */
+}
+
+.login-inputBox {
+  display: flex;
+  flex-direction: column;
+  margin: 5px 0;
+  width: 100%;
+  padding-left: 10px;
+}
+
+a {
+  font-family: Pretendard;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 16.71px;
+  text-align: center;
+  color: rgba(128, 128, 128, 1);
+}
+
+.submitBTN {
+  width: 90%;
+  height: 40px;
+  border-radius: 10px;
+  background-color: rgba(0, 122, 255, 1);
+  border: none;
+  color: white;
+  font-size: 14px;
+  margin-bottom: 5px;
+}

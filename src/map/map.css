@@ -1,0 +1,49 @@
+.mapHeader{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mapHeader > h3{
+  /* font-weight: 400; */
+  font-size: 18px;
+}
+
+.map {
+    width: 100%;
+    height: 83%;
+    align-items: center;
+    justify-content: center;
+  }
+
+.btnBox{
+  position: absolute;
+  top: 100px;
+  z-index: 99;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.location-button{
+   width: 150px;
+   background: #fff;
+   border: 1px solid #333;
+}
+
+
+/* 카카오맵 기본 css 수정란 */
+/* map.css 파일에 추가 */
+/* .custom-zoom-control {
+  width: 20px; 
+  height: 60px; 
+}
+
+.custom-zoom-control .kakao-mc {
+  font-size: 14px; 
+}
+
+.custom-zoom-control .kakao-mc-btn {
+  width: 20px; 
+  height: 30px; 
+} */

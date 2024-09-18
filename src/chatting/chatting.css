@@ -1,0 +1,149 @@
+#chatting-main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-y: auto;
+}
+
+#chatting-title {
+  width: 70%;
+  text-align: center;
+}
+
+#chatting-title h1 {
+  font-family: Inter;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 23px;
+  text-align: center;
+}
+
+#chatting-date {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#chatting-date span {
+  font-family: Inter;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 21px;
+  color: rgba(161, 125, 28, 1);
+}
+
+.chatting-img {
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+}
+
+.chattingBox {
+  display: flex;
+  align-items: flex-end;
+  margin: 15px 0;
+  box-sizing: border-box;
+}
+
+.my_chattingBox_column1 {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.my_chattingBox_column2 {
+  margin-left: 10px;
+}
+
+.chattingBox-message p {
+  font-family: Inter;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 24px;
+  text-align: left;
+  color: rgba(33, 26, 10, 1);
+}
+
+.my_chattingBox-message p {
+  color: rgba(171, 33, 23, 1);
+}
+
+.chattingBox_column2 {
+  margin-right: 10px;
+}
+
+.chattingBox_column1 {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.chattingBox-message {
+  width: 90%;
+  border-radius: 15px;
+  background: rgba(245, 240, 219, 1);
+  padding: 0 13px;
+  max-width: 300px;
+}
+
+.my_chattingBox-message {
+  width: 90%;
+  border-radius: 15px;
+  background: rgba(250, 199, 56, 1);
+  padding: 0 13px;
+}
+
+.chattingBox_name {
+  margin-bottom: 7px;
+}
+
+.chattingBox_name span {
+  font-family: Inter;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 20px;
+  color: rgba(161, 125, 28, 1);
+}
+
+#chatting-img_footer {
+  border-radius: 50%;
+  height: 35px;
+  width: 35px;
+}
+
+#chatting-footer {
+  position: absolute;
+  bottom: 20px;
+  display: flex;
+  width: 100%;
+  padding: 0 10px;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
+
+#chatting-inputBox {
+  width: 85%;
+  border-radius: 15px;
+  height: 40px;
+  background-color: rgba(245, 240, 219, 1);
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2px 10px;
+}
+
+#chatting-input {
+  border: none;
+  background-color: rgba(0, 0, 0, 0);
+  font-family: Inter;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 24px;
+  text-align: left;
+  color: rgba(161, 125, 28, 1);
+}
+
+#chatting-input:focus {
+  outline: none;
+}
