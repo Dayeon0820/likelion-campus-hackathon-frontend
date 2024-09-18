@@ -53,13 +53,30 @@
     margin-left: 10px;
 }
 .averageTitleBox > h3{
-    font-size: 30px;
+    font-size: 34px;
+ /*    font-weight: 800; */
 }
 .averageTitleBox > .totalStarBox{
-    border: 1px solid #333;
-    width: 80%;
-    height: 25px;
+    /* border: 1px solid #333; */
+    width: 100%;
+    height: 60px;
 }
+.totalStarBox {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.star {
+    color: rgba(219, 224, 229, 1); /* 비활성 색상 */
+    font-size: 15px;
+    margin-right: 5px;
+}
+
+.star.filled {
+    color: rgba(54, 158, 255, 1); /* 활성 색상 */
+}
+
 
 .reviewAverage > .averageRatingBox{
     width: 57%;
@@ -166,6 +183,11 @@
 
 .rating{
     margin-bottom: 5px;
+}
+.individualStar{
+    color: rgba(54, 158, 255, 1);
+    font-size: 11px;
+    margin-right: 3px;
 }
 .reviewComment{
     font-size: 13px;

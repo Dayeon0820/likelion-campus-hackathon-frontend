@@ -1,10 +1,13 @@
-import { React, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import Navbar from "../main/navbar";
 import "./map.css";
 
 const ClassMap = () => {
+    const navigate = useNavigate();
     const [currentPosition, setCurrentPosition] = useState(null); // 현재 위치
     const [map, setMap] = useState(null); 
+    const [selectedClass, setSelectedClass] = useState(null); // 선택된 클래스 정보
 
     const new_script = src => {
         return new Promise((resolve, reject) => {
@@ -53,7 +56,7 @@ const ClassMap = () => {
         const loadMapAndPosition = async () => {
             const scriptPromise = new_script('https://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=31ab0c2dde1e7c5f97a4aba8000bfd13');
             const positionPromise = fetchCurrentPosition();
-
+ 
             try {
                 // 스크립트와 현재 위치를 동시에 로드
                 await scriptPromise;
@@ -75,7 +78,6 @@ const ClassMap = () => {
                     // 줌 컨트롤 추가
                     const zoomControl = new kakao.maps.ZoomControl();
                     map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
-
 
                     // 등록된 클래스 위치 리스트 (서울, 경기 지역 임의 좌표)
                     const classLocations = [
@@ -113,21 +115,15 @@ const ClassMap = () => {
                         // 마커에 이벤트 등록
                         let isOpen = false; // 인포윈도우가 열린 상태를 추적할 변수
 
-                        // 마우스 오버 시 인포윈도우 열기
-                        // kakao.maps.event.addListener(marker, 'mouseover', () => {
-                        //     if (!isOpen) {
-                        //         infowindow.open(map, marker);
-                        //         isOpen = true;
-                        //     }
-                        // });
-
                         // 마커 클릭 시 인포윈도우 열기 및 닫기
                         kakao.maps.event.addListener(marker, 'click', () => {
                             if (isOpen) {
                                 infowindow.close();
+                                setSelectedClass(null); // 선택된 클래스 정보 초기화
                                 isOpen = false;
                             } else {
                                 infowindow.open(map, marker);
+                                setSelectedClass(location); // 선택된 클래스 정보 업데이트
                                 isOpen = true;
                             }
                         });
@@ -135,6 +131,7 @@ const ClassMap = () => {
                         kakao.maps.event.addListener(map, 'click', () => {
                             if (isOpen) {
                                 infowindow.close();
+                                setSelectedClass(null); // 선택된 클래스 정보 초기화
                                 isOpen = false;
                             }
                         });
@@ -160,6 +157,10 @@ const ClassMap = () => {
         loadMapAndPosition();
     }, []);
 
+    const handleClassInfoClick = () => {
+        navigate(`/home/class_list`);
+    };
+
     return (
         <div id="mobile-view">
             <header className="app-header mapHeader">
@@ -167,6 +168,24 @@ const ClassMap = () => {
             </header>
             <div id="map" className="map">
                 {!currentPosition && <p>Loading map...</p>}
+                {selectedClass && (
+                <div id="clickModal" className="class-info">
+                    <span></span>
+                    <div 
+                    className="clickClassInfo" 
+                    onClick={handleClassInfoClick}>
+                        <img src="" alt="" />
+                        <div className="classInfoTxt">
+                            <p className="selectedClassType">요리 _ 정규클래스</p>
+                            <h4 className="selectedClassName">{selectedClass.name}</h4>
+                            <p className="selectedClassTime">9월 18일, 11:00</p>
+                            <p className="selectedClassAddress">도오오오오오오오로명 주소</p>
+                            {/* <p>위치: {selectedClass.lat}, {selectedClass.lng}</p>  */}
+                            <p className="selectedClassPrice">75000원</p>
+                        </div>
+                    </div>
+                </div>
+            )}
             </div>
             <Navbar />
         </div>

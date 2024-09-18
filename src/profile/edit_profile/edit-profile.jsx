@@ -91,15 +91,15 @@ function EditProfile() {
         </header>
         <div id="header-title">
           <h2>
-            나의 프로필 <br />
-            수정하기
+            권한 <br/>변경하기
+            <span class="material-symbols-outlined">autorenew</span> 
           </h2>
         </div>
 
-        <h2 id="profile-questionTxt">권한 변경하기</h2>
+        <h2 id="profile-questionTxt">역할 선택하기</h2>
         <div id="profile-quesionBox">
           <h4>클래스 개최자이신가요? . . .</h4>
-          <input type="checkbox" id="checkBox" onClick={onCheck} />
+          <input type="checkbox" id="profileCheckBox" onClick={onCheck} />
         </div>
         <button className="profileBtn" onClick={onSubmit}>
           변경하기

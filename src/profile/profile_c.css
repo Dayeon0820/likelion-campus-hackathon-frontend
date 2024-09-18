@@ -58,11 +58,12 @@
   text-align: left;
 }
 
-#checkBox {
+#profileCheckBox {
   height: 17px;
   width: 17px;
-  border: 2px solid rgba(219, 224, 229, 1);
+/*   border: 2px solid rgba(219, 224, 229, 1); */
   border-radius: 5px;
+  border: 1px solid #333;
 }
 
 .profileBtn {

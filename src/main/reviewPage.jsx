@@ -1,6 +1,8 @@
 import {React, useState, useEffect } from "react";
 import { Link, useNavigate, NavLink } from "react-router-dom";
 import "./css/review.css";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faStar } from '@fortawesome/free-solid-svg-icons';
 
 // 리뷰 데이터 (예시)
 const initialReviews = [
@@ -36,7 +38,7 @@ const initialReviews = [
       id: 5,
       memberNickname: "Lucas",
       createdTime: "2024-02-13",
-      score: 3,
+      score: 5,
       reviewComment: "I loved this class! It was so fun and the teacher was great.",
     },
   ];
@@ -44,6 +46,7 @@ const initialReviews = [
 const ReviewInquiry = () => {
     const [reviews, SetReviews] = useState(initialReviews);
     const [sortOption, setSortOption] = useState("latest"); // 정렬 옵션 상태 추가
+    
 
     // 정렬된 리뷰 가져오기
     const sortedReviews = () => {
@@ -70,6 +73,21 @@ const ReviewInquiry = () => {
 
     const ratingPercentages = calculateRatings();
 
+    // 평균 별점 계산
+    const averageRating = (
+        reviews.reduce((acc, review) => acc + review.score, 0) / reviews.length
+    ).toFixed(1);
+
+    const calculateStarClasses = (index, rating) => {
+        if (index < Math.floor(rating)) {
+            return "star filled";
+        } else if (index === Math.floor(rating) && rating % 1 !== 0) {
+            return "star half";
+        } else {
+            return "star";
+        }
+    };
+
     return(
         <div id="mobile-view">
             <header className="app-header reviewHeader defaultHeader">
@@ -82,7 +100,18 @@ const ReviewInquiry = () => {
                 <section className="reviewAverage">
                     <div className="averageTitleBox">
                         <h3>4.5</h3>
-                        <div className="totalStarBox"></div>
+                        <div className="totalStarBox">
+                            <div className="averageStar">
+                                {[...Array(5)].map((_, index) => (
+                                    <FontAwesomeIcon
+                                        key={index}
+                                        icon={faStar}
+                                        className={calculateStarClasses(index, averageRating)}
+                                    />
+                                ))}
+                            </div>
+                            <span>1.5K 리뷰</span>
+                        </div>
                     </div>
                     <div className="averageRatingBox">
                         {ratingPercentages.map((percentage, index) => (
@@ -101,7 +130,7 @@ const ReviewInquiry = () => {
                         name="sort" 
                         id="reviewSelect"
                         value={sortOption}
-                        onChange={(e) => setSortOption(e.target.value)} // setSortOption으로 변경
+                        onChange={(e) => setSortOption(e.target.value)} 
                     >
                         <option value="latest">최신순</option>
                         <option value="rating">별점순</option>
@@ -118,7 +147,14 @@ const ReviewInquiry = () => {
                                 </div>
                             </div>
                             <div className="rating">
-                                {"⭐".repeat(review.score)}
+                                {/* {"⭐".repeat(review.score)} */}
+                                {Array.from({ length: review.score }, (_, index) => (
+                                    <FontAwesomeIcon
+                                        key={index}
+                                        icon={faStar}
+                                        className="individualStar"
+                                    />
+                                ))}
                             </div>
                             <p className="reviewComment">{review.reviewComment}</p>
                         </div>
