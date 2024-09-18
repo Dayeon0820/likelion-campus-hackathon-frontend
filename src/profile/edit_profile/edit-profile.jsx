@@ -20,6 +20,7 @@ function EditProfile() {
   };
 
   useEffect(() => {
+    console.log(check)
     if (check === false) {
       setPermission("USER");
     } else if (check === true) {
@@ -33,8 +34,10 @@ function EditProfile() {
     setIsModalOpen(true); // 모달 열림
   };
 
+  useEffect(() => {
+    console.log(permission);
+  }, [permission])
   const handleModalConfirm = async (e) => {
-
     e.preventDefault();
     const formData = new FormData();
     const baseUrl = "http://sangsang2.kr:8080/api/member-info/edit";
@@ -124,11 +127,11 @@ function EditProfile() {
         {/* 모달이 열렸을 때만 표시 */}
         {isModalOpen && (
           <div
-            id="promiseModalBox"
-            className="promise-modal-Box"
+            id="permissionModalBox"
+            className="permission-modal-Box"
             onClick={handleModalOutsideClick}
           >
-            <div className="promise-modal-txt">
+            <div className="permission-modal-txt">
               <p>개최자로<br/>변경하시겠습니까?</p>
             </div>
             <div>
