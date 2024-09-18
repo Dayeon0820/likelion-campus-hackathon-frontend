@@ -80,7 +80,7 @@ const ClassApplication = () => {
         </div>
         <section className="classApplicationSection">
           <div className="titleContainer">
-            <Link to="/home/class_application/review" className="classRating">
+            <Link to={`/home/class_application/review/${id}`} className="classRating">
               <span className="star">⭐</span> {averageScore} ({scoreCount})
             </Link>
             <h3 className="classTitle">{name}</h3>

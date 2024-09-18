@@ -1,97 +1,144 @@
 import {React, useState, useEffect } from "react";
-import { Link, useNavigate, NavLink } from "react-router-dom";
+import { Link, useNavigate, NavLink, useParams } from "react-router-dom";
 import "./css/review.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
+import axios from 'axios';
 
 // 리뷰 데이터 (예시)
-const initialReviews = [
-    {
-      id: 1,
-      memberNickname: "Annabelle",
-      createdTime: "2023-09-15",
-      score: 1,
-      reviewComment: "수업은 일상적이었고 선생님도 놀라웠습니다.",
-    },
-    {
-      id: 2,
-      memberNickname: "Mia",
-      createdTime: "2024-09-10",
-      score: 3,
-      reviewComment: "수업이 정말 즐거웠고 많은 것을 배웠습니다.",
-    },
-    {
-      id: 3,
-      memberNickname: "Ava",
-      createdTime: "2024-08-13",
-      score: 5,
-      reviewComment: "이 수업은 저에게 완벽했습니다. 저는 그 속도가 마음에 듭니다.",
-    },
-    {
-      id: 4,
-      memberNickname: "Liam",
-      createdTime: "2024-06-13",
-      score: 4,
-      reviewComment: "훌륭한 수업이었고, 새로운 취미를 시작하는 데 정말 도움이 되었습니다.",
-    },
-    {
-      id: 5,
-      memberNickname: "Lucas",
-      createdTime: "2024-02-13",
-      score: 5,
-      reviewComment: "I loved this class! It was so fun and the teacher was great.",
-    },
-  ];
+// const initialReviews = [
+//     {
+//       id: 1,
+//       memberNickname: "Annabelle",
+//       createdTime: "2023-09-15",
+//       score: 1,
+//       reviewComment: "수업은 일상적이었고 선생님도 놀라웠습니다.",
+//     },
+//     {
+//       id: 2,
+//       memberNickname: "Mia",
+//       createdTime: "2024-09-10",
+//       score: 3,
+//       reviewComment: "수업이 정말 즐거웠고 많은 것을 배웠습니다.",
+//     },
+//     {
+//       id: 3,
+//       memberNickname: "Ava",
+//       createdTime: "2024-08-13",
+//       score: 5,
+//       reviewComment: "이 수업은 저에게 완벽했습니다. 저는 그 속도가 마음에 듭니다.",
+//     },
+//     {
+//       id: 4,
+//       memberNickname: "Liam",
+//       createdTime: "2024-06-13",
+//       score: 4,
+//       reviewComment: "훌륭한 수업이었고, 새로운 취미를 시작하는 데 정말 도움이 되었습니다.",
+//     },
+//     {
+//       id: 5,
+//       memberNickname: "Lucas",
+//       createdTime: "2024-02-13",
+//       score: 5,
+//       reviewComment: "I loved this class! It was so fun and the teacher was great.",
+//     },
+//   ];
 
 const ReviewInquiry = () => {
-    const [reviews, SetReviews] = useState(initialReviews);
+    const { id } = useParams();
+    const token = localStorage.getItem('token');
+    console.log(id,'강의 id')
+    // const [reviews, setReviews] = useState(initialReviews);
+    // const [review, setReview] = useState([]);
     const [sortOption, setSortOption] = useState("latest"); // 정렬 옵션 상태 추가
     
 
-    // 정렬된 리뷰 가져오기
-    const sortedReviews = () => {
-        let sorted = [...reviews]; // 리뷰 복사본 생성
-        if (sortOption === "rating") {
-            // 별점 순으로 정렬
-            sorted.sort((a, b) => b.score - a.score);
-        } else {
-            // 최신순 정렬 (날짜순)
-            sorted.sort((a, b) => new Date(b.createdTime) - new Date(a.createdTime));
-        }
-        return sorted;
-    };
+    //리뷰 데이터 가져오기
+    // const fetchReviews = async () => {
+    //     console.log(id,'리뷰 데이터 가져오는 console.log')
+    //     try{
+    //         const response = await fetch(`http://sangsang2.kr:8080/api/review?${id}`);
+    //         // const response = await fetch(`http://sangsang2.kr:8080/api/review/${id}`, {
+    //         //     method: 'GET',
+    //         //     headers: {
+    //         //         'Content-Type': 'application/json',
+    //         //         'Authorization': `Bearer ${token}` // 토큰을 Authorization 헤더에 포함
+    //         //     }
+    //         // });
+    //         const reviewData = await response.json();
+    //         console.log(reviewData,'reviewData');
+    //         // setReview(reviewData);
+    //     } catch (error) {
+    //         console.error('리뷰 정보 가져오지 못했음',error)
+    //         alert('리뷰 정보 가져오지 못했음')
+    //     }
+    //     // console.log(review)
+    // }
+    useEffect(() => {
+        // 데이터 가져오기 함수
+        const fetchReviewData = async () => {
+          try {
+            const response = await axios.get(`/api/review/`, {
+              params: { id } // requestParam으로 id를 전달
+            });
+            console.log(response,'response')
+          } catch (err) {
+          }
+        };
+    
+        fetchReviewData();
+      }, [id]); // id가 변경될 때마다 다시 호출
+
+    // useEffect(() => {
+    //     if (id) {
+    //         fetchReviews();
+    //     }
+    // }, [id]);
+
+    // 리뷰 정렬
+    // const sortedReviews = () => {
+    //     let sorted = [...review]; 
+    //     if (sortOption === "rating") {
+    //         // 별점 순으로 정렬
+    //         sorted.sort((a, b) => b.score - a.score);
+    //     } else {
+    //         // 날짜순 정렬
+    //         sorted.sort((a, b) => new Date(b.createdTime) - new Date(a.createdTime));
+    //     }
+    //     return sorted;
+    // };
 
     // 평점별 리뷰 비율 계산
-    const calculateRatings = () => { //실제로는 api 가져와서 사용하면 됨
-        const ratingCounts = [0, 0, 0, 0, 0]; // 5, 4, 3, 2, 1
-        reviews.forEach(review => {
-            ratingCounts[review.score - 1]++;
-        });
-        const totalReviews = reviews.length;
-        return ratingCounts.map(count => (totalReviews > 0 ? (count / totalReviews) * 100 : 0));
-    };
+    // const calculateRatings = () => { //실제로는 api 가져와서 사용하면 됨
+    //     const ratingCounts = [0, 0, 0, 0, 0]; // 5, 4, 3, 2, 1
+    //     review.forEach(review => {
+    //         ratingCounts[review.score - 1]++;
+    //     });
+    //     const totalReviews = review.length;
+    //     return ratingCounts.map(count => (totalReviews > 0 ? (count / totalReviews) * 100 : 0));
+    // };
 
-    const ratingPercentages = calculateRatings();
+    // const ratingPercentages = calculateRatings();
 
     // 평균 별점 계산
-    const averageRating = (
-        reviews.reduce((acc, review) => acc + review.score, 0) / reviews.length
-    ).toFixed(1);
+    // const averageRating = (
+    //     review.reduce((acc, review) => acc + review.score, 0) / review.length
+    // ).toFixed(1);
 
-    const calculateStarClasses = (index, rating) => {
-        if (index < Math.floor(rating)) {
-            return "star filled";
-        } else if (index === Math.floor(rating) && rating % 1 !== 0) {
-            return "star half";
-        } else {
-            return "star";
-        }
-    };
+    // const calculateStarClasses = (index, rating) => {
+    //     if (index < Math.floor(rating)) {
+    //         return "star filled";
+    //     } else if (index === Math.floor(rating) && rating % 1 !== 0) {
+    //         return "star half";
+    //     } else {
+    //         return "star";
+    //     }
+    // };
 
     return(
         <div id="mobile-view">
             <header className="app-header reviewHeader defaultHeader">
-                <Link to="/home"> {/* /home/class_application/i 로 고치기 */}
+                <Link to={`/home/class_application/${id}`}> {/* /home/class_application/i 로 고치기 */}
                     <span className="material-symbols-outlined">arrow_back_ios</span>
                 </Link>
                 <h3>클래스 리뷰</h3>
@@ -106,7 +153,7 @@ const ReviewInquiry = () => {
                                     <FontAwesomeIcon
                                         key={index}
                                         icon={faStar}
-                                        className={calculateStarClasses(index, averageRating)}
+                                        // className={calculateStarClasses(index, averageRating)}
                                     />
                                 ))}
                             </div>
@@ -114,7 +161,7 @@ const ReviewInquiry = () => {
                         </div>
                     </div>
                     <div className="averageRatingBox">
-                        {ratingPercentages.map((percentage, index) => (
+                        {/* {ratingPercentages.map((percentage, index) => (
                             <div key={index} className="ratingBarWrapper">
                                 <div className="ratingLabel">{5 - index}</div>
                                 <div className="ratingBar">
@@ -122,7 +169,7 @@ const ReviewInquiry = () => {
                                 </div>
                                 <div className="ratingPercentage">{percentage.toFixed(0)} %</div>
                             </div>
-                        ))}
+                        ))} */}
                     </div>
                 </section>
                 <div className="reviewBtnBox">  {/* 시간 남으면 별점 선택해서 보는 것도 select추가 */}
@@ -136,7 +183,7 @@ const ReviewInquiry = () => {
                         <option value="rating">별점순</option>
                     </select>
                 </div>
-                <section id="reviewList">
+                {/* <section id="reviewList">
                     {sortedReviews().map(review => ( //실제로는 api 값 가져와서
                         <div key={review.id} className="reviewItem">
                             <div className="reviewProfile">
@@ -147,7 +194,6 @@ const ReviewInquiry = () => {
                                 </div>
                             </div>
                             <div className="rating">
-                                {/* {"⭐".repeat(review.score)} */}
                                 {Array.from({ length: review.score }, (_, index) => (
                                     <FontAwesomeIcon
                                         key={index}
@@ -159,7 +205,7 @@ const ReviewInquiry = () => {
                             <p className="reviewComment">{review.reviewComment}</p>
                         </div>
                     ))}
-                </section>
+                </section> */}
 
 
             </main>

@@ -59,7 +59,7 @@ function App() {
           element={<CompletedApplication />}
         />
         <Route
-          path="/home/class_application/review"
+          path="/home/class_application/review/:id"
           element={<ReviewInquiry />}
         />
         <Route path="/map" element={<ClassMap />} />
