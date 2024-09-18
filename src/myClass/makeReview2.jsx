@@ -57,7 +57,7 @@ function MakeReview2() {
           <span className="process-dot"></span>
         </div>
         <h2 id="profile-questionTxt">2단계: 사진 추가하기</h2>
-        <div id="profile-quesionBox">
+        <div id="review-questionBox">
           <h4 className="review-sub-title">리뷰 사진을 추가해주세요.</h4>
         </div>
         <div className="createInput-box createInput-box_image">

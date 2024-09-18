@@ -50,7 +50,7 @@ function MakeReview() {
           <span className="process-dot"></span>
         </div>
         <h2 id="profile-questionTxt">1단계: 클래스에 만족하셨나요?</h2>
-        <div id="profile-quesionBox">
+        <div id="review-questionBox">
           <h4>1개에서 5개까지 별을 클릭해주세요</h4>
         </div>
         <div id="review-starBox">
