@@ -27,7 +27,7 @@ function MakeReview2() {
     e.preventDefault();
     console.log("review3", requestDTO);
     const formData = new FormData();
-    const baseUrl = "http://sangsang2.kr:8080/api/lecture/review/write";
+    const baseUrl = "http://sangsang2.kr:8080/api/review/write";
 
     formData.append(
       "review",
@@ -66,7 +66,7 @@ function MakeReview2() {
       }
 
       console.log("Success:", data);
-      navigate("/myclass");
+      navigate("/profile");
     } catch (error) {
       console.error("Error:", error);
     }
@@ -94,7 +94,7 @@ function MakeReview2() {
           <span className="process-dot"></span>
         </div>
         <h2 id="profile-questionTxt">3단계: 리뷰 작성하기</h2>
-        <div id="profile-quesionBox">
+        <div id="review-questionBox">
           <h4 className="review-sub-title">여러분의 리뷰를 작성해주세요.</h4>
         </div>
         <div className=" editProfile-textarea review-textarea">

@@ -27,51 +27,6 @@ function MakeReview() {
     score: rating,
     lectureId: courseId,
   };
-  const onSubmit = async (e) => {
-    e.preventDefault();
-    console.log("review2 :", requestDTO);
-    const formData = new FormData();
-    const baseUrl = "http://sangsang2.kr:8080/api/lecture/review/write";
-
-    formData.append(
-      "review",
-      new Blob([JSON.stringify(requestDTO)], { type: "application/json" })
-    );
-
-    try {
-      const response = await fetch(baseUrl, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        body: formData,
-      });
-
-      const data = await response.json();
-      if (!response.ok) {
-        if (response.status === 404) {
-          if (data.error === "존재하지 않는 회원입니다") {
-            alert("사용자를 찾을 수 없습니다.");
-          } else if (data.error === "존재하지 않는 클래스입니다.") {
-            alert("존재하지 않는 클래스입니다.");
-          } else if (data.error === "이미 리뷰를 작성한 회원입니다.") {
-            alert("이미 리뷰를 작성한 회원입니다.");
-          } else {
-            alert("리뷰 생성에 실패했습니다."); // 다른 404 에러 처리
-          }
-        } else {
-          alert("리뷰 생성에 실패했습니다.");
-        }
-        console.log(data.error);
-        return;
-      }
-
-      console.log("Success:", data);
-      navigate("/myclass");
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  };
 
   return (
     <div id="mobile-view">
@@ -80,7 +35,7 @@ function MakeReview() {
           <img
             src="/arrow.png"
             id="header-arrowIcon"
-            onClick={() => navigate("/myClass")}
+            onClick={() => navigate("/completedClass")}
           />
         </header>
         <div id="header-title">
@@ -95,7 +50,7 @@ function MakeReview() {
           <span className="process-dot"></span>
         </div>
         <h2 id="profile-questionTxt">1단계: 클래스에 만족하셨나요?</h2>
-        <div id="profile-quesionBox">
+        <div id="review-questionBox">
           <h4>1개에서 5개까지 별을 클릭해주세요</h4>
         </div>
         <div id="review-starBox">
@@ -120,16 +75,12 @@ function MakeReview() {
           </div>
         </div>
         <button
-          className="nextBtn secondBtn"
+          className="nextBtn "
           onClick={() => {
             navigate("/makeReview2", { state: { rating, courseId } });
           }}
         >
           사진, 글 추가하러 가기
-        </button>
-
-        <button className="nextBtn" onClick={onSubmit}>
-          등록하기
         </button>
       </div>
     </div>
