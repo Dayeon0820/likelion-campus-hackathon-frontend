@@ -31,6 +31,7 @@ import CompletedClass from "./myClass/completed";
 import PassWord from "./signup/password";
 import PassWord2 from "./signup/password2";
 import SearchList from "./search/searchList";
+import SendingChats from "./chatting/sendingChats";
 
 function App() {
   return (
@@ -41,6 +42,7 @@ function App() {
         <Route path="/password" element={<PassWord />} />
         <Route path="/password2" element={<PassWord2 />} />
         <Route path="/chats" element={<Chats />} />
+        <Route path="/sendingChats" element={<SendingChats />} />
         <Route path="/chatting" element={<Chatting />} />
         <Route path="/home" element={<Home />} />
         <Route path="/home/class_list" element={<ClassList />} />

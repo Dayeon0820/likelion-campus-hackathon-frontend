@@ -7,42 +7,38 @@ import "../App.css";
 import "./chatting.css";
 import styles from "./chatting.module.css";
 
-function Chatting() {
+function SendingChats() {
   const navigate = useNavigate();
   const location = useLocation();
   const token = localStorage.getItem("token");
-  const id = location.state?.id;
-  const lectureId = parseFloat(id);
-  const title = location.state?.name || "";
+  const { search } = useLocation();
+  const query = new URLSearchParams(search);
+  const id = query.get("chatRoomId");
+  const title = query.get("chatRoomName");
   const [sending, setsending] = useState("");
   const [messages, setMessages] = useState({});
   const gobackHome = () => navigate(`/home`);
-  const createChatting = async (e) => {
-    const baseUrl = "http://sangsang2.kr:8080/api/chat/create/chatRoom";
+
+  const getMessage = async (e) => {
+    const baseUrl = `http://sangsang2.kr:8080/api/chat/chatRoom?chatRoomId=${id}`;
 
     try {
       const response = await fetch(baseUrl, {
-        method: "POST",
+        method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          lectureId: lectureId,
-        }),
       });
 
       const data = await response.json();
       if (!response.ok) {
-        if (data.error === "이미 채팅방이 존재합니다.") {
-          alert("이미 존재하는 채팅방입니다.");
-          navigate("/chats");
-        }
+        alert("메세지 불러오기에 실패했습니다.");
+
         console.log("Error Data:", data);
         return;
       }
 
-      console.log("Success:", data);
       const { chatRoomId, created_at, messageList } = data;
       const processedMessages = messageList.map((message) => ({
         content: message.message,
@@ -57,16 +53,14 @@ function Chatting() {
         messages: processedMessages, // 가공된 메시지 리스트
       };
 
-      console.log(" create chatting Success: Processed Data:", processedData);
-      setMessages(processedData);
+      console.log(" get message Success:", processedData);
     } catch (error) {
       console.error("Error:", error);
     }
   };
 
   useEffect(() => {
-    console.log("lecture id", lectureId);
-    createChatting();
+    getMessage();
   }, []);
 
   const sendMessage = async (e) => {
@@ -81,7 +75,7 @@ function Chatting() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          chatRoomId: messages.chatRoomId,
+          chatRoomId: id,
           message: sending,
         }),
       });
@@ -107,7 +101,7 @@ function Chatting() {
           <img
             src="/arrow.png"
             id="header-arrowIcon"
-            onClick={() => navigate(`/home/class_application/${id}`)}
+            onClick={() => navigate(`/chats`)}
           />
           <div id="chatting-title">
             <h1>{title}</h1>
@@ -160,7 +154,9 @@ function Chatting() {
                 setsending(e.target.value);
               }}
             />
-            <img src="/send.png" id="input-sendingIcon" />
+            <button>
+              <img src="/send.png" id="input-sendingIcon" type="submit" />
+            </button>
           </form>
         </div>
       </div>
@@ -168,4 +164,4 @@ function Chatting() {
   );
 }
 
-export default Chatting;
+export default SendingChats;
