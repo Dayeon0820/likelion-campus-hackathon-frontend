@@ -6,6 +6,7 @@ import "../App.css";
 import "../profile/profile.css";
 import "./myclass.css";
 import Navbar from "../main/navbar";
+
 function Myclass() {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
@@ -14,6 +15,7 @@ function Myclass() {
   useEffect(() => {
     getclassList();
   }, []);
+
   const getclassList = async () => {
     const baseUrl =
       "http://sangsang2.kr:8080/api/lecture/own?permission=CREATOR";
@@ -39,19 +41,26 @@ function Myclass() {
         }
         return;
       }
-      const formattedData = data.map((course) => ({
+
+    console.log(data,'data')
+
+    const formattedData = data.map((course,i) => {
+      console.log(course.imageUrl,i, 'course imageUrl'); // 디버깅 로그 추가
+      const imageUrl = course.imageUrl && Array.isArray(course.imageUrl) && course.imageUrl.length > 0
+        ? course.imageUrl[0].imageUrl
+        : defaultImageUrl;
+      
+      return {
         id: course.id,
         name: course.name,
         type: course.type,
         price: course.price,
-        imageUrls:
-          course.imageUrl.length > 0
-            ? course.imageUrl[0].imageUrl
-            : defaultImageUrl,
-      }));
+        imageUrls: imageUrl,
+      };
+    });
 
       setCourses(formattedData);
-      console.log(formattedData);
+      console.log(formattedData, 'formattedData');
     } catch (error) {
       console.error("Error occurred during delete:", error);
       alert("Error occurred " + error.message);
