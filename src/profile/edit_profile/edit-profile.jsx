@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import "../../App.css";
@@ -31,12 +32,13 @@ function EditProfile() {
   const onSubmit = (e) => {
     e.preventDefault();
     console.log("Opening modal...");
-    setIsModalOpen(true); // 모달 열림
+    setIsModalOpen(true); 
   };
 
   useEffect(() => {
     console.log(permission);
   }, [permission])
+
   const handleModalConfirm = async (e) => {
     e.preventDefault();
     const formData = new FormData();
@@ -78,7 +80,6 @@ function EditProfile() {
         }
         return;
       }
-
       console.log("Success:", data);
       navigate("/profile");
     } catch (error) {
@@ -89,14 +90,7 @@ function EditProfile() {
   };
 
   const handleModalCancel = () => {
-    setIsModalOpen(false); // 모달 닫기
-  };
-
-  const handleModalOutsideClick = (e) => {
-    // 모달 외부 클릭 시 닫기 처리
-    if (e.target.id === "modalOverlay") {
-      setIsModalOpen(false);
-    }
+    setIsModalOpen(false); 
   };
 
   return (
@@ -129,7 +123,6 @@ function EditProfile() {
           <div
             id="permissionModalBox"
             className="permission-modal-Box"
-            onClick={handleModalOutsideClick}
           >
             <div className="permission-modal-txt">
               <p>개최자로<br/>변경하시겠습니까?</p>
