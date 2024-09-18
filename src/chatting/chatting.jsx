@@ -20,6 +20,7 @@ function Chatting() {
   const gobackHome = () => navigate(`/home`);
   const messageEndRef = useRef(null);
   const [flag, setFlag] = useState(false);
+  const [chatRoomId, setChatRoomId] = useState(null); // 채팅방 ID 상태 추가
 
   const createChatting = async (e) => {
     const baseUrl = "http://sangsang2.kr:8080/api/chat/create/chatRoom";
@@ -48,6 +49,7 @@ function Chatting() {
 
       console.log("Success:", data);
       const { chatRoomId, created_at, messageList } = data;
+      setChatRoomId(chatRoomId);
       const processedMessages = messageList.map((message) => ({
         content: message.message,
         nickname: message.memberNickname,
@@ -75,6 +77,7 @@ function Chatting() {
   }, []);
 
   const getMessage = async (e) => {
+    if (!chatRoomId) return; // 채팅방 ID가 없으면 getMessage를 실행하지 않음
     const baseUrl = `http://sangsang2.kr:8080/api/chat/chatRoom?chatRoomId=${id}`;
 
     try {
@@ -123,7 +126,7 @@ function Chatting() {
     const intervalId = setInterval(getMessage, 3000); // 5초마다 호출
 
     return () => clearInterval(intervalId); // 컴포넌트 언마운트 시 클리어
-  }, [flag]); // 빈 배열로 초기 마운트 시만 실행되도록
+  }, [flag, chatRoomId]); // 빈 배열로 초기 마운트 시만 실행되도록
 
   useEffect(() => {
     // 메시지가 업데이트 될 때마다 스크롤을 가장 아래로 이동
@@ -189,21 +192,39 @@ function Chatting() {
                   message.type === "Sent" ? "sent" : "received"
                 }`}
               >
-                <div className="message-content">
-                  <div className="chattingBox_name">
-                    <span>{message.nickname}</span>
-                  </div>
-
-                  <div className="chattingBox-message chattingBox-message">
-                    <p>{message.content}</p>
-                  </div>
-                </div>
-
-                <img
-                  src={message.avatar || "/user.png"}
-                  alt="avatar"
-                  className="chatting-img"
-                />
+                {message.type === "Received" ? (
+                  <>
+                    <img
+                      src={message.avatar || "/user.png"}
+                      alt="avatar"
+                      className="chatting-img"
+                    />
+                    <div className="message-content received">
+                      <div className="chattingBox_name">
+                        <span>{message.nickname}</span>
+                      </div>
+                      <div className="chattingBox-message chattingBox-message">
+                        <p>{message.content}</p>
+                      </div>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div className="message-content sent">
+                      <div className="chattingBox_name">
+                        <span>{message.nickname}</span>
+                      </div>
+                      <div className="chattingBox-message chattingBox-message sent">
+                        <p>{message.content}</p>
+                      </div>
+                    </div>
+                    <img
+                      src={message.avatar || "/user.png"}
+                      alt="avatar"
+                      className="chatting-img"
+                    />
+                  </>
+                )}
               </div>
             ))}
           </div>
