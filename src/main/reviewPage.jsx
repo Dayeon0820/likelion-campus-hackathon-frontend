@@ -1,63 +1,23 @@
 import {React, useState, useEffect } from "react";
 import { Link, useNavigate, NavLink, useParams } from "react-router-dom";
 import "./css/review.css";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStar } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faStar } from "@fortawesome/free-solid-svg-icons";
+import axios from "axios";
 
 const ReviewInquiry = () => {
-    const { id } = useParams();
-    const token = localStorage.getItem('token');
-    console.log(id,'강의 id')
-    const [review, setReview] = useState([]);
-    const [averageScore, setAverageScore] = useState([]);
-    const [sortOption, setSortOption] = useState("latest"); // 정렬 옵션 상태
+    const [reviews, SetReviews] = useState(initialReviews);
+    const [sortOption, setSortOption] = useState("latest"); // 정렬 옵션 상태 추가
     
 
-    //리뷰 데이터 가져오기
-    useEffect(() => {
-        const fetchReviews = async () => {
-            console.log(id,'리뷰 데이터 가져오는 console.log')
-            try{
-                const response = await fetch(`http://sangsang2.kr:8080/api/review/?lectureId=${id}`);
-                const reviewData = await response.json();
-                console.log(reviewData,'reviewData');
-                setReview(reviewData);
-            } catch (error) {
-                console.error('리뷰 정보 가져오지 못했음',error)
-                alert('리뷰 정보 가져오지 못했음')
-            }
-            console.log(review)
-        };
-
-        const fetchAverageScore = async () => {
-            try{
-                const response = await fetch(`http://sangsang2.kr:8080/api/review/score/average?lectureId=${id}`);
-                if(!response.ok) {
-                    throw new Error("API 호출 실패");
-                }
-                const averageData = await response.json()
-                setAverageScore(averageData);
-                console.log(averageData,'평균')
-            } catch(error){
-                console.error('평균 스코어 정보 가져오지 못했음',error)
-                alert('평균 스코어 정보 가져오지 못했음')
-            }
-            console.log(averageScore,'averageScore');
-        }
-
-        fetchReviews();
-        fetchAverageScore();
-
-    }, []);
-
-    // 리뷰 정렬
+    // 정렬된 리뷰 가져오기
     const sortedReviews = () => {
-        let sorted = [...review]; 
+        let sorted = [...reviews]; // 리뷰 복사본 생성
         if (sortOption === "rating") {
             // 별점 순으로 정렬
             sorted.sort((a, b) => b.score - a.score);
         } else {
-            // 날짜순 정렬
+            // 최신순 정렬 (날짜순)
             sorted.sort((a, b) => new Date(b.createdTime) - new Date(a.createdTime));
         }
         return sorted;
@@ -73,22 +33,22 @@ const ReviewInquiry = () => {
         return ratingCounts.map(count => (totalReviews > 0 ? (count / totalReviews) * 100 : 0));
     };
 
-    const ratingPercentages = calculateRatings();
+  // const ratingPercentages = calculateRatings();
 
     // 평균 별점 계산
     const averageRating = (
         review.reduce((acc, review) => acc + review.score, 0) / review.length
     ).toFixed(1);
 
-    const calculateStarClasses = (index, rating) => {
-        if (index < Math.floor(rating)) {
-            return "star filled";
-        } else if (index === Math.floor(rating) && rating % 1 !== 0) {
-            return "star half";
-        } else {
-            return "star";
-        }
-    };
+  // const calculateStarClasses = (index, rating) => {
+  //     if (index < Math.floor(rating)) {
+  //         return "star filled";
+  //     } else if (index === Math.floor(rating) && rating % 1 !== 0) {
+  //         return "star half";
+  //     } else {
+  //         return "star";
+  //     }
+  // };
 
     return(
         <div id="mobile-view">
@@ -124,21 +84,23 @@ const ReviewInquiry = () => {
                                 </div>
                                 <div className="ratingPercentage">{percentage.toFixed(0)} %</div>
                             </div>
-                        ))}
-                    </div>
-                </section>
-                <div className="reviewBtnBox">  {/* 시간 남으면 별점 선택해서 보는 것도 select추가 */}
-                    <select 
-                        name="sort" 
-                        id="reviewSelect"
-                        value={sortOption}
-                        onChange={(e) => setSortOption(e.target.value)} 
-                    >
-                        <option value="latest">최신순</option>
-                        <option value="rating">별점순</option>
-                    </select>
-                </div>
-                <section id="reviewList">
+                        ))} */}
+          </div>
+        </section>
+        <div className="reviewBtnBox">
+          {" "}
+          {/* 시간 남으면 별점 선택해서 보는 것도 select추가 */}
+          <select
+            name="sort"
+            id="reviewSelect"
+            value={sortOption}
+            onChange={(e) => setSortOption(e.target.value)}
+          >
+            <option value="latest">최신순</option>
+            <option value="rating">별점순</option>
+          </select>
+        </div>
+        {/* <section id="reviewList">
                     {sortedReviews().map(review => ( //실제로는 api 값 가져와서
                         <div key={review.id} className="reviewItem">
                             <div className="reviewProfile">
@@ -160,12 +122,10 @@ const ReviewInquiry = () => {
                             <p className="reviewComment">{review.reviewComment}</p>
                         </div>
                     ))}
-                </section>
+                </section> */}
+      </main>
+    </div>
+  );
+};
 
-
-            </main>
-        </div>
-    );
-}
-
-export default ReviewInquiry
+export default ReviewInquiry;
