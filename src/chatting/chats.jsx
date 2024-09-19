@@ -11,10 +11,6 @@ function Chats() {
   const [chatRoomList, setChatRoomList] = useState([]);
   const [myImg, setMyImg] = useState("");
   const [selectedType, setSelectedType] = useState("all");
-  const handleButtonClick = (type) => {
-    console.log("Button Clicked:", type); // 상태 업데이트 확인
-    setSelectedType(type);
-  };
   const navigate = useNavigate();
   const getChatsList = async (e) => {
     const baseUrl = "http://sangsang2.kr:8080/api/chat/chatRoom/all";
@@ -41,7 +37,7 @@ function Chats() {
         chatRoomName: chatRoom.chatRoomName,
         count: chatRoom.notReadMessageCount,
         nickname: chatRoom.receiverNickname,
-        type: chatRoom.isLectureOwner === "true" ? "creator" : "user",
+        amIowner: chatRoom.isLectureOwner,
       }));
 
       const processedData = {
@@ -56,10 +52,12 @@ function Chats() {
       console.error("Error:", error);
     }
   };
-  // 선택한 타입에 맞게 채팅방 필터링
+  // 필터링 로직
   const filteredChatRooms = chatRoomList.filter((chatRoom) => {
-    if (selectedType === "all") return true; // 전체를 보여줌
-    return chatRoom.type === selectedType;
+    if (selectedType === "all") return true; // 전체
+    if (selectedType === "mine") return chatRoom.amIowner === false; // 내 문의
+    if (selectedType === "received") return chatRoom.amIowner === true; // 내가 받은 문의
+    return true; // 기본값
   });
 
   useEffect(() => {
@@ -71,34 +69,34 @@ function Chats() {
 
   return (
     <div id="mobile-view">
-      <div id="default-padding">
+      <div id="chats-default-padding">
         <header id="chats_header">
           <img id="chats_myImg" src={myImg || "/user.png"} />
         </header>
         <div id="chats_title">
           <h1>Chats</h1>
         </div>
+        {/* 필터링 버튼 */}
         <div id="chatRoomTypeButtons">
           <button
-            onClick={() => handleButtonClick("all")}
+            onClick={() => setSelectedType("all")}
             className={selectedType === "all" ? "active" : ""}
           >
             전체
           </button>
           <button
-            onClick={() => handleButtonClick("user")}
-            className={selectedType === "user" ? "active" : ""}
+            onClick={() => setSelectedType("mine")}
+            className={selectedType === "mine" ? "active" : ""}
           >
             내 문의
           </button>
           <button
-            onClick={() => handleButtonClick("creator")}
-            className={selectedType === "creator" ? "active" : ""}
+            onClick={() => setSelectedType("received")}
+            className={selectedType === "received" ? "active" : ""}
           >
-            내 클래스 문의
+            내가 받은 문의
           </button>
         </div>
-
         <div id="chats_list">
           {filteredChatRooms.map((chatRoom) => (
             <div

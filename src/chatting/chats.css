@@ -5,6 +5,7 @@
   justify-content: space-between;
   align-items: center;
   margin-top: 20px;
+  padding: 5%;
 }
 
 #chats_myImg {
@@ -18,6 +19,7 @@
   display: flex;
   justify-content: flex-start;
   margin-bottom: 15px;
+  padding: 0 5%;
 }
 
 #chats_title h1 {
@@ -28,10 +30,16 @@
 
 #chats_list {
   width: 100%;
+  padding: 0 5%;
   display: flex;
   align-items: center;
   flex-direction: column;
-  padding: 0;
+  overflow-y: auto;
+}
+
+#chats-default-padding {
+  width: 100%;
+  height: 100%;
 }
 
 .chats_li-column {
@@ -84,16 +92,24 @@
 
 #chatRoomTypeButtons {
   width: 100%;
+  height: 43px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 20px;
+  padding: 0;
+  background-color: #f5f0f5;
 }
 
 #chatRoomTypeButtons button {
   width: 28%;
   padding: 6px;
-  border-radius: 15px;
+  height: 100%;
+  margin: 0;
   font-size: 12px;
   background-color: #f5f0f5;
+}
+
+.active {
+  border-bottom: 2px solid rgba(140, 94, 130, 1);
 }
