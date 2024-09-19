@@ -15,7 +15,7 @@ function CompletedClass() {
     getclassList();
   }, []);
   const getclassList = async () => {
-    const baseUrl = "http://sangsang2.kr:8080/api/lecture/own?permission=USER";
+    const baseUrl = "https://sangsang2.kr:8080/api/lecture/own?permission=USER";
 
     try {
       const response = await fetch(baseUrl, {

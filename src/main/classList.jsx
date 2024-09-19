@@ -20,7 +20,7 @@ const ClassList = () => {
   const fetchClassData = async (category, classType) => {
     try {
       const response = await fetch(
-        `http://sangsang2.kr:8080/api/lecture/category?category=${category}`
+        `https://sangsang2.kr:8080/api/lecture/category?category=${category}`
       );
       const data = await response.json();
 

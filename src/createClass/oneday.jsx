@@ -66,7 +66,7 @@ function CreateOnedayClass() {
   const onSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
-    const baseUrl = "http://sangsang2.kr:8080/api/lecture/create/oneday";
+    const baseUrl = "https://sangsang2.kr:8080/api/lecture/create/oneday";
 
     formData.append(
       "lecture",

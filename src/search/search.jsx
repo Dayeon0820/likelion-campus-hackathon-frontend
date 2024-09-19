@@ -22,7 +22,7 @@ const SearchPage = () => {
   useEffect(() => {
     const fetchClassData = async () => {
       try {
-        const response = await fetch("http://sangsang2.kr:8080/api/lecture/banner");
+        const response = await fetch("https://sangsang2.kr:8080/api/lecture/banner");
         const data = await response.json();
         setClassData(data);
       } catch (error) {
@@ -74,7 +74,7 @@ const SearchPage = () => {
 
   //검색  api불러오기
   const onSearch = async () => {
-    const baseUrl = `http://sangsang2.kr:8080/api/lecture/search?keyword=${searchInput}`;
+    const baseUrl = `https://sangsang2.kr:8080/api/lecture/search?keyword=${searchInput}`;
 
     try {
       const response = await fetch(baseUrl, {

@@ -22,7 +22,7 @@ function SendingChats() {
   const messageEndRef = useRef(null);
 
   const getMessage = async (e) => {
-    const baseUrl = `http://sangsang2.kr:8080/api/chat/chatRoom?chatRoomId=${id}`;
+    const baseUrl = `https://sangsang2.kr:8080/api/chat/chatRoom?chatRoomId=${id}`;
 
     try {
       const response = await fetch(baseUrl, {
@@ -79,7 +79,7 @@ function SendingChats() {
 
   const sendMessage = async (e) => {
     e.preventDefault();
-    const baseUrl = "http://sangsang2.kr:8080/api/chat/send";
+    const baseUrl = "https://sangsang2.kr:8080/api/chat/send";
 
     try {
       const response = await fetch(baseUrl, {

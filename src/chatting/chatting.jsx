@@ -23,7 +23,7 @@ function Chatting() {
   const [chatRoomId, setChatRoomId] = useState(null); // 채팅방 ID 상태 추가
 
   const createChatting = async (e) => {
-    const baseUrl = "http://sangsang2.kr:8080/api/chat/create/chatRoom";
+    const baseUrl = "https://sangsang2.kr:8080/api/chat/create/chatRoom";
 
     try {
       const response = await fetch(baseUrl, {
@@ -78,7 +78,7 @@ function Chatting() {
 
   const getMessage = async (e) => {
     if (!chatRoomId) return; // 채팅방 ID가 없으면 getMessage를 실행하지 않음
-    const baseUrl = `http://sangsang2.kr:8080/api/chat/chatRoom?chatRoomId=${id}`;
+    const baseUrl = `https://sangsang2.kr:8080/api/chat/chatRoom?chatRoomId=${id}`;
 
     try {
       const response = await fetch(baseUrl, {
@@ -135,7 +135,7 @@ function Chatting() {
 
   const sendMessage = async (e) => {
     e.preventDefault();
-    const baseUrl = "http://sangsang2.kr:8080/api/chat/send";
+    const baseUrl = "https://sangsang2.kr:8080/api/chat/send";
 
     try {
       const response = await fetch(baseUrl, {

@@ -47,7 +47,7 @@ function Signup1() {
   const getVerifEmail = async (e) => {
     //인증번호 api 불러오기
     e.preventDefault();
-    const baseURL = "http://sangsang2.kr:8080/api/member/send-verification";
+    const baseURL = "https://sangsang2.kr:8080/api/member/send-verification";
     if (!email) {
       alert("이메일 주소를 입력해 주십시오"); //알림창 모달창으로 꾸며야함
       return;
@@ -86,7 +86,7 @@ function Signup1() {
     e.preventDefault();
     const passwordPattern =
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()]).{8,}$/;
-    const baseURL = "http://sangsang2.kr:8080/api/member/signup";
+    const baseURL = "https://sangsang2.kr:8080/api/member/signup";
 
     if (!passW || !email || !rePassW || !Verif) {
       alert("모든 입력칸은 채워주십시오");
