@@ -20,7 +20,7 @@
   width: 100%;
   height: calc(100% - 110px);
   overflow-y: auto;
-  border: 1px solid #333;
+  /* border: 1px solid #333; */
 }
 
 #myclass-main::-webkit-scrollbar {

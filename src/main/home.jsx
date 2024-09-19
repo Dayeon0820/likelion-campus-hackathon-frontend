@@ -17,13 +17,13 @@ function Home() {
         const response = await fetch("https://sangsang2.kr:8080/api/lecture/banner");
         const data = await response.json();
         setBanners(data);
-        console.log(banners);
       } catch (error) {
         console.error("배너 불러오지 못함", error);
       }
     };
-
+    
     fetchBanners();
+    console.log(banners);
   }, []);
 
   const settings = {

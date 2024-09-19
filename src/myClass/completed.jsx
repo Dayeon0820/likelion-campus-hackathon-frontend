@@ -72,8 +72,7 @@ function CompletedClass() {
           {courses.map((course) => (
           <div key={course.id} className="completed-contentBox">
             <img
-              /* src={course.imageUrls} */
-              src="https://via.placeholder.com/100" /* 사진 안보여서 임의로 해놓은거임 */
+              src={course.imageUrls}
               alt={course.name}
               className="completed-contentBox_img"
             />

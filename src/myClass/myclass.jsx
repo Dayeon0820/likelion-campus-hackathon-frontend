@@ -82,8 +82,7 @@ function Myclass() {
           {courses.map((course) => (
             <div key={course.id} className="myclass-box">
               <img
-                /* src={course.imageUrls} */
-                src="https://via.placeholder.com/100" /* 사진 안보여서 임의로 해놓은거임 */
+                src={course.imageUrls}
                 alt={course.name}
                 className="myclass-box_img"
               />
