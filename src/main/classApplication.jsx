@@ -7,6 +7,7 @@ const ClassApplication = () => {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const [classData, setClassData] = useState(null);
+  const defaultImageUrl = "/defaultclass.png";
   const { id } = useParams(); // URL에서 id 가져오기
 
   useEffect(() => {
@@ -24,7 +25,7 @@ const ClassApplication = () => {
         console.log("Response status:", response.status); // 응답 상태 확인
         const data = await response.json();
         setClassData(data);
-        console.log(classData, "classData");
+        console.log(classData, "data");
       } catch (error) {
         console.error("Error fetching class data:", error);
       }
@@ -57,6 +58,7 @@ const ClassApplication = () => {
     averageScore,
     scoreCount,
     imageUrl,
+    remainingSpace,
   } = classData;
 
   return (
@@ -72,7 +74,7 @@ const ClassApplication = () => {
             src={
               imageUrl && imageUrl.length > 0
                 ? imageUrl[0].imageUrl
-                : "./img/class_application_banner.svg"
+                : defaultImageUrl
             }
             alt="Class Banner"
             className="banner-image"
@@ -80,7 +82,10 @@ const ClassApplication = () => {
         </div>
         <section className="classApplicationSection">
           <div className="titleContainer">
-            <Link to={`/home/class_application/review/${id}`} className="classRating">
+            <Link
+              to={`/home/class_application/review/${id}`}
+              className="classRating"
+            >
               <span className="star">⭐</span> {averageScore} ({scoreCount})
             </Link>
             <h3 className="classTitle">{name}</h3>

@@ -7,6 +7,7 @@ import "./css/class_list.css";
 const ClassList = () => {
   const [classData, setClassData] = useState([]);
   const location = useLocation();
+  const defaultImageUrl = "/defaultclass.png";
   const [selectedClassType, setSelectedClassType] = useState(
     location.state?.selectedClassType || "allClass"
   );
@@ -31,9 +32,7 @@ const ClassList = () => {
           id: lecture.id,
           title: lecture.name,
           price: `₩ ${lecture.price.toLocaleString()}`,
-          image:
-            lecture.imageUrl?.[0]?.imageUrl ||
-            "https://via.placeholder.com/100",
+          image: lecture.imageUrl?.[0]?.imageUrl || defaultImageUrl,
         }));
       setClassData(transformedData);
     } catch (error) {
