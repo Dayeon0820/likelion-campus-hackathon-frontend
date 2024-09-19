@@ -39,9 +39,11 @@ function SearchList() {
         scoreCount: course.scoreCount, //리뷰 수
 
         imageUrls:
-          course.imageUrl.length > 0
+          Array.isArray(course.imageUrl) && course.imageUrl.length > 0
             ? course.imageUrl[0].imageUrl
-            : defaultImageUrl, //이미지가 있으면 한개만 추출,없으면 디폴트이미지
+            : defaultImageUrl,
+
+        //이미지가 있으면 한개만 추출,없으면 디폴트이미지
       }));
 
       setCourses(formattedData);
