@@ -1,9 +1,8 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 import "../App.css";
 import "../login/login.css";
 import "./signup1.css";
@@ -12,17 +11,17 @@ import styles from "../login/background.module.css";
 function Signup1() {
   const navigate = useNavigate();
   const goBack = () => navigate("/");
-  const [passW, setpassW] = useState("");
+  const [passW, setPassW] = useState("");
   const [email, setEmail] = useState("");
   const [rePassW, setRePassW] = useState("");
-  const [Verif, setVerif] = useState("");
+  const [verif, setVerif] = useState("");
   const [buttonTxt, setButtonTxt] = useState("인증하기");
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const [count, setCount] = useState(30);
   const [isCounting, setIsCounting] = useState(false);
 
   useEffect(() => {
-    //30초 카운트 다운
+    // 30초 카운트 다운
     let intervalId;
     if (isCounting) {
       intervalId = setInterval(() => setCount((current) => current - 1), 1000);
@@ -45,84 +44,75 @@ function Signup1() {
   }, [count, isCounting]);
 
   const getVerifEmail = async (e) => {
-    //인증번호 api 불러오기
+    // 인증번호 API 호출
     e.preventDefault();
     const baseURL = "http://sangsang2.kr:8080/api/member/send-verification";
     if (!email) {
-      alert("이메일 주소를 입력해 주십시오"); //알림창 모달창으로 꾸며야함
+      alert("이메일 주소를 입력해 주십시오"); // 알림창 모달창으로 꾸며야 함
       return;
     } else {
-      const verifDTO = {
-        email: email,
-      };
+      const verifDTO = { email };
       console.log(verifDTO);
       setIsButtonDisabled(true); // 버튼 비활성화
       setIsCounting(true);
 
       try {
-        const response = await fetch(baseURL, {
-          method: "POST",
+        const response = await axios.post(baseURL, verifDTO, {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(verifDTO),
         });
-        if (!response.ok) {
-          alert("인증번호 전송에 실패했습니다.");
-          return;
-        }
-
-        const data = await response.json();
-        console.log("response received", data);
+        console.log("response received", response.data);
         alert("인증번호가 이메일로 전송되었습니다.");
       } catch (error) {
-        console.error("Error occurred during signup:", error);
-        alert("Error occurred" + error.message);
+        console.error("Error occurred during verification:", error);
+        alert("인증번호 전송에 실패했습니다.");
       }
     }
   };
+
   const onSignup = async (e) => {
-    //회원가입 api 불러오기
+    // 회원가입 API 호출
     e.preventDefault();
-    const passwordPattern =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()]).{8,}$/;
+    const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()]).{8,}$/;
     const baseURL = "http://sangsang2.kr:8080/api/member/signup";
 
-    if (!passW || !email || !rePassW || !Verif) {
+    if (!passW || !email || !rePassW || !verif) {
       alert("모든 입력칸은 채워주십시오");
       return;
     } else if (!passwordPattern.test(passW)) {
-      alert(
-        "비밀번호는 최소 8자 이상이어야 하며, 대문자, 소문자, 숫자, 특수문자를 포함해야 합니다."
-      );
+      alert("비밀번호는 최소 8자 이상이어야 하며, 대문자, 소문자, 숫자, 특수문자를 포함해야 합니다.");
       return;
     } else if (passW !== rePassW) {
       alert("비밀번호가 일치하지 않습니다");
       return;
     } else {
       const signupDTO = {
-        email: email,
+        email,
         password: passW,
         checkPassword: rePassW,
-        verification: Verif,
+        verification: verif,
       };
       console.log(signupDTO);
       try {
-        const response = await fetch(baseURL, {
-          method: "POST",
+        const response = await axios.post(baseURL, signupDTO, {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(signupDTO),
         });
-        if (!response.ok) {
-          const data = await response.json();
-          if (response.status === 400) {
-            if (data.error === "이메일 중복") {
+        console.log("response received", response.data);
+        alert("회원가입 되었습니다. 다시 로그인해 주세요");
+        navigate("/");
+      } catch (error) {
+        console.error("Error occurred during signup:", error);
+        if (error.response && error.response.data) {
+          const { error: errorMessage } = error.response.data;
+          if (error.response.status === 400) {
+            if (errorMessage === "이메일 중복") {
               alert("이미 사용 중인 이메일입니다. 다른 이메일을 입력하세요.");
-            } else if (data.error === "비밀번호 일치하지 않음") {
+            } else if (errorMessage === "비밀번호 일치하지 않음") {
               alert("비밀번호가 일치하지 않습니다. 다시 확인해주세요.");
-            } else if (data.error === "유효하지 않은 인증코드") {
+            } else if (errorMessage === "유효하지 않은 인증코드") {
               alert("유효하지 않은 인증코드입니다.");
             } else {
               alert("회원가입에 실패했습니다."); // 다른 400 에러 처리
@@ -130,28 +120,20 @@ function Signup1() {
           } else {
             alert("회원가입에 실패했습니다.");
           }
-
-          console.log("response received", data);
-          return;
+        } else {
+          alert("회원가입에 실패했습니다.");
         }
-
-        const data = await response.text();
-        console.log("response received", data);
-        alert("회원가입 되었습니다. 다시 로그인해 주세요");
-        navigate("/");
-      } catch (error) {
-        console.error("Error occurred during signup:", error);
-        alert("Error occurred" + error.message);
       }
     }
   };
+
   return (
     <div id="mobile-view" className={styles.background}>
       <div id="login-container">
         <form onSubmit={onSignup} id="login_Box">
           <img src="/logo.png" id="logo" />
 
-          <div className="input_divider ">
+          <div className="input_divider">
             <h1 id="greetingTxt">
               모먼트 클래스의
               <br /> 회원이 되어주세요.
@@ -191,7 +173,7 @@ function Signup1() {
               <input
                 type="password"
                 required
-                onChange={(e) => setpassW(e.target.value)}
+                onChange={(e) => setPassW(e.target.value)}
                 placeholder="대.소문자, 숫자, 특수문자 포함 8자리 이상"
                 className="inputBox_input"
               />

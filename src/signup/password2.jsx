@@ -1,9 +1,6 @@
-import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
-import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
-import { useEffect } from "react";
+import React, { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import apiClient from "../apiClient"; // apiClient 임포트
 import "../App.css";
 import "../login/login.css";
 import "../login/input.css";
@@ -13,19 +10,19 @@ import styles from "../login/background.module.css";
 function PassWord2() {
   const navigate = useNavigate();
   const goBack = () => navigate("/");
-  const [passW, setpassW] = useState("");
-  const token = localStorage.getItem("token");
+  const [passW, setPassW] = useState("");
   const [rePassW, setRePassW] = useState("");
+  const token = localStorage.getItem("token");
 
   const onSignup = async (e) => {
-    //회원가입 api 불러오기
+    // 비밀번호 변경 API 호출
     e.preventDefault();
     const passwordPattern =
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()]).{8,}$/;
     const baseURL = "http://sangsang2.kr:8080/api/member/change-password";
 
     if (!passW || !rePassW) {
-      alert("모든 입력칸dmf 채워주십시오");
+      alert("모든 입력칸을 채워주십시오");
       return;
     } else if (!passwordPattern.test(passW)) {
       alert(
@@ -42,43 +39,23 @@ function PassWord2() {
       };
       console.log(passwordDTO);
       try {
-        const response = await fetch(baseURL, {
+        await apiClient(baseURL, {
           method: "PATCH",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-          body: JSON.stringify(passwordDTO),
+          data: passwordDTO,
         });
-        if (!response.ok) {
-          const data = await response.json();
-          if (response.status === 400) {
-            if (data.error === "사용자 찾을 수 없음") {
-              alert("사용자를 찾을 수 없습니다");
-            } else if (data.error === "비밀번호 일치하지 않음") {
-              alert("비밀번호가 일치하지 않습니다. 다시 확인해주세요.");
-            } else {
-              alert("비밀번호 변경에 실패했습니다."); // 다른 400 에러 처리
-            }
-          } else {
-            alert("비밀번호 변경에 실패했습니다.");
-          }
-
-          console.log("response received", data);
-          navigate("/profile");
-          return;
-        }
-
-        const data = await response.text();
-        console.log("response received", data);
         alert("비밀번호가 변경되었습니다.");
         navigate("/profile");
       } catch (error) {
-        console.error("Error occurred during signup:", error);
-        alert("Error occurred" + error.message);
+        alert("비밀번호 변경에 실패했습니다: " + error.message);
+        navigate("/profile");
       }
     }
   };
+
   return (
     <div id="mobile-view" className={styles.background}>
       <div id="login-container">
@@ -93,7 +70,7 @@ function PassWord2() {
               <input
                 type="password"
                 required
-                onChange={(e) => setpassW(e.target.value)}
+                onChange={(e) => setPassW(e.target.value)}
                 placeholder="대.소문자, 숫자, 특수문자 포함 8자리 이상"
                 className="inputBox_input"
               />

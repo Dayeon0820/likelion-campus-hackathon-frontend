@@ -1,9 +1,6 @@
-import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
-import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
-import { useEffect } from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import apiClient from "../apiClient"; // apiClient 임포트
 import "../App.css";
 import "../login/login.css";
 import "../login/input.css";
@@ -13,7 +10,6 @@ import styles from "../login/background.module.css";
 function PassWord() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
-  const [rePassW, setRePassW] = useState("");
   const [Verif, setVerif] = useState("");
   const [buttonTxt, setButtonTxt] = useState("인증하기");
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
@@ -21,7 +17,7 @@ function PassWord() {
   const [isCounting, setIsCounting] = useState(false);
 
   useEffect(() => {
-    //30초 카운트 다운
+    // 30초 카운트 다운
     let intervalId;
     if (isCounting) {
       intervalId = setInterval(() => setCount((current) => current - 1), 1000);
@@ -44,91 +40,54 @@ function PassWord() {
   }, [count, isCounting]);
 
   const getVerifEmail = async (e) => {
-    //인증번호 api 불러오기
+    // 인증번호 API 호출
     e.preventDefault();
     const baseURL = "http://sangsang2.kr:8080/api/member/send-verification";
     if (!email) {
-      alert("이메일 주소를 입력해 주십시오"); //알림창 모달창으로 꾸며야함
+      alert("이메일 주소를 입력해 주십시오");
       return;
     } else {
-      const verifDTO = {
-        email: email,
-      };
-      console.log(verifDTO);
+      const verifDTO = { email };
       setIsButtonDisabled(true); // 버튼 비활성화
       setIsCounting(true);
 
       try {
-        const response = await fetch(baseURL, {
+        await apiClient(baseURL, {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify(verifDTO),
         });
-        if (!response.ok) {
-          alert("인증번호 전송에 실패했습니다.");
-          return;
-        }
-
-        const data = await response.json();
-        console.log("response received", data);
         alert("인증번호가 이메일로 전송되었습니다.");
       } catch (error) {
-        console.error("Error occurred during signup:", error);
-        alert("Error occurred" + error.message);
+        alert("인증번호 전송에 실패했습니다: " + error.message);
       }
     }
   };
+
   const onSignup = async (e) => {
-    //회원가입 api 불러오기
+    // 이메일 인증 API 호출
     e.preventDefault();
-    const passwordPattern =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()]).{8,}$/;
     const baseURL = "http://sangsang2.kr:8080/api/member/verify";
 
     if (!email || !Verif) {
-      alert("모든 입력칸dmf 채워주십시오");
+      alert("모든 입력칸을 채워주십시오");
       return;
     } else {
-      const emailDTO = {
-        email: email,
-        verification: Verif,
-      };
-      console.log(emailDTO);
+      const emailDTO = { email, verification: Verif };
+
       try {
-        const response = await fetch(baseURL, {
+        await apiClient(baseURL, {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify(emailDTO),
         });
-        if (!response.ok) {
-          const data = await response.json();
-          if (response.status === 400) {
-            if (data.error === "유효하지 않은 인증코드") {
-              alert("유효하지 않은 인증코드입니다.");
-            } else {
-              alert("이메일 인증에 실패했습니다."); // 다른 400 에러 처리
-            }
-          } else {
-            alert("이메일 인증에 실패했습니다.");
-          }
-
-          console.log("response received", data);
-          return;
-        }
-
-        const data = await response.text();
-        console.log("response received", data);
         navigate("/password2");
       } catch (error) {
-        console.error("Error occurred during signup:", error);
-        alert("Error occurred" + error.message);
+        alert("이메일 인증에 실패했습니다: " + error.message);
       }
     }
   };
+
   return (
     <div id="mobile-view" className={styles.background}>
       <div id="login-container">
