@@ -72,7 +72,7 @@ function Myclass() {
         <Link to="/profile">
           <span className="material-symbols-outlined">arrow_back_ios</span>
         </Link>
-        <h3>마이 프로필</h3>
+        <h3>나의 클래스</h3>
       </header>
       <main id="default-padding" className="profileMain">
         <div id="myclass-header">
@@ -82,7 +82,8 @@ function Myclass() {
           {courses.map((course) => (
             <div key={course.id} className="myclass-box">
               <img
-                src={course.imageUrls}
+                /* src={course.imageUrls} */
+                src="https://via.placeholder.com/100" /* 사진 안보여서 임의로 해놓은거임 */
                 alt={course.name}
                 className="myclass-box_img"
               />

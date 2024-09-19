@@ -1,0 +1,57 @@
+/* 참여 완료 클래스 - 이전은 myclass와 동일*/
+.completed-section {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 20px; 
+    overflow-y: auto;
+    height: calc(100% - 88px);
+    /* border: 1px solid #333; */
+}
+
+.completed-contentBox {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 40px;
+    /* border: 1px solid #333; */
+}
+.completed-contentBox_img {
+    width: 100%;
+    max-height: 155px;
+    border-radius: 12px;
+    margin-bottom: 10px;
+}
+.completed-contentBox h4 {
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 23px;
+    text-align: left;
+}
+.completed-contentBox span {
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 24px;
+    text-align: left;
+    color: rgba(61, 77, 92, 1);
+}
+  
+
+
+
+.completed-content_btnBox {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+.completed-reviewBtn {
+    width: 35%;
+    height: 28px;
+    border-radius: 12px;
+    font-size: 12px;
+    line-height: 21px;
+    text-align: center;
+    background-color: rgba(54, 158, 255, 1);
+    color: rgba(255, 255, 255, 1);
+}

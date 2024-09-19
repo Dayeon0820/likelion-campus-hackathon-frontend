@@ -7,12 +7,20 @@
   margin: 5% 0 4%;
   font-size: 15px;
 }
+#myclass-header h3 {
+  font-size: 17px;
+  font-weight: bold;
+  line-height: 35px;
+  text-align: left;
+  margin-bottom: 15px;
+  margin-top: 10px;
+}
 
 .myclass-main {
   width: 100%;
   height: calc(100% - 110px);
   overflow-y: auto;
-  /* border: 1px solid #333; */
+  border: 1px solid #333;
 }
 
 #myclass-main::-webkit-scrollbar {
@@ -26,6 +34,7 @@
 #myclass-main::-webkit-scrollbar-track {
   background: transparent; /* 스크롤바 트랙의 색상을 투명으로 설정 */
 }
+
 .myclass-contentBox {
   width: 100%;
   display: flex;
@@ -33,56 +42,24 @@
   align-items: flex-start;
   margin-bottom: 40px;
 }
-
-#myclass-header h1 {
-  font-size: 22px;
-  font-weight: 700;
-  line-height: 35px;
-  text-align: left;
-  margin-bottom: 15px;
-  margin-top: 10px;
-}
-
 .myclass-contentBox_img {
   width: 100%;
-
   max-height: 155px;
   border-radius: 15px;
   margin-bottom: 10px;
 }
-
 .myclass-contentBox h4 {
   font-size: 16px;
   font-weight: 700;
   line-height: 23px;
   text-align: left;
 }
-
 .myclass-contentBox span {
   font-size: 13px;
   font-weight: 400;
   line-height: 24px;
   text-align: left;
   color: rgba(61, 77, 92, 1);
-}
-
-.myclass-content_btnBox {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-}
-
-.myclass-reviewBtn {
-  width: 33%;
-  height: 28px;
-  border-radius: 18px;
-  font-size: 12px;
-  font-weight: 5r00;
-  line-height: 21px;
-  text-align: center;
-  background-color: rgba(54, 158, 255, 1);
-  color: rgba(255, 255, 255, 1);
 }
 
 /* 내가 생성한 클래스 */

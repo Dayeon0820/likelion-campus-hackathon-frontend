@@ -2,10 +2,9 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useEffect } from "react";
-import "../App.css";
-import "../profile/profile.css";
-import "./myclass.css";
+import "./completed.css";
 import Navbar from "../main/navbar";
+
 function CompletedClass() {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
@@ -59,48 +58,42 @@ function CompletedClass() {
   };
   return (
     <div id="mobile-view">
-      <div id="default-padding">
-        <header className="app-header header_3components">
-          <img
-            src="/arrow.png"
-            id="header-arrowIcon"
-            onClick={() => {
-              navigate("/profile");
-            }}
-          />
-          <div id="chatting-title">
-            <h1>나의클래스</h1>
-          </div>
-          <span></span>
-        </header>
+      <header className="app-header profileHeader defaultHeader">
+        <Link to="/profile">
+          <span className="material-symbols-outlined">arrow_back_ios</span>
+        </Link>
+        <h3>신청 클래스</h3>
+      </header>
+      <main id="default-padding" className="profileMain">
         <div id="myclass-header">
-          <h1>참여 완료한 클래스</h1>
+          <h3>참여 완료한 클래스</h3>
         </div>
-        <main className="myclass-main">
+        <section className="completed-section completedClassSection">
           {courses.map((course) => (
-            <div key={course.id} className="myclass-contentBox">
-              <img
-                src={course.imageUrls}
-                alt={course.name}
-                className="myclass-contentBox_img"
-              />
-              <h3>{course.name}</h3>
-              <span>${course.price.toLocaleString()}</span>
-              <div className="myclass-content_btnBox">
-                <span>정규 수업</span>
-                <button
-                  className="myclass-reviewBtn"
-                  onClick={() => {
-                    navigate(`/makeReview?id=${course.id}`);
-                  }}
-                >
-                  리뷰 작성하기
-                </button>
+          <div key={course.id} className="completed-contentBox">
+            <img
+              /* src={course.imageUrls} */
+              src="https://via.placeholder.com/100" /* 사진 안보여서 임의로 해놓은거임 */
+              alt={course.name}
+              className="completed-contentBox_img"
+            />
+            <h4>{course.name}</h4>
+            <span>${course.price.toLocaleString()}</span>
+            <div className="completed-content_btnBox">
+              <span>정규 수업</span>
+              <button
+                className="completed-reviewBtn"
+                onClick={() => {
+                  navigate(`/makeReview?id=${course.id}`);
+                }}
+              >
+                리뷰 작성하기
+              </button>
               </div>
-            </div>
-          ))}
-        </main>
-      </div>
+              </div>
+            ))}
+        </section>
+      </main>
     </div>
   );
 }
