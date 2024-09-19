@@ -34,7 +34,7 @@ function EditProfile2() {
   const onSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
-    const baseUrl = "http://sangsang2.kr:8080/api/member-info/edit";
+    const baseUrl = "https://sangsang2.kr:8080/api/member-info/edit";
     const info = {
       permission: permission,
     };

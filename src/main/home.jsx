@@ -14,7 +14,7 @@ function Home() {
   useEffect(() => { //배너 가져오기
     const fetchBanners = async () => {
       try {
-        const response = await fetch("http://sangsang2.kr:8080/api/lecture/banner");
+        const response = await fetch("https://sangsang2.kr:8080/api/lecture/banner");
         const data = await response.json();
         setBanners(data);
         console.log(banners);

@@ -54,7 +54,7 @@ const ClassMap = () => {
 
     const fetchClassLocations = async () => {
         try {
-            const response = await fetch("http://sangsang2.kr:8080/api/lecture/map");
+            const response = await fetch("https://sangsang2.kr:8080/api/lecture/map");
             const data = await response.json();
             console.log(data, 'fetched class data'); 
             setClassLocations(data);

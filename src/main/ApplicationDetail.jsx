@@ -62,7 +62,7 @@ const ApplicationDetail = () => {
   };
 
   const handleApplicationClick = async () => {
-    const baseUrl = `http://sangsang2.kr:8080/api/lecture/join?lecture=${id}&count=${count}`;
+    const baseUrl = `https://sangsang2.kr:8080/api/lecture/join?lecture=${id}&count=${count}`;
 
     try {
       const response = await fetch(baseUrl, {

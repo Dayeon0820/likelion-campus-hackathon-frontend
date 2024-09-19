@@ -1,7 +1,18 @@
+.profileMain{
+  /* border: 1px solid #333; */
+}
+
+#myclass-header{
+  /* border: 1px solid #333; */
+  margin: 5% 0 4%;
+  font-size: 15px;
+}
+
 .myclass-main {
   width: 100%;
   height: calc(100% - 110px);
   overflow-y: auto;
+  /* border: 1px solid #333; */
 }
 
 #myclass-main::-webkit-scrollbar {
@@ -40,7 +51,7 @@
   margin-bottom: 10px;
 }
 
-.myclass-contentBox h3 {
+.myclass-contentBox h4 {
   font-size: 16px;
   font-weight: 700;
   line-height: 23px;
@@ -93,7 +104,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 15px;
+  border-radius: 10px;
 }
 
 .myclass-box_title,
@@ -126,11 +137,12 @@
   font-size: 11px;
 }
 
-@media (min-width: 550px) {
+/* @media (min-width: 550px) {
   .myclass-gridBox {
     grid-template-columns: repeat(
       3,
       1fr
-    ); /* 태블릿 사이즈 이상에서는 한 줄에 세 개 */
+    ); 
   }
 }
+ */

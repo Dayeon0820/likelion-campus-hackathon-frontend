@@ -14,7 +14,7 @@ const ClassApplication = () => {
     const fetchClassData = async () => {
       try {
         const response = await fetch(
-          `http://sangsang2.kr:8080/api/lecture/${id}`,
+          `https://sangsang2.kr:8080/api/lecture/${id}`,
           {
             method: "GET",
             headers: {

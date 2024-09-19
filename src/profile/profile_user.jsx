@@ -36,7 +36,7 @@ function Profile_USER(props) {
     if (confirmedLogout) {
       try {
         const response = await fetch(
-          "http://sangsang2.kr:8080/api/member/logout",
+          "https://sangsang2.kr:8080/api/member/logout",
           {
             method: "POST",
             headers: {

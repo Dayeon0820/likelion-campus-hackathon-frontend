@@ -27,7 +27,7 @@ function MakeReview2() {
     e.preventDefault();
 
     const formData = new FormData();
-    const baseUrl = "http://sangsang2.kr:8080/api/review/write";
+    const baseUrl = "https://sangsang2.kr:8080/api/review/write";
     console.log("review3", requestDTO, "image: ", image);
     formData.append(
       "review",

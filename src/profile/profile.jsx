@@ -12,7 +12,7 @@ function Profile() {
   const [flag, setFlag] = useState(false);
   const navigate = useNavigate();
   const onLoadProfile = async () => {
-    const baseUrl = "http://sangsang2.kr:8080/api/member-info/info";
+    const baseUrl = "https://sangsang2.kr:8080/api/member-info/info";
     try {
       const response = await fetch(baseUrl, {
         method: "GET",

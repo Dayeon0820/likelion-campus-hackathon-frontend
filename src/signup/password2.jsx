@@ -19,7 +19,7 @@ function PassWord2() {
     e.preventDefault();
     const passwordPattern =
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()]).{8,}$/;
-    const baseURL = "http://sangsang2.kr:8080/api/member/change-password";
+    const baseURL = "https://sangsang2.kr:8080/api/member/change-password";
 
     if (!passW || !rePassW) {
       alert("모든 입력칸을 채워주십시오");

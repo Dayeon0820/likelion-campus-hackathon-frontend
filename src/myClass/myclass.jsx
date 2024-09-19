@@ -18,7 +18,7 @@ function Myclass() {
 
   const getclassList = async () => {
     const baseUrl =
-      "http://sangsang2.kr:8080/api/lecture/own?permission=CREATOR";
+      "https://sangsang2.kr:8080/api/lecture/own?permission=CREATOR";
 
     try {
       const response = await fetch(baseUrl, {
@@ -68,24 +68,17 @@ function Myclass() {
   };
   return (
     <div id="mobile-view">
-      <div id="default-padding">
-        <header className="app-header header_3components">
-          <img
-            src="/arrow.png"
-            id="header-arrowIcon"
-            onClick={() => {
-              navigate("/profile");
-            }}
-          />
-          <div id="chatting-title">
-            <h1>나의클래스</h1>
-          </div>
-          <span></span>
-        </header>
+      <header className="app-header profileHeader defaultHeader">
+        <Link to="/profile">
+          <span className="material-symbols-outlined">arrow_back_ios</span>
+        </Link>
+        <h3>마이 프로필</h3>
+      </header>
+      <main id="default-padding" className="profileMain">
         <div id="myclass-header">
-          <h1>내가 생성한 클래스</h1>
+          <h3>내가 생성한 클래스</h3>
         </div>
-        <main className="myclass-main myclass-gridBox">
+        <section className="myclass-main myclass-gridBox">
           {courses.map((course) => (
             <div key={course.id} className="myclass-box">
               <img
@@ -93,7 +86,7 @@ function Myclass() {
                 alt={course.name}
                 className="myclass-box_img"
               />
-              <h3 className="myclass-box_title">{course.name}</h3>
+              <h4 className="myclass-box_title">{course.name}</h4>
               <span className="myclass-box_price">
                 ${course.price.toLocaleString()}
               </span>
@@ -102,8 +95,8 @@ function Myclass() {
               </div>
             </div>
           ))}
-        </main>
-      </div>
+        </section>
+      </main>
     </div>
   );
 }

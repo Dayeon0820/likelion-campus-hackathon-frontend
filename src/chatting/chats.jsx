@@ -13,7 +13,7 @@ function Chats() {
   const [selectedType, setSelectedType] = useState("all");
   const navigate = useNavigate();
   const getChatsList = async (e) => {
-    const baseUrl = "http://sangsang2.kr:8080/api/chat/chatRoom/all";
+    const baseUrl = "https://sangsang2.kr:8080/api/chat/chatRoom/all";
 
     try {
       const response = await fetch(baseUrl, {

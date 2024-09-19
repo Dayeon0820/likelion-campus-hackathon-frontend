@@ -17,8 +17,8 @@ function Login() {
       email: email,
       password: password,
     };
-    const baseURL = "http://sangsang2.kr:8080/api/member/login";
-
+    const baseURL = "https://sangsang2.kr:8080/api/member/login";
+    console.log(loginDTO);
     if (!email || !password) {
       alert("모든 입력칸을 채워주십시오");
       return;

@@ -16,7 +16,7 @@ function SearchList() {
   const [courses, setCourses] = useState(location.state?.formattedData || []);
   const handleSearch = async (e) => {
     e.preventDefault();
-    const baseUrl = `http://sangsang2.kr:8080/api/lecture/search?keyword=${searchInput}`;
+    const baseUrl = `https://sangsang2.kr:8080/api/lecture/search?keyword=${searchInput}`;
 
     try {
       const response = await fetch(baseUrl, {
