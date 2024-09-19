@@ -16,12 +16,13 @@ function Home() {
       try {
         const response = await fetch("https://sangsang2.kr:8080/api/lecture/banner");
         const data = await response.json();
+        console.log(data)
         setBanners(data);
       } catch (error) {
         console.error("배너 불러오지 못함", error);
       }
     };
-    
+
     fetchBanners();
     console.log(banners);
   }, []);
@@ -37,7 +38,7 @@ function Home() {
   };
 
   return (
-    <div id="mobile-view">
+    <div id="mobile-view" className="homeBackground">
       <div id="default-padding">
         <header className="homeHeader">
           <h3>MOMENT CLASS</h3>
@@ -63,17 +64,24 @@ function Home() {
             <Slider {...settings} className="banner">
               {banners.length > 0 ? (
                 banners.map((banner) => (
-                  <div key={banner.id}>
+                  <div className="bannerImgWrapper" key={banner.id}>
                     <img
                       src={banner.imageUrl || "https://via.placeholder.com/338x150"}
                       alt={banner.name || "Banner"}
+                      className="bannerImg"
                     />
+                    <div className="bannerTxtBox">
+                      <h4>{banner.name}</h4>
+                      <p>{banner.type == "OneDay" ? banner.date : `${banner.startDate} ~ ${banner.endDate}`}</p>
+                      <p>{banner.type}</p>
+                    </div>
                   </div>
                 ))
               ) : (
                 <div>null</div>
               )}
             </Slider>
+
           </section>
           <section className="categoryContainer">
             <h4 className="classTxt">카테고리</h4>

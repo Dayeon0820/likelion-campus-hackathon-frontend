@@ -21,14 +21,14 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    /* border: 1px solid #333; */
+   /*  border: 1px solid #333; */
 }
 
 #navBar > .navLink > .navImgBox{
     display: inline-block;
     width: 50px;
     height: 70%;
-   /*  border: 1px solid #333; */
+    /* border: 1px solid #333; */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -36,7 +36,10 @@
 
 #navBar > a > p{
     height: 30%;
-    font-size: 12px;
+    font-size: 10px;
     color: #8C5E8A;
+    text-align: center;
+    line-height: 1;
+    padding-top: 3px;
     /* border: 1px solid #333; */
 }
