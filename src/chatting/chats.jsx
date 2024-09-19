@@ -10,7 +10,7 @@ function Chats() {
   const token = localStorage.getItem("token");
   const [chatRoomList, setChatRoomList] = useState([]);
   const [myImg, setMyImg] = useState("");
-
+  const [selectedType, setSelectedType] = useState("all");
   const navigate = useNavigate();
   const getChatsList = async (e) => {
     const baseUrl = "http://sangsang2.kr:8080/api/chat/chatRoom/all";
@@ -37,7 +37,7 @@ function Chats() {
         chatRoomName: chatRoom.chatRoomName,
         count: chatRoom.notReadMessageCount,
         nickname: chatRoom.receiverNickname,
-        type: chatRoom.isLectureOwner === "true" ? "creator" : "user",
+        amIowner: chatRoom.isLectureOwner,
       }));
 
       const processedData = {
@@ -52,26 +52,53 @@ function Chats() {
       console.error("Error:", error);
     }
   };
+  // 필터링 로직
+  const filteredChatRooms = chatRoomList.filter((chatRoom) => {
+    if (selectedType === "all") return true; // 전체
+    if (selectedType === "mine") return chatRoom.amIowner === false; // 내 문의
+    if (selectedType === "received") return chatRoom.amIowner === true; // 내가 받은 문의
+    return true; // 기본값
+  });
 
   useEffect(() => {
     getChatsList(); // 초기 호출
-    const intervalId = setInterval(getChatsList, 10000); // 5초마다 호출
+    //const intervalId = setInterval(getChatsList, 10000); // 5초마다 호출
 
-    return () => clearInterval(intervalId); // 컴포넌트 언마운트 시 클리어
+    // return () => clearInterval(intervalId); // 컴포넌트 언마운트 시 클리어
   }, []); // 빈 배열로 초기 마운트 시만 실행되도록
 
   return (
     <div id="mobile-view">
-      <div id="default-padding">
+      <div id="chats-default-padding">
         <header id="chats_header">
           <img id="chats_myImg" src={myImg || "/user.png"} />
         </header>
         <div id="chats_title">
           <h1>Chats</h1>
         </div>
-
+        {/* 필터링 버튼 */}
+        <div id="chatRoomTypeButtons">
+          <button
+            onClick={() => setSelectedType("all")}
+            className={selectedType === "all" ? "active" : ""}
+          >
+            전체
+          </button>
+          <button
+            onClick={() => setSelectedType("mine")}
+            className={selectedType === "mine" ? "active" : ""}
+          >
+            내 문의
+          </button>
+          <button
+            onClick={() => setSelectedType("received")}
+            className={selectedType === "received" ? "active" : ""}
+          >
+            내가 받은 문의
+          </button>
+        </div>
         <div id="chats_list">
-          {chatRoomList.map((chatRoom) => (
+          {filteredChatRooms.map((chatRoom) => (
             <div
               key={chatRoom.chatRoomId}
               className="chats_listItem"
