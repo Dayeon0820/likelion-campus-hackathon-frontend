@@ -6,11 +6,52 @@ import { faStar } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 
 const ReviewInquiry = () => {
-    const [reviews, SetReviews] = useState(initialReviews);
-    const [sortOption, setSortOption] = useState("latest"); // 정렬 옵션 상태 추가
+    const { id } = useParams();
+    const token = localStorage.getItem('token');
+    console.log(id,'강의 id')
+    const [review, setReview] = useState([]);
+    const [averageScore, setAverageScore] = useState([]);
+    const [sortOption, setSortOption] = useState("latest"); // 정렬 옵션 상태
     
 
-    // 정렬된 리뷰 가져오기
+    //리뷰 데이터 가져오기
+    useEffect(() => {
+        const fetchReviews = async () => {
+            console.log(id,'리뷰 데이터 가져오는 console.log')
+            try{
+                const response = await fetch(`http://sangsang2.kr:8080/api/review/?lectureId=${id}`);
+                const reviewData = await response.json();
+                console.log(reviewData,'reviewData');
+                setReview(reviewData);
+            } catch (error) {
+                console.error('리뷰 정보 가져오지 못했음',error)
+                alert('리뷰 정보 가져오지 못했음')
+            }
+            console.log(review)
+        };
+
+        const fetchAverageScore = async () => {
+            try{
+                const response = await fetch(`http://sangsang2.kr:8080/api/review/score/average?lectureId=${id}`);
+                if(!response.ok) {
+                    throw new Error("API 호출 실패");
+                }
+                const averageData = await response.json()
+                setAverageScore(averageData);
+                console.log(averageData,'평균')
+            } catch(error){
+                console.error('평균 스코어 정보 가져오지 못했음',error)
+                alert('평균 스코어 정보 가져오지 못했음')
+            }
+            console.log(averageScore,'averageScore');
+        }
+
+        fetchReviews();
+        fetchAverageScore();
+
+    }, []);
+
+    // 리뷰 정렬
     const sortedReviews = () => {
         let sorted = [...reviews]; // 리뷰 복사본 생성
         if (sortOption === "rating") {
@@ -33,22 +74,22 @@ const ReviewInquiry = () => {
         return ratingCounts.map(count => (totalReviews > 0 ? (count / totalReviews) * 100 : 0));
     };
 
-  // const ratingPercentages = calculateRatings();
+  const ratingPercentages = calculateRatings();
 
     // 평균 별점 계산
     const averageRating = (
         review.reduce((acc, review) => acc + review.score, 0) / review.length
     ).toFixed(1);
 
-  // const calculateStarClasses = (index, rating) => {
-  //     if (index < Math.floor(rating)) {
-  //         return "star filled";
-  //     } else if (index === Math.floor(rating) && rating % 1 !== 0) {
-  //         return "star half";
-  //     } else {
-  //         return "star";
-  //     }
-  // };
+  const calculateStarClasses = (index, rating) => {
+      if (index < Math.floor(rating)) {
+          return "star filled";
+      } else if (index === Math.floor(rating) && rating % 1 !== 0) {
+          return "star half";
+      } else {
+          return "star";
+      }
+  };
 
     return(
         <div id="mobile-view">
@@ -100,7 +141,7 @@ const ReviewInquiry = () => {
             <option value="rating">별점순</option>
           </select>
         </div>
-        {/* <section id="reviewList">
+        <section id="reviewList">
                     {sortedReviews().map(review => ( //실제로는 api 값 가져와서
                         <div key={review.id} className="reviewItem">
                             <div className="reviewProfile">
@@ -122,7 +163,7 @@ const ReviewInquiry = () => {
                             <p className="reviewComment">{review.reviewComment}</p>
                         </div>
                     ))}
-                </section> */}
+                </section>
       </main>
     </div>
   );
