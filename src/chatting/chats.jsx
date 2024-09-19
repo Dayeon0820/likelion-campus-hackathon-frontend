@@ -10,7 +10,11 @@ function Chats() {
   const token = localStorage.getItem("token");
   const [chatRoomList, setChatRoomList] = useState([]);
   const [myImg, setMyImg] = useState("");
-
+  const [selectedType, setSelectedType] = useState("all");
+  const handleButtonClick = (type) => {
+    console.log("Button Clicked:", type); // 상태 업데이트 확인
+    setSelectedType(type);
+  };
   const navigate = useNavigate();
   const getChatsList = async (e) => {
     const baseUrl = "http://sangsang2.kr:8080/api/chat/chatRoom/all";
@@ -52,12 +56,17 @@ function Chats() {
       console.error("Error:", error);
     }
   };
+  // 선택한 타입에 맞게 채팅방 필터링
+  const filteredChatRooms = chatRoomList.filter((chatRoom) => {
+    if (selectedType === "all") return true; // 전체를 보여줌
+    return chatRoom.type === selectedType;
+  });
 
   useEffect(() => {
     getChatsList(); // 초기 호출
-    const intervalId = setInterval(getChatsList, 10000); // 5초마다 호출
+    //const intervalId = setInterval(getChatsList, 10000); // 5초마다 호출
 
-    return () => clearInterval(intervalId); // 컴포넌트 언마운트 시 클리어
+    // return () => clearInterval(intervalId); // 컴포넌트 언마운트 시 클리어
   }, []); // 빈 배열로 초기 마운트 시만 실행되도록
 
   return (
@@ -69,9 +78,29 @@ function Chats() {
         <div id="chats_title">
           <h1>Chats</h1>
         </div>
+        <div id="chatRoomTypeButtons">
+          <button
+            onClick={() => handleButtonClick("all")}
+            className={selectedType === "all" ? "active" : ""}
+          >
+            전체
+          </button>
+          <button
+            onClick={() => handleButtonClick("user")}
+            className={selectedType === "user" ? "active" : ""}
+          >
+            내 문의
+          </button>
+          <button
+            onClick={() => handleButtonClick("creator")}
+            className={selectedType === "creator" ? "active" : ""}
+          >
+            내 클래스 문의
+          </button>
+        </div>
 
         <div id="chats_list">
-          {chatRoomList.map((chatRoom) => (
+          {filteredChatRooms.map((chatRoom) => (
             <div
               key={chatRoom.chatRoomId}
               className="chats_listItem"

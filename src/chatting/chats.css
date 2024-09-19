@@ -81,3 +81,19 @@
   line-height: 21px;
   text-align: left;
 }
+
+#chatRoomTypeButtons {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+#chatRoomTypeButtons button {
+  width: 28%;
+  padding: 6px;
+  border-radius: 15px;
+  font-size: 12px;
+  background-color: #f5f0f5;
+}
