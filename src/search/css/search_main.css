@@ -116,4 +116,5 @@
   width: 35%;
   height: 80px;
   border-radius: 10px;
+  object-fit: cover;
 }

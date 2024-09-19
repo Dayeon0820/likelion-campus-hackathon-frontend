@@ -8,6 +8,7 @@ const SearchPage = () => {
   const [searchInput, setSearchInput] = useState("");
   const defaultImageUrl = "/defaultclass.png"; //강의 기본 이미지
   const [courses, setCourses] = useState([]); //검색 결과 강의들
+  const [classData, setClassData] = useState([]);
   const navigate = useNavigate();
 
   //임의의 데이터
@@ -16,6 +17,21 @@ const SearchPage = () => {
     { id:2 , name:"요리 클래스", category: "요리", date: "2024-09-10",  type: "정규", },
     { id:3 , name:"아트 클래스", category: "아트", date: "2024-09-10", type: "원데이",},
   ]
+
+  //인기 클래스 가져오기
+  useEffect(() => {
+    const fetchClassData = async () => {
+      try {
+        const response = await fetch("http://sangsang2.kr:8080/api/lecture/banner");
+        const data = await response.json();
+        setClassData(data);
+      } catch (error) {
+        console.error("인기 클래스 불러오지 못함", error);
+      }
+    };
+    console.log(classData, 'classData');
+    fetchClassData();
+  }, []);
 
   // 로컬 스토리지에서 최근 검색어 가져오기
   useEffect(() => {
@@ -54,21 +70,7 @@ const SearchPage = () => {
     setRecentSearches([]);
   };
 
-  //인기 클래스 불러오기
-  // const popularClass = async () => {
-  //   try{
-  //     const popularResponse = await fetch(`http://sangsang2.kr:8080/api/lecture/banner`,{
-  //       method: "GET",
-  //     });
-  //     if (!popularResponse.ok) {
-  //       throw new Error('Failed to fetch popular classes');
-  //     }
-  //     const popularData = await popularResponse.json();
-  //     console.log(popularData,'popularData')
-  //   } catch (error) {
-  //     console.error("Error fetching popular classes: ", error)
-  //   }
-  // }
+
 
   //검색  api불러오기
   const onSearch = async () => {
@@ -95,7 +97,7 @@ const SearchPage = () => {
         scoreCount: course.scoreCount, //리뷰 수
 
         imageUrls:
-          course.imageUrl.length > 0
+          course.imageUrl.length > 0 && Array.isArray(course.imageUrl)
             ? course.imageUrl[0].imageUrl
             : defaultImageUrl, //이미지가 있으면 한개만 추출,없으면 디폴트이미지
       }));
@@ -158,7 +160,7 @@ const SearchPage = () => {
         <section className="popularContainer">
           <h4>인기 클래스</h4>
           <div className="popularContent">
-            {popularClassList.map((item) => (
+            {classData.map((item) => (
               <Link 
               className="popularItem" 
               key={item.id} 
@@ -169,7 +171,7 @@ const SearchPage = () => {
                   <h5>{item.name}</h5>
                   <p>{item.type}  •  {item.date}</p>
                 </div>
-                <img src="https://via.placeholder.com/100" alt="" />
+                <img src={`${item.imageUrl || `https://via.placeholder.com/100`}`} alt={item.name} />
               </Link>
             ))}
           </div>

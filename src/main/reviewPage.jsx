@@ -54,46 +54,33 @@ const ReviewInquiry = () => {
     
 
     //리뷰 데이터 가져오기
-    // const fetchReviews = async () => {
-    //     console.log(id,'리뷰 데이터 가져오는 console.log')
-    //     try{
-    //         const response = await fetch(`http://sangsang2.kr:8080/api/review?${id}`);
-    //         // const response = await fetch(`http://sangsang2.kr:8080/api/review/${id}`, {
-    //         //     method: 'GET',
-    //         //     headers: {
-    //         //         'Content-Type': 'application/json',
-    //         //         'Authorization': `Bearer ${token}` // 토큰을 Authorization 헤더에 포함
-    //         //     }
-    //         // });
-    //         const reviewData = await response.json();
-    //         console.log(reviewData,'reviewData');
-    //         // setReview(reviewData);
-    //     } catch (error) {
-    //         console.error('리뷰 정보 가져오지 못했음',error)
-    //         alert('리뷰 정보 가져오지 못했음')
-    //     }
-    //     // console.log(review)
-    // }
-    useEffect(() => {
-        // 데이터 가져오기 함수
-        const fetchReviewData = async () => {
-          try {
-            const response = await axios.get(`/api/review/`, {
-              params: { id } // requestParam으로 id를 전달
-            });
-            console.log(response,'response')
-          } catch (err) {
-          }
-        };
-    
-        fetchReviewData();
-      }, [id]); // id가 변경될 때마다 다시 호출
+    const fetchReviews = async () => {
+        console.log(id,'리뷰 데이터 가져오는 console.log')
+        try{
+            const response = await fetch(`http://sangsang2.kr:8080/api/review/?lectureId=${id}`);
+            // const response = await fetch(`http://sangsang2.kr:8080/api/review/${id}`, {
+            //     method: 'GET',
+            //     headers: {
+            //         'Content-Type': 'application/json',
+            //         'Authorization': `Bearer ${token}` // 토큰을 Authorization 헤더에 포함
+            //     }
+            // });
+            const reviewData = await response.json();
+            console.log(reviewData,'reviewData');
+            // setReview(reviewData);
+        } catch (error) {
+            console.error('리뷰 정보 가져오지 못했음',error)
+            alert('리뷰 정보 가져오지 못했음')
+        }
+        // console.log(review)
+    }
 
-    // useEffect(() => {
-    //     if (id) {
-    //         fetchReviews();
-    //     }
-    // }, [id]);
+
+    useEffect(() => {
+        if (id) {
+            fetchReviews();
+        }
+    }, [id]);
 
     // 리뷰 정렬
     // const sortedReviews = () => {

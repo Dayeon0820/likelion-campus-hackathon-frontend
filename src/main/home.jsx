@@ -11,14 +11,15 @@ import { categoryMap, classTypeMap } from "../utils/mappings";
 function Home() {
   const [banners, setBanners] = useState([]);
 
-  useEffect(() => {
+  useEffect(() => { //배너 가져오기
     const fetchBanners = async () => {
       try {
         const response = await fetch("http://sangsang2.kr:8080/api/lecture/banner");
         const data = await response.json();
         setBanners(data);
+        console.log(banners);
       } catch (error) {
-        console.error("Error fetching banners:", error);
+        console.error("배너 불러오지 못함", error);
       }
     };
 
