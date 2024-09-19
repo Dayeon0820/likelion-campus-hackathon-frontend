@@ -84,6 +84,7 @@ const ClassMap = () => {
                     const map = new kakao.maps.Map(mapContainer, options);
                     setMap(map);
 
+                    //줌 컨트롤러 설정
                     const zoomControl = new kakao.maps.ZoomControl();
                     map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
 
@@ -122,11 +123,13 @@ const ClassMap = () => {
                 position: markerPosition
             });
 
+            //마커 클릭시 인포창
             const infowindow = new kakao.maps.InfoWindow({
                 content: `
                         <div className="info-window-content" style="padding:5px;font-size:12px;">
                             ${location.name} <br/>
-                            <a href="https://map.kakao.com/link/to/${location.name},${location.latitude},${location.longitude}" style="color:blue" target="_blank">길찾기</a> </div>
+                            <a href="https://map.kakao.com/link/to/${location.name},${location.latitude},${location.longitude}" style="color:blue" target="_blank">길찾기</a> 
+                        </div>
                         `
             });
 
@@ -156,15 +159,22 @@ const ClassMap = () => {
         });
     }, [map, classLocations]); // map과 classLocations 변경될 때마다 마커 다시 그리기
 
+    //인포모달창 클릭 시 상세 창으로 넘어감
     const handleClassInfoClick = () => {
-        navigate(`/home/class_list`);
+        if (selectedClass && selectedClass.id) {
+            navigate(`/home/class_application/${selectedClass.id}`, { state: { selectedClass } });
+        } else {
+            console.error("No class selected or missing class ID.");
+        }
     };
-
+    
+    // 지도 중심을 현재 위치로 설정
     const handleResetCenter = () => {
         if (map && currentPosition) {
             const kakao = window['kakao'];
             const newCenter = new kakao.maps.LatLng(currentPosition.lat, currentPosition.lng);
-            map.setCenter(newCenter); // 지도 중심을 현재 위치로 설정
+            map.setCenter(newCenter); 
+            map.setLevel(5);
         }
     };
 

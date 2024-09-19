@@ -1,49 +1,14 @@
 import {React, useState, useEffect } from "react";
-import { Link, useNavigate, NavLink } from "react-router-dom";
+import { Link, useNavigate, NavLink, useParams } from "react-router-dom";
 import "./css/review.css";
-
-// 리뷰 데이터 (예시)
-const initialReviews = [
-    {
-      id: 1,
-      memberNickname: "Annabelle",
-      createdTime: "2023-09-15",
-      score: 1,
-      reviewComment: "수업은 일상적이었고 선생님도 놀라웠습니다.",
-    },
-    {
-      id: 2,
-      memberNickname: "Mia",
-      createdTime: "2024-09-10",
-      score: 3,
-      reviewComment: "수업이 정말 즐거웠고 많은 것을 배웠습니다.",
-    },
-    {
-      id: 3,
-      memberNickname: "Ava",
-      createdTime: "2024-08-13",
-      score: 5,
-      reviewComment: "이 수업은 저에게 완벽했습니다. 저는 그 속도가 마음에 듭니다.",
-    },
-    {
-      id: 4,
-      memberNickname: "Liam",
-      createdTime: "2024-06-13",
-      score: 4,
-      reviewComment: "훌륭한 수업이었고, 새로운 취미를 시작하는 데 정말 도움이 되었습니다.",
-    },
-    {
-      id: 5,
-      memberNickname: "Lucas",
-      createdTime: "2024-02-13",
-      score: 3,
-      reviewComment: "I loved this class! It was so fun and the teacher was great.",
-    },
-  ];
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faStar } from "@fortawesome/free-solid-svg-icons";
+import axios from "axios";
 
 const ReviewInquiry = () => {
     const [reviews, SetReviews] = useState(initialReviews);
     const [sortOption, setSortOption] = useState("latest"); // 정렬 옵션 상태 추가
+    
 
     // 정렬된 리뷰 가져오기
     const sortedReviews = () => {
@@ -61,19 +26,34 @@ const ReviewInquiry = () => {
     // 평점별 리뷰 비율 계산
     const calculateRatings = () => { //실제로는 api 가져와서 사용하면 됨
         const ratingCounts = [0, 0, 0, 0, 0]; // 5, 4, 3, 2, 1
-        reviews.forEach(review => {
+        review.forEach(review => {
             ratingCounts[review.score - 1]++;
         });
-        const totalReviews = reviews.length;
+        const totalReviews = review.length;
         return ratingCounts.map(count => (totalReviews > 0 ? (count / totalReviews) * 100 : 0));
     };
 
-    const ratingPercentages = calculateRatings();
+  // const ratingPercentages = calculateRatings();
+
+    // 평균 별점 계산
+    const averageRating = (
+        review.reduce((acc, review) => acc + review.score, 0) / review.length
+    ).toFixed(1);
+
+  // const calculateStarClasses = (index, rating) => {
+  //     if (index < Math.floor(rating)) {
+  //         return "star filled";
+  //     } else if (index === Math.floor(rating) && rating % 1 !== 0) {
+  //         return "star half";
+  //     } else {
+  //         return "star";
+  //     }
+  // };
 
     return(
         <div id="mobile-view">
             <header className="app-header reviewHeader defaultHeader">
-                <Link to="/home"> {/* /home/class_application/i 로 고치기 */}
+                <Link to={`/home/class_application/${id}`}> {/* /home/class_application/i 로 고치기 */}
                     <span className="material-symbols-outlined">arrow_back_ios</span>
                 </Link>
                 <h3>클래스 리뷰</h3>
@@ -81,8 +61,19 @@ const ReviewInquiry = () => {
             <main id="reviewInner">
                 <section className="reviewAverage">
                     <div className="averageTitleBox">
-                        <h3>4.5</h3>
-                        <div className="totalStarBox"></div>
+                        <h3>{averageScore.averageScore}</h3>
+                        <div className="totalStarBox">
+                            <div className="averageStar">
+                                {[...Array(5)].map((_, index) => (
+                                    <FontAwesomeIcon
+                                        key={index}
+                                        icon={faStar}
+                                        className={calculateStarClasses(index, averageRating)}
+                                    />
+                                ))}
+                            </div>
+                            <span>{averageScore.totalReviewCount}개 리뷰</span>
+                        </div>
                     </div>
                     <div className="averageRatingBox">
                         {ratingPercentages.map((percentage, index) => (
@@ -93,42 +84,48 @@ const ReviewInquiry = () => {
                                 </div>
                                 <div className="ratingPercentage">{percentage.toFixed(0)} %</div>
                             </div>
-                        ))}
-                    </div>
-                </section>
-                <div className="reviewBtnBox">  {/* 시간 남으면 별점 선택해서 보는 것도 select추가 */}
-                    <select 
-                        name="sort" 
-                        id="reviewSelect"
-                        value={sortOption}
-                        onChange={(e) => setSortOption(e.target.value)} // setSortOption으로 변경
-                    >
-                        <option value="latest">최신순</option>
-                        <option value="rating">별점순</option>
-                    </select>
-                </div>
-                <section id="reviewList">
+                        ))} 
+          </div>
+        </section>
+        <div className="reviewBtnBox">
+          {" "}
+          {/* 시간 남으면 별점 선택해서 보는 것도 select추가 */}
+          <select
+            name="sort"
+            id="reviewSelect"
+            value={sortOption}
+            onChange={(e) => setSortOption(e.target.value)}
+          >
+            <option value="latest">최신순</option>
+            <option value="rating">별점순</option>
+          </select>
+        </div>
+        {/* <section id="reviewList">
                     {sortedReviews().map(review => ( //실제로는 api 값 가져와서
                         <div key={review.id} className="reviewItem">
                             <div className="reviewProfile">
-                                <img src="https://via.placeholder.com/100" className="reviewItemImg"/>
+                                <img src={`${review.memberImageUrl || `https://via.placeholder.com/100`}`} className="reviewItemImg"/>
                                 <div>
                                     <h5>{review.memberNickname}</h5>
                                     <p>{review.createdTime}</p>
                                 </div>
                             </div>
                             <div className="rating">
-                                {"⭐".repeat(review.score)}
+                                {Array.from({ length: review.score }, (_, index) => (
+                                    <FontAwesomeIcon
+                                        key={index}
+                                        icon={faStar}
+                                        className="individualStar"
+                                    />
+                                ))}
                             </div>
                             <p className="reviewComment">{review.reviewComment}</p>
                         </div>
                     ))}
-                </section>
+                </section> */}
+      </main>
+    </div>
+  );
+};
 
-
-            </main>
-        </div>
-    );
-}
-
-export default ReviewInquiry
+export default ReviewInquiry;

@@ -89,12 +89,12 @@ function MakeReview2() {
           </h2>
         </div>
         <div className="process-dot-box">
-          <span className="process-dot blue-dot"></span>
           <span className="process-dot"></span>
           <span className="process-dot"></span>
+          <span className="process-dot  blue-dot"></span>
         </div>
         <h2 id="profile-questionTxt">3단계: 리뷰 작성하기</h2>
-        <div id="profile-quesionBox">
+        <div id="review-questionBox">
           <h4 className="review-sub-title">여러분의 리뷰를 작성해주세요.</h4>
         </div>
         <div className=" editProfile-textarea review-textarea">

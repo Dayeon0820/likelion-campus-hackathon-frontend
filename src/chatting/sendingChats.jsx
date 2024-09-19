@@ -7,77 +7,21 @@ import "../App.css";
 import "./chatting.css";
 import styles from "./chatting.module.css";
 
-function Chatting() {
+function SendingChats() {
   const navigate = useNavigate();
   const location = useLocation();
   const token = localStorage.getItem("token");
-  const id = location.state?.id;
-  const lectureId = parseFloat(id);
-  const title = location.state?.name || "";
-  const [date, setDate] = useState("");
+  const { search } = useLocation();
+  const query = new URLSearchParams(search);
+  const id = query.get("chatRoomId");
+  const title = query.get("chatRoomName");
   const [sending, setsending] = useState("");
   const [messages, setMessages] = useState([]);
+  const [date, setDate] = useState("");
   const gobackHome = () => navigate(`/home`);
   const messageEndRef = useRef(null);
-  const [flag, setFlag] = useState(false);
-  const [chatRoomId, setChatRoomId] = useState(null); // 채팅방 ID 상태 추가
-
-  const createChatting = async (e) => {
-    const baseUrl = "http://sangsang2.kr:8080/api/chat/create/chatRoom";
-
-    try {
-      const response = await fetch(baseUrl, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          lectureId: lectureId,
-        }),
-      });
-
-      const data = await response.json();
-      if (!response.ok) {
-        if (data.error === "이미 채팅방이 존재합니다.") {
-          alert("이미 존재하는 채팅방입니다.");
-          navigate("/chats");
-        }
-        console.log("Error Data:", data);
-        return;
-      }
-
-      console.log("Success:", data);
-      const { chatRoomId, created_at, messageList } = data;
-      setChatRoomId(chatRoomId);
-      const processedMessages = messageList.map((message) => ({
-        content: message.message,
-        nickname: message.memberNickname,
-        avatar: message.memberImageUrl,
-        type: message.messageType === "SENDER" ? "Sent" : "Received",
-      }));
-
-      const processedData = {
-        chatRoomId, // 채팅방 ID
-        createdAt: created_at, // 채팅 생성 날짜
-        messages: processedMessages, // 가공된 메시지 리스트
-      };
-
-      console.log(" create chatting Success: Processed Data:", processedData);
-      setMessages(processedData);
-      setFlag(true);
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  };
-
-  useEffect(() => {
-    console.log("lecture id", lectureId);
-    createChatting();
-  }, []);
 
   const getMessage = async (e) => {
-    if (!chatRoomId) return; // 채팅방 ID가 없으면 getMessage를 실행하지 않음
     const baseUrl = `http://sangsang2.kr:8080/api/chat/chatRoom?chatRoomId=${id}`;
 
     try {
@@ -126,7 +70,7 @@ function Chatting() {
     const intervalId = setInterval(getMessage, 3000); // 5초마다 호출
 
     return () => clearInterval(intervalId); // 컴포넌트 언마운트 시 클리어
-  }, [flag, chatRoomId]); // 빈 배열로 초기 마운트 시만 실행되도록
+  }, []); // 빈 배열로 초기 마운트 시만 실행되도록
 
   useEffect(() => {
     // 메시지가 업데이트 될 때마다 스크롤을 가장 아래로 이동
@@ -153,6 +97,7 @@ function Chatting() {
       const data = await response.json();
       if (!response.ok) {
         alert("메세지 전송에 실패했습니다.");
+        navigate("/chats");
 
         console.log("Error Data:", data);
         return;
@@ -251,4 +196,4 @@ function Chatting() {
   );
 }
 
-export default Chatting;
+export default SendingChats;

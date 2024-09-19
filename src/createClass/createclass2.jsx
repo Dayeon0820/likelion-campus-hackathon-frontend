@@ -12,7 +12,7 @@ function CreateClass2() {
   const navigate = useNavigate();
   const location = useLocation();
   const classInfo = location.state?.classInfo;
-  const [type, setType] = useState("regular");
+  const [type, setType] = useState("");
   const [price, setPrice] = useState("");
   const [address, setAddress] = useState("");
   const [detailAddress, setDetailAddress] = useState("");
@@ -106,7 +106,6 @@ function CreateClass2() {
               type="radio"
               value="regular"
               id="regular"
-              checked
               onChange={(e) => {
                 setType(e.target.value);
               }}
