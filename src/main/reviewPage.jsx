@@ -9,6 +9,7 @@ const ReviewInquiry = () => {
   const [review, setReview] = useState([]);
   const [averageScore, setAverageScore] = useState({});
   const [sortOption, setSortOption] = useState("latest");
+  const ratingLabels = [5, 4, 3, 2, 1]; 
 
   // 리뷰 데이터 및 평균 스코어 가져오기
   useEffect(() => {
@@ -37,6 +38,16 @@ const ReviewInquiry = () => {
     fetchReviews();
     fetchAverageScore();
   }, [id]);
+  const ratingScores = [
+    averageScore.scoreFive,
+    averageScore.scoreFour,
+    averageScore.scoreThree,
+    averageScore.scoreTwo,
+    averageScore.scoreOne
+  ]; // 별점에 대한 비율 배열
+
+
+
 
   // 리뷰 정렬
   const sortedReviews = () => {
@@ -71,48 +82,24 @@ const ReviewInquiry = () => {
                   />
                 ))}
               </div>
-              <span>{averageScore.totalReviewCount}개 리뷰</span>
+              <span>{averageScore.totalReviewCount || 0}개 리뷰</span>
             </div>
           </div>
 
           <div className="averageRatingBox">
-            {/* 각 별점의 퍼센티지를 API에서 바로 가져와서 사용 */}
-            <div className="ratingBarWrapper">
-              <div className="ratingLabel">5</div>
-              <div className="ratingBar">
-                <div className="ratingBarFill" style={{ width: `${averageScore.scoreFive}%` }}></div>
-              </div>
-              <div className="ratingPercentage">{averageScore.scoreFive}%</div>
-            </div>
-            <div className="ratingBarWrapper">
-              <div className="ratingLabel">4</div>
-              <div className="ratingBar">
-                <div className="ratingBarFill" style={{ width: `${averageScore.scoreFour}%` }}></div>
-              </div>
-              <div className="ratingPercentage">{averageScore.scoreFour}%</div>
-            </div>
-            <div className="ratingBarWrapper">
-              <div className="ratingLabel">3</div>
-              <div className="ratingBar">
-                <div className="ratingBarFill" style={{ width: `${averageScore.scoreThree}%` }}></div>
-              </div>
-              <div className="ratingPercentage">{averageScore.scoreThree}%</div>
-            </div>
-            <div className="ratingBarWrapper">
-              <div className="ratingLabel">2</div>
-              <div className="ratingBar">
-                <div className="ratingBarFill" style={{ width: `${averageScore.scoreTwo}%` }}></div>
-              </div>
-              <div className="ratingPercentage">{averageScore.scoreTwo}%</div>
-            </div>
-            <div className="ratingBarWrapper">
-              <div className="ratingLabel">1</div>
-              <div className="ratingBar">
-                <div className="ratingBarFill" style={{ width: `${averageScore.scoreOne}%` }}></div>
-              </div>
-              <div className="ratingPercentage">{averageScore.scoreOne}%</div>
-            </div>
-          </div>
+    {ratingLabels.map((label, index) => (
+      <div key={label} className="ratingBarWrapper">
+        <div className="ratingLabel">{label}</div>
+        <div className="ratingBar">
+          <div
+            className="ratingBarFill"
+            style={{ width: `${ratingScores[index]}%` }}
+          ></div>
+        </div>
+        <div className="ratingPercentage">{ratingScores[index]}%</div>
+      </div>
+    ))}
+  </div>
         </section>
 
         <div className="reviewBtnBox">

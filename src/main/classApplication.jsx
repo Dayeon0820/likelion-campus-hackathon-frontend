@@ -24,11 +24,11 @@ const ClassApplication = () => {
         console.log("Response status:", response.status); // 응답 상태 확인
         const data = await response.json();
         setClassData(data);
-        console.log(classData, "classData");
       } catch (error) {
         console.error("Error fetching class data:", error);
       }
     };
+    console.log(classData, "classData");
 
     fetchClassData();
   }, [id]);
