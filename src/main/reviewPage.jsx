@@ -1,8 +1,9 @@
 import {React, useState, useEffect } from "react";
 import { Link, useNavigate, NavLink, useParams } from "react-router-dom";
 import "./css/review.css";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStar } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faStar } from "@fortawesome/free-solid-svg-icons";
+import axios from "axios";
 
 const ReviewInquiry = () => {
     const { id } = useParams();
@@ -73,22 +74,22 @@ const ReviewInquiry = () => {
         return ratingCounts.map(count => (totalReviews > 0 ? (count / totalReviews) * 100 : 0));
     };
 
-    const ratingPercentages = calculateRatings();
+  const ratingPercentages = calculateRatings();
 
     // 평균 별점 계산
     const averageRating = (
         review.reduce((acc, review) => acc + review.score, 0) / review.length
     ).toFixed(1);
 
-    const calculateStarClasses = (index, rating) => {
-        if (index < Math.floor(rating)) {
-            return "star filled";
-        } else if (index === Math.floor(rating) && rating % 1 !== 0) {
-            return "star half";
-        } else {
-            return "star";
-        }
-    };
+  const calculateStarClasses = (index, rating) => {
+      if (index < Math.floor(rating)) {
+          return "star filled";
+      } else if (index === Math.floor(rating) && rating % 1 !== 0) {
+          return "star half";
+      } else {
+          return "star";
+      }
+  };
 
     return(
         <div id="mobile-view">
@@ -124,21 +125,23 @@ const ReviewInquiry = () => {
                                 </div>
                                 <div className="ratingPercentage">{percentage.toFixed(0)} %</div>
                             </div>
-                        ))}
-                    </div>
-                </section>
-                <div className="reviewBtnBox">  {/* 시간 남으면 별점 선택해서 보는 것도 select추가 */}
-                    <select 
-                        name="sort" 
-                        id="reviewSelect"
-                        value={sortOption}
-                        onChange={(e) => setSortOption(e.target.value)} 
-                    >
-                        <option value="latest">최신순</option>
-                        <option value="rating">별점순</option>
-                    </select>
-                </div>
-                <section id="reviewList">
+                        ))} 
+          </div>
+        </section>
+        <div className="reviewBtnBox">
+          {" "}
+          {/* 시간 남으면 별점 선택해서 보는 것도 select추가 */}
+          <select
+            name="sort"
+            id="reviewSelect"
+            value={sortOption}
+            onChange={(e) => setSortOption(e.target.value)}
+          >
+            <option value="latest">최신순</option>
+            <option value="rating">별점순</option>
+          </select>
+        </div>
+        <section id="reviewList">
                     {sortedReviews().map(review => ( //실제로는 api 값 가져와서
                         <div key={review.id} className="reviewItem">
                             <div className="reviewProfile">
@@ -161,11 +164,9 @@ const ReviewInquiry = () => {
                         </div>
                     ))}
                 </section>
+      </main>
+    </div>
+  );
+};
 
-
-            </main>
-        </div>
-    );
-}
-
-export default ReviewInquiry
+export default ReviewInquiry;
