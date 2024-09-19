@@ -110,6 +110,6 @@
   background-color: #f5f0f5;
 }
 
-.active {
+.chatBtnActive {
   border-bottom: 2px solid rgba(140, 94, 130, 1);
 }

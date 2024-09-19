@@ -53,7 +53,7 @@ const ReviewInquiry = () => {
 
     // 리뷰 정렬
     const sortedReviews = () => {
-        let sorted = [...reviews]; // 리뷰 복사본 생성
+        let sorted = [...review]; // 리뷰 복사본 생성
         if (sortOption === "rating") {
             // 별점 순으로 정렬
             sorted.sort((a, b) => b.score - a.score);

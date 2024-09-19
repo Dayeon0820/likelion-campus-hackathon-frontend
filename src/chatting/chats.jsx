@@ -80,19 +80,19 @@ function Chats() {
         <div id="chatRoomTypeButtons">
           <button
             onClick={() => setSelectedType("all")}
-            className={selectedType === "all" ? "active" : ""}
+            className={selectedType === "all" ? "chatBtnActive" : ""}
           >
             전체
           </button>
           <button
             onClick={() => setSelectedType("mine")}
-            className={selectedType === "mine" ? "active" : ""}
+            className={selectedType === "mine" ? "chatBtnActive" : ""}
           >
             내 문의
           </button>
           <button
             onClick={() => setSelectedType("received")}
-            className={selectedType === "received" ? "active" : ""}
+            className={selectedType === "received" ? "chatBtnActive" : ""}
           >
             내가 받은 문의
           </button>
