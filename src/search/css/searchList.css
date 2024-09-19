@@ -1,4 +1,4 @@
-.searchListMain{
+.searchListMain {
   width: 100%;
   margin-top: 7vh;
   display: flex;
@@ -42,11 +42,14 @@
   /* height: calc(100% - 20px); */
   overflow-y: auto;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); /* 최소 300px, 최대 1fr */
-  gap: 10px; 
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(220px, 1fr)
+  ); /* 최소 300px, 최대 1fr */
+  gap: 10px;
 }
 
-.mySearchList-main > .myclass-contentBox{
+.mySearchList-main > .myclass-contentBox {
   /* border: 1px solid #333; */
   padding: 10px;
   height: auto;

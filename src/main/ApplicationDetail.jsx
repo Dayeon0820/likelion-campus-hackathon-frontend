@@ -41,6 +41,9 @@ const ApplicationDetail = () => {
       }
     }
   }, [date, classData]);
+  useEffect(() => {
+    console.log("remainingSpace  :", classData.remainingSpace);
+  }, []);
 
   const handleDateChange = (date) => {
     setDate(date);
@@ -59,7 +62,7 @@ const ApplicationDetail = () => {
   };
 
   const handleApplicationClick = async () => {
-    const baseUrl = `http://sangsang2.kr:8080/api/lecture/join?lecture=${id}`;
+    const baseUrl = `http://sangsang2.kr:8080/api/lecture/join?lecture=${id}&count=${count}`;
 
     try {
       const response = await fetch(baseUrl, {
@@ -94,6 +97,7 @@ const ApplicationDetail = () => {
         return;
       }
       console.log(data);
+      navigate("/home/class_application/completed");
       alert("성공");
       navigate('/home/class_application/completed');     
     } catch (error) {
@@ -107,7 +111,7 @@ const ApplicationDetail = () => {
   };
 
   const increaseCount = () => {
-    if (count < classData?.member_limit) {
+    if (count < classData?.remainingSpace) {
       setCount(count + 1);
     }
   };
@@ -152,8 +156,8 @@ const ApplicationDetail = () => {
             <button onClick={decreaseCount}>-</button>
             <p>{count}</p>
             <button
+              disabled={count >= classData?.remainingSpace}
               onClick={increaseCount}
-              disabled={count >= classData?.member_limit}
             >
               +
             </button>

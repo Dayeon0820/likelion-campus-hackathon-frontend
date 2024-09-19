@@ -43,8 +43,9 @@ function CompletedClass() {
         name: course.name,
         type: course.type,
         price: course.price,
+
         imageUrls:
-          course.imageUrl.length > 0
+          Array.isArray(course.imageUrl) && course.imageUrl.length > 0
             ? course.imageUrl[0].imageUrl
             : defaultImageUrl,
       }));

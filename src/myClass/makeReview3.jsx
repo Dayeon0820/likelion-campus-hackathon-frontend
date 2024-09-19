@@ -25,10 +25,10 @@ function MakeReview2() {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    console.log("review3", requestDTO);
+
     const formData = new FormData();
     const baseUrl = "http://sangsang2.kr:8080/api/review/write";
-
+    console.log("review3", requestDTO, "image: ", image);
     formData.append(
       "review",
       new Blob([JSON.stringify(requestDTO)], { type: "application/json" })

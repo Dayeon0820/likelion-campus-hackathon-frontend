@@ -107,7 +107,7 @@ const ReviewInquiry = () => {
             name="sort"
             id="reviewSelect"
             value={sortOption}
-            onChange={(e) => setSortOption(e.target.value)}
+            onChange={(e) => setSortOption(e.target.value)} // setSortOption으로 변경
           >
             <option value="latest">최신순</option>
             <option value="rating">별점순</option>
