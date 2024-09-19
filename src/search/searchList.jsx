@@ -40,7 +40,7 @@ function SearchList() {
 
         imageUrls:
           course.imageUrl.length > 0
-            ? course.imageUrl[0].imageUrl
+            ? course.imageUrl[0].imageUrl && Array.isArray(course.imageUrl) 
             : defaultImageUrl, //이미지가 있으면 한개만 추출,없으면 디폴트이미지
       }));
 
@@ -55,6 +55,12 @@ function SearchList() {
   return (
     <div id="mobile-view">
       <header className="app-header reviewHeader defaultHeader">
+        <Link to="/search">
+          <span className="material-symbols-outlined">arrow_back_ios</span>
+        </Link>
+        <h3>검색 결과</h3>
+      </header>
+      <main id="default-padding" className="searchListMain">
         <form
           className="second_search-form search-form"
           onSubmit={handleSearch}
@@ -70,43 +76,42 @@ function SearchList() {
             <span className="material-symbols-outlined">search</span>
           </button>
         </form>
-      </header>
-      <div className="searchList-main">
-        <div id="searchList-selectBox">
-          <select name="order">
-            <option name="order" value="normal">
-              기본 순
-            </option>
-            <option name="order" value="searchCount">
-              최다 검색 순
-            </option>
-            <option name="order" value="scoreCount">
-              리뷰 많은 순
-            </option>
-            <option name="order" value="averageScore">
-              별점 높은 순
-            </option>
-          </select>
-        </div>
-        <main className="mySearchList-main">
-          {" "}
-          {/* 마이클래스 ui 가져옴*/}
-          {courses.map((course) => (
-            <div key={course.id} className="myclass-contentBox">
-              <img
-                src={course.imageUrls || defaultImageUrl}
-                alt={course.name}
-                className="myclass-contentBox_img"
-              />
-              <h3>{course.name}</h3>
-              <span>${course.price.toLocaleString()}</span>
-              <div className="myclass-content_btnBox">
-                <span>정규 수업</span>
+        <section className="searchList-main">
+          <div id="searchList-selectBox">
+            <select name="order">
+              <option name="order" value="normal">
+                기본 순
+              </option>
+              <option name="order" value="searchCount">
+                최다 검색 순
+              </option>
+              <option name="order" value="scoreCount">
+                리뷰 많은 순
+              </option>
+              <option name="order" value="averageScore">
+                별점 높은 순
+              </option>
+            </select>
+          </div>
+          <section className="mySearchList-main">
+            {/* 마이클래스 ui 가져옴*/}
+            {courses.map((course) => (
+              <div key={course.id} className="myclass-contentBox">
+                <img
+                  src={course.imageUrls || defaultImageUrl}
+                  alt={course.name}
+                  className="myclass-contentBox_img"
+                />
+                <h3>{course.name}</h3>
+                <span>${course.price.toLocaleString()}</span>
+                <div className="myclass-content_btnBox">
+                  <span>정규 수업</span>
+                </div>
               </div>
-            </div>
-          ))}
-        </main>
-      </div>
+            ))}
+          </section>
+        </section>
+      </main>
       <Navbar></Navbar>
     </div>
   );
