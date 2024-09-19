@@ -84,7 +84,7 @@ const ReviewInquiry = () => {
                                 </div>
                                 <div className="ratingPercentage">{percentage.toFixed(0)} %</div>
                             </div>
-                        ))} */}
+                        ))} 
           </div>
         </section>
         <div className="reviewBtnBox">
