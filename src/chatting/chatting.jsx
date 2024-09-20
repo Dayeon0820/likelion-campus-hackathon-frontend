@@ -55,7 +55,7 @@ function Chatting() {
   };
 
   const deleteChats = async () => {
-    const baseUrl = `https://sangsang2.kr:8080/api/chat/chatRoom/delete?chatRoomId=${id}`;
+    const baseUrl = `https://sangsang2.kr:8080/api/chat/chatRoom/delete?chatRoomId=${chatRoomId}`;
 
     try {
       const response = await fetch(baseUrl, {
@@ -74,6 +74,7 @@ function Chatting() {
       const data = await response.text();
       closeModal();
       console.log("delete chatrooms success: ", response);
+      navigate("/chats");
     } catch (error) {
       console.error("Error deleting chat room:", error);
     }
@@ -311,9 +312,9 @@ function Chatting() {
           </div>
           <div ref={messageEndRef} /> {/* 메시지 끝부분을 가리키는 div */}
         </div>
-        <div id="chatting-footer">
-          <img src="/user.png" id="chatting-img_footer" />
-        </div>
+      </div>
+      <div id="chatting-footer">
+        <img src="/user.png" id="chatting-img_footer" />
         <form id="chatting-inputBox" onSubmit={sendMessage}>
           <input
             id="chatting-input"

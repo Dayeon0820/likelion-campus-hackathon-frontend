@@ -91,9 +91,9 @@ function PassWord2() {
               변경하기
             </button>
             <footer id="login-footer">
-              <span id="login-footerTxt">아직 계정이 없으신가요?</span>
-              <Link to="/signup1" id="login-footerLink">
-                회원가입
+              <span id="login-footerTxt">돌아가기</span>
+              <Link to="/edit_profile2" id="login-footerLink">
+                마이페이지
               </Link>
             </footer>
           </div>

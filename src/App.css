@@ -68,6 +68,57 @@ body {
   display: none; /* 스크롤바 숨기기 */
 }
 
+/*모달*/
+.overlay {
+  background-color: rgba(0, 0, 0, 0.6);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 모달 창 */
+.modal {
+  background: rgba(255, 255, 255, 0.8);
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 210px;
+  width: 100%;
+  text-align: center;
+}
+
+.modal h2 {
+  margin-bottom: 20px;
+  font-size: 15px;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: space-around;
+}
+
+.confirm-btn,
+.cancel-btn {
+  padding: 5px 15px;
+  border: none;
+  border-radius: 5px;
+  font-size: 10px;
+  cursor: pointer;
+}
+
+.confirm-btn {
+  background-color: rgba(140, 94, 130, 1);
+  color: white;
+}
+
+.cancel-btn {
+  background-color: #f5f0f5;
+}
+
 @media screen and (max-width: 768px) {
   body {
     justify-content: flex-start;

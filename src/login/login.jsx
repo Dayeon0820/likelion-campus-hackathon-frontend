@@ -5,11 +5,14 @@ import "../App.css";
 import "./login.css";
 import "./input.css";
 import styles from "./background.module.css";
+import Modal from "react-modal";
+Modal.setAppElement("#root");
 
 function Login() {
   const navigate = useNavigate();
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const onLogin = async (e) => {
     e.preventDefault();
@@ -35,8 +38,7 @@ function Login() {
 
       localStorage.setItem("token", data.access_token);
       localStorage.setItem("refresh_token", data.refresh_token);
-      alert("로그인 성공");
-      navigate("/home");
+      setIsModalOpen(true);
     } catch (error) {
       if (error.message.includes("비밀번호가 일치하지 않음")) {
         alert("비밀번호가 일치하지 않습니다. 다시 확인해주세요.");
@@ -49,8 +51,27 @@ function Login() {
     }
   };
 
+  const handleConfirm = () => {
+    setIsModalOpen(false); // 모달 닫기
+    navigate("/home"); // 홈으로 이동
+  };
+
   return (
     <div id="mobile-view" className={styles.background}>
+      <Modal
+        isOpen={isModalOpen}
+        onRequestClose={() => setIsModalOpen(false)}
+        contentLabel="로그인 성공"
+        className="modal"
+        overlayClassName="overlay"
+      >
+        <h2>로그인 성공</h2>
+        <div className="modal-buttons">
+          <button onClick={handleConfirm} className="confirm-btn">
+            확인
+          </button>
+        </div>
+      </Modal>
       <div id="login-container">
         <form onSubmit={onLogin} id="login_Box">
           <img src="/logo.png" id="logo" />

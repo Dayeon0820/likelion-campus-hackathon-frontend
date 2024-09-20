@@ -74,6 +74,7 @@ function SendingChats() {
       const data = await response.text();
       closeModal();
       console.log("delete chatrooms success: ", response);
+      navigate("/chats");
     } catch (error) {
       console.error("Error deleting chat room:", error);
     }

@@ -5,7 +5,8 @@ import { useEffect } from "react";
 import "../App.css";
 import "../profile/profile.css";
 import "./myclass.css";
-import Navbar from "../main/navbar";
+import Modal from "react-modal";
+Modal.setAppElement("#root");
 
 function Myclass() {
   const navigate = useNavigate();
@@ -13,6 +14,11 @@ function Myclass() {
   const refreshToken = localStorage.getItem("refresh_token");
   const [courses, setCourses] = useState([]);
   const defaultImageUrl = "/defaultclass.png";
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedCourseId, setSelectedCourseId] = useState(null); // 선택된 강의 ID
+
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
   useEffect(() => {
     getclassList();
   }, []);
@@ -104,6 +110,34 @@ function Myclass() {
       alert("Error occurred " + error.message);
     }
   };
+
+  const onDeleteClass = async (id) => {
+    const baseUrl = `https://sangsang2.kr:8080/api/lecture/delete/${id}`;
+    console.log("id: ", id);
+    try {
+      const response = await fetch(baseUrl, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        alert("강의 삭제에 실패했습니다.");
+        console.log("Error Data:", response);
+        closeModal();
+        return;
+      }
+      const data = await response.text();
+      closeModal();
+      console.log("delete classroom success: ", data);
+    } catch (error) {
+      console.error("Error deleting classroom:", error);
+      closeModal();
+    }
+  };
+
   return (
     <div id="mobile-view">
       <header className="app-header profileHeader defaultHeader">
@@ -131,8 +165,38 @@ function Myclass() {
               <div className="myclass-box_type">
                 <span>{course.type === "Regular" ? "정규" : "원데이"}</span>
               </div>
+              <div className="myclass-box-btn">
+                <button
+                  onClick={() => {
+                    setSelectedCourseId(course.id);
+                    openModal();
+                  }}
+                >
+                  강의 삭제
+                </button>
+              </div>
             </div>
           ))}
+          <Modal
+            isOpen={isModalOpen}
+            onRequestClose={closeModal}
+            contentLabel="강의 삭제하기"
+            className="modal"
+            overlayClassName="overlay"
+          >
+            <h2>강의를 삭제하시겠습니까??</h2>
+            <div className="modal-buttons">
+              <button
+                onClick={() => onDeleteClass(selectedCourseId)}
+                className="confirm-btn"
+              >
+                네
+              </button>
+              <button onClick={closeModal} className="cancel-btn">
+                아니요
+              </button>
+            </div>
+          </Modal>
         </section>
       </main>
     </div>

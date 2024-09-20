@@ -1,5 +1,5 @@
 import { React, useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import "./css/review.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
@@ -10,6 +10,8 @@ const ReviewInquiry = () => {
   const [averageScore, setAverageScore] = useState({});
   const [sortOption, setSortOption] = useState("latest");
   const ratingLabels = [5, 4, 3, 2, 1];
+  const token = localStorage.getItem("token");
+  const navigate = useNavigate();
 
   // 리뷰 데이터 및 평균 스코어 가져오기
   useEffect(() => {
@@ -20,6 +22,7 @@ const ReviewInquiry = () => {
         );
         const reviewData = await response.json();
         setReview(reviewData);
+        console.log("reviewdata: ", reviewData);
       } catch (error) {
         console.error("리뷰 정보를 가져오지 못했습니다:", error);
         alert("리뷰 정보를 가져오지 못했습니다.");
@@ -59,6 +62,39 @@ const ReviewInquiry = () => {
       sorted.sort((a, b) => new Date(b.createdTime) - new Date(a.createdTime));
     }
     return sorted;
+  };
+
+  const gotoDetail = async (reviewId) => {
+    try {
+      const response = await fetch(
+        `https://sangsang2.kr:8080/api/review/detail?reviewID=${reviewId}`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const reviewData = await response.json();
+      if (!response.ok) {
+        if (reviewData.error === "존재하지 않는 클래스입니다.") {
+          alert("존재하지 않는 클래스입니다.");
+        } else if (reviewData.error === "존재하지 않는 리뷰입니다.")
+          alert("존재하지 않는 리뷰입니다.");
+
+        console.log("Error Data:", reviewData);
+        return;
+      }
+
+      console.log("review detail: ", reviewData);
+      navigate("/home/class_application/review/detail", {
+        state: { reviewData, id },
+      });
+    } catch (error) {
+      console.error("리뷰 상세정보를 가져오지 못했습니다:", error);
+      alert("리뷰 상세정보를 가져오지 못했습니다.");
+    }
   };
 
   return (
@@ -119,7 +155,14 @@ const ReviewInquiry = () => {
 
         <section id="reviewList">
           {sortedReviews().map((review) => (
-            <div key={review.id} className="reviewItem">
+            <div
+              key={review.reviewId}
+              className="reviewItem"
+              onClick={() => {
+                gotoDetail(review.reviewId);
+                console.log(review.reviewId);
+              }}
+            >
               <div className="reviewProfile">
                 <img
                   src={`${review.memberImageUrl || `/user.png`}`}

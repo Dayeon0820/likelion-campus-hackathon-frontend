@@ -7,6 +7,8 @@ import "../App.css";
 import "../login/login.css";
 import "./signup1.css";
 import styles from "../login/background.module.css";
+import Modal from "react-modal";
+Modal.setAppElement("#root");
 
 function Signup1() {
   const navigate = useNavigate();
@@ -19,7 +21,7 @@ function Signup1() {
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const [count, setCount] = useState(30);
   const [isCounting, setIsCounting] = useState(false);
-
+  const [isModalOpen, setIsModalOpen] = useState(false);
   useEffect(() => {
     // 30초 카운트 다운
     let intervalId;
@@ -63,7 +65,7 @@ function Signup1() {
           },
         });
         console.log("response received", response.data);
-        alert("인증번호가 이메일로 전송되었습니다.");
+        console.log("인증번호가 이메일로 전송되었습니다.");
       } catch (error) {
         console.error("Error occurred during verification:", error);
         alert("인증번호 전송에 실패했습니다.");
@@ -104,8 +106,7 @@ function Signup1() {
           },
         });
         console.log("response received", response.data);
-        alert("회원가입 되었습니다. 다시 로그인해 주세요");
-        navigate("/");
+        setIsModalOpen(true);
       } catch (error) {
         console.error("Error occurred during signup:", error);
         if (error.response && error.response.data) {
@@ -129,9 +130,27 @@ function Signup1() {
       }
     }
   };
+  const handleConfirm = () => {
+    setIsModalOpen(false); // 모달 닫기
+    navigate("/login"); // 홈으로 이동
+  };
 
   return (
     <div id="mobile-view" className={styles.background}>
+      <Modal
+        isOpen={isModalOpen}
+        onRequestClose={() => setIsModalOpen(false)}
+        contentLabel="로그인 성공"
+        className="modal"
+        overlayClassName="overlay"
+      >
+        <h2>회원가입 성공</h2>
+        <div className="modal-buttons">
+          <button onClick={handleConfirm} className="confirm-btn">
+            로그인
+          </button>
+        </div>
+      </Modal>
       <div id="login-container">
         <form onSubmit={onSignup} id="login_Box">
           <img src="/logo.png" id="logo" />

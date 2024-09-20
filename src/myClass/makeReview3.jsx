@@ -65,18 +65,6 @@ function MakeReview2() {
       formData.append("images", image, image.name);
     }
 
-    // // 기본 이미지 경로
-    // const defaultImageUrl = "/defaultReview.png"; // 기본 이미지 URL
-    // const response = await fetch(defaultImageUrl);
-    // const blob = await response.blob(); // Blob으로 변환
-
-    // // 입력된 이미지가 없으면 기본 이미지 사용
-    // if (image && image instanceof File) {
-    //   formData.append("images", image);
-    // } else {
-    //   formData.append("images", blob, "defaultReview.png"); // 기본 이미지 추가 (용량 작은걸로 골라오기)
-    // }
-
     try {
       const response = await fetch(baseUrl, {
         method: "POST",

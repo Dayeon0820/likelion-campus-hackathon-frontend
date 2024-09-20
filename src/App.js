@@ -33,6 +33,7 @@ import PassWord from "./signup/password";
 import PassWord2 from "./signup/password2";
 import SearchList from "./search/searchList";
 import SendingChats from "./chatting/sendingChats";
+import ReviewDetail from "./main/reviewDetail";
 
 function App() {
   return (
@@ -63,6 +64,10 @@ function App() {
         <Route
           path="/home/class_application/review/:id"
           element={<ReviewInquiry />}
+        />
+        <Route
+          path="/home/class_application/review/detail"
+          element={<ReviewDetail />}
         />
         <Route path="/map" element={<ClassMap />} />
         <Route path="/profile" element={<Profile />} />

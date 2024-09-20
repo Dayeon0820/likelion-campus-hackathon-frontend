@@ -6,6 +6,8 @@ import "../App.css";
 import Navbar from "../main/navbar";
 import "./profile.css";
 import styles from "./profile.module.css";
+import Modal from "react-modal";
+Modal.setAppElement("#root");
 
 function Profile_CREATOR(props) {
   const navigate = useNavigate();
@@ -19,6 +21,10 @@ function Profile_CREATOR(props) {
   const permission = userInfo.permission;
   const imageurl = userInfo.imageUrl;
   const [userImg, setUserImg] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
 
   const onRefreshToken = async () => {
     const refreshResponse = await fetch(
@@ -55,54 +61,54 @@ function Profile_CREATOR(props) {
     console.log(userImg);
   }, [imageurl]);
 
-  const onConfirm = async (e) => {
-    e.preventDefault();
+  const handleConfirm = () => {
+    onLogout(); // '네'를 누르면 실행
+  };
 
-    const confirmedLogout = window.confirm("로그아웃 하시겠습니까?");
-    if (confirmedLogout) {
-      try {
-        const response = await fetch(
-          "https://sangsang2.kr:8080/api/member/logout",
-          {
-            method: "POST",
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-
-        if (!response.ok) {
-          const data = await response.json();
-          if (response.status === 400) {
-            if (data.error === "사용자 찾을 수 없음") {
-              alert("사용자 정보를 찾을 수 없습니다.");
-            } else {
-              alert("로그아웃에 실패했습니다."); // 다른 400 에러 처리
-            }
-          } else if (
-            data.error === "토큰이 유효하지 않습니다." ||
-            data.error === "토큰 사용자를 찾을 수 없습니다."
-          ) {
-            const newToken = await onRefreshToken(); // 새로운 토큰 요청
-
-            if (newToken) {
-              // 새로운 토큰이 있으면 재시도
-              return onConfirm(); // 다시 호출
-            }
-          } else {
-            alert("로그인에 실패했습니다.");
-          }
-          return;
+  const onLogout = async () => {
+    try {
+      const response = await fetch(
+        "https://sangsang2.kr:8080/api/member/logout",
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
-        const data = await response.text();
-        alert("계정에서 로그아웃 되었습니다.");
-        localStorage.removeItem("token");
-        localStorage.removeItem("refresh_token");
-        navigate("/login");
-      } catch (error) {
-        console.error("Error occurred during delete:", error);
-        alert("Error occurred " + error.message);
+      );
+
+      if (!response.ok) {
+        const data = await response.json();
+        if (response.status === 400) {
+          if (data.error === "사용자 찾을 수 없음") {
+            alert("사용자 정보를 찾을 수 없습니다.");
+          } else {
+            alert("로그아웃에 실패했습니다."); // 다른 400 에러 처리
+          }
+        } else if (
+          data.error === "토큰이 유효하지 않습니다." ||
+          data.error === "토큰 사용자를 찾을 수 없습니다."
+        ) {
+          const newToken = await onRefreshToken(); // 새로운 토큰 요청
+
+          if (newToken) {
+            // 새로운 토큰이 있으면 재시도
+            return onLogout(); // 다시 호출
+          }
+        } else {
+          alert("로그인에 실패했습니다.");
+        }
+        return;
       }
+      const data = await response.text();
+
+      localStorage.removeItem("token");
+      localStorage.removeItem("refresh_token");
+      closeModal();
+      navigate("/login");
+    } catch (error) {
+      console.error("Error occurred during delete:", error);
+      alert("Error occurred " + error.message);
     }
   };
   return (
@@ -156,7 +162,6 @@ function Profile_CREATOR(props) {
         <div id="profile-emptyBox">
           <span id="profile-introduction">{introduction}</span>
         </div>
-
         <button
           className="logoutBtn permissionBtn"
           onClick={() =>
@@ -168,10 +173,27 @@ function Profile_CREATOR(props) {
           권한 변경하기
         </button>
 
-        <button className="logoutBtn" onClick={onConfirm}>
+        <button className="logoutBtn" onClick={openModal}>
           로그아웃
         </button>
       </main>
+      <Modal
+        isOpen={isModalOpen}
+        onRequestClose={closeModal}
+        contentLabel="로그아웃"
+        className="modal"
+        overlayClassName="overlay"
+      >
+        <h2>로그아웃 하시겠습니까?</h2>
+        <div className="modal-buttons">
+          <button onClick={handleConfirm} className="confirm-btn">
+            네
+          </button>
+          <button onClick={closeModal} className="cancel-btn">
+            아니요
+          </button>
+        </div>
+      </Modal>
       <Navbar></Navbar>
     </div>
   );
