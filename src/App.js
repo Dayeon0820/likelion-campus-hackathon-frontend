@@ -38,8 +38,8 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/splash" element={<Splash />} />
-        <Route path="/" element={<Login />} />
+        <Route path="/" element={<Splash />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/signup1" element={<Signup1 />} />
         <Route path="/password" element={<PassWord />} />
         <Route path="/password2" element={<PassWord2 />} />

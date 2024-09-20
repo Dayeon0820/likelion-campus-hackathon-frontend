@@ -37,7 +37,7 @@ function Myclass() {
       return refreshData.accessToken; // 새로운 토큰 반환
     } else {
       alert("로그인 기간이 만료되었습니다.");
-      navigate("/"); // 로그인 페이지로 리다이렉트
+      navigate("/login"); // 로그인 페이지로 리다이렉트
       return null; // 실패 시 null 반환
     }
   };
@@ -61,7 +61,10 @@ function Myclass() {
           } else {
             alert("클래스 내역 불러오기에 실패했습니다."); // 다른 404 에러 처리
           }
-        } else if (response.status === 401 && refreshToken) {
+        } else if (
+          data.error === "토큰이 유효하지 않습니다." ||
+          data.error === "토큰 사용자를 찾을 수 없습니다."
+        ) {
           const newToken = await onRefreshToken(); // 새로운 토큰 요청
 
           if (newToken) {

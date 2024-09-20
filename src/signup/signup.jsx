@@ -82,7 +82,9 @@ function Signup1() {
       alert("모든 입력칸은 채워주십시오");
       return;
     } else if (!passwordPattern.test(passW)) {
-      alert("비밀번호는 최소 8자 이상이어야 하며, 대문자, 소문자, 숫자, 특수문자를 포함해야 합니다.");
+      alert(
+        "비밀번호는 최소 8자 이상이어야 하며, 대문자, 소문자, 숫자, 특수문자를 포함해야 합니다."
+      );
       return;
     } else if (passW !== rePassW) {
       alert("비밀번호가 일치하지 않습니다");
@@ -196,7 +198,7 @@ function Signup1() {
             </button>
             <footer id="login-footer">
               <span id="login-footerTxt">이미 회원이신가요?</span>
-              <Link to="/" id="login-footerLink">
+              <Link to="/login" id="login-footerLink">
                 로그인하기
               </Link>
             </footer>
