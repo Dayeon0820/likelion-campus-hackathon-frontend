@@ -51,7 +51,7 @@ const ClassList = () => {
   };
 
   return (
-    <div id="mobile-view">
+    <div id="mobile-view" className="homeBackground">
       <header className="classListHeader">
         <div className="headerTop">
           <Link to="/home">
