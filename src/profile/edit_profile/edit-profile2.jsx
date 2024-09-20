@@ -12,12 +12,40 @@ function EditProfile2() {
   const navigate = useNavigate();
   const location = useLocation();
   const token = localStorage.getItem("token");
+  const refreshToken = localStorage.getItem("refresh_token");
   const permission = location.state?.permission || "";
   const tag = location.state?.tag || "";
   const originalIntro = location.state?.introduction || "";
   const [nickname, setNickname] = useState("");
   const [introduction, setIntroduction] = useState("");
   const originalName = location.state?.nickname || "모맨트 클래스";
+
+  const onRefreshToken = async () => {
+    const refreshResponse = await fetch(
+      "https://sangsang2.kr:8080/api/memebr/refresh",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          refresh_token: refreshToken,
+        }),
+      }
+    );
+
+    const refreshData = await refreshResponse.json();
+    if (refreshResponse.ok) {
+      // 새로운 액세스 토큰 저장
+      localStorage.setItem("token", refreshData.accessToken);
+      return refreshData.accessToken; // 새로운 토큰 반환
+    } else {
+      alert("로그인 기간이 만료되었습니다.");
+      navigate("/"); // 로그인 페이지로 리다이렉트
+      return null; // 실패 시 null 반환
+    }
+  };
+
   useEffect(() => {
     // 컴포넌트가 언마운트될 때 URL 해제
     return () => {
@@ -81,6 +109,13 @@ function EditProfile2() {
             alert("업데이트된 사용자 정보를 불러올 수 없습니다.");
           } else {
             alert("회원 정보 불러오기에 실패했습니다."); // 다른 404 에러 처리
+          }
+        } else if (response.status === 401 && refreshToken) {
+          const newToken = await onRefreshToken(); // 새로운 토큰 요청
+
+          if (newToken) {
+            // 새로운 토큰이 있으면 재시도
+            return EditProfile2(); // 다시 호출
           }
         } else {
           alert("회원 정보 불러오기에 실패했습니다.");

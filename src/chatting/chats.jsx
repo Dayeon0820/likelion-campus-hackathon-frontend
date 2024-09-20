@@ -8,10 +8,37 @@ import "./chats.css";
 
 function Chats() {
   const token = localStorage.getItem("token");
+  const refreshToken = localStorage.getItem("refresh_token");
   const [chatRoomList, setChatRoomList] = useState([]);
   const [myImg, setMyImg] = useState("");
   const [selectedType, setSelectedType] = useState("all");
   const navigate = useNavigate();
+  const onRefreshToken = async () => {
+    const refreshResponse = await fetch(
+      "https://sangsang2.kr:8080/api/memebr/refresh",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          refresh_token: refreshToken,
+        }),
+      }
+    );
+
+    const refreshData = await refreshResponse.json();
+    if (refreshResponse.ok) {
+      // 새로운 액세스 토큰 저장
+      localStorage.setItem("token", refreshData.accessToken);
+      return refreshData.accessToken; // 새로운 토큰 반환
+    } else {
+      alert("로그인 기간이 만료되었습니다.");
+      navigate("/"); // 로그인 페이지로 리다이렉트
+      return null; // 실패 시 null 반환
+    }
+  };
+
   const getChatsList = async (e) => {
     const baseUrl = "https://sangsang2.kr:8080/api/chat/chatRoom/all";
 
@@ -26,6 +53,14 @@ function Chats() {
 
       const data = await response.json();
       if (!response.ok) {
+        if (response.status === 401 && refreshToken) {
+          const newToken = await onRefreshToken(); // 새로운 토큰 요청
+
+          if (newToken) {
+            // 새로운 토큰이 있으면 재시도
+            return getChatsList(); // 다시 호출
+          }
+        }
         console.log("Error Data:", data);
         return;
       }

@@ -1,134 +1,139 @@
 /* header--start */
-.classListHeader{
-    width: 100%;
-    height: 13vh;
-    /* background: #ededed; */
-    position: absolute;  /* 나중에 fixed로 수정 */
-    top: 0;
-    z-index: 2;
+.classListHeader {
+  width: 100%;
+  height: 13vh;
+  /* background: #ededed; */
+  position: absolute; /* 나중에 fixed로 수정 */
+  top: 0;
+  z-index: 2;
 }
-.classListHeader > .headerTop{
-    width: 100%;
-    height: 54%;
-    margin: 0 auto;
-    background: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
+.classListHeader > .headerTop {
+  width: 100%;
+  height: 54%;
+  margin: 0 auto;
+  background: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
 }
-.headerTop > a{
-    display: inline-block;
-    width: 24px;
-    height: 24px;
-    /* background: #333; */
-    display: flex;
-    align-items: center;
-    position: absolute;
-    left: 6%;
+.headerTop > a {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  /* background: #333; */
+  display: flex;
+  align-items: center;
+  position: absolute;
+  left: 6%;
 }
-.headerTop > a > span{
-    color: #141414;
-    font-size: 18px;
-    /* background: url("../../../public/arrow.png") no-repeat center; */
-}
-
-.headerTop > .classSelect{
-    height: 100%;
-    border: none;
-    border-radius: 0;
+.headerTop > a > span {
+  color: #141414;
+  font-size: 18px;
+  /* background: url("../../../public/arrow.png") no-repeat center; */
 }
 
-.classListHeader > .headerCategories{
-    /* border: 1px solid #333; */
-    background: #edededed;
-    width: 100%;
-    height: 46%;
-    display: flex;
-    align-items: center;
+.headerTop > .classSelect {
+  height: 100%;
+  border: none;
+  border-radius: 0;
 }
-.headerCategories > P{
-    /* background: #333; */
-    width: auto;
-    height: 40%;
-    padding: 0 3%;
-    border-right: 1px solid #898989;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.headerTop > .classSelect:focus {
+  outline: none;
 }
-.headerCategories > ul{
-    width: 82%;
-    height: 70%;
-    padding: 0 2%;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
+.classListHeader > .headerCategories {
+  /* border: 1px solid #333; */
+  background: #edededed;
+  width: 100%;
+  height: 46%;
+  display: flex;
+  align-items: center;
 }
-.categoryTxt{
-    font-size: 10px;
-    cursor: pointer;
+.headerCategories > P {
+  /* background: #333; */
+  width: auto;
+  height: 40%;
+  padding: 0 3%;
+  border-right: 1px solid #898989;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.headerCategories > ul {
+  width: 82%;
+  height: 70%;
+  padding: 0 2%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.categoryTxt {
+  font-size: 10px;
+  cursor: pointer;
 }
 .categoryTxt.active {
-    color: #369EFF; 
-    font-weight: bold; 
+  color: #369eff;
+  font-weight: bold;
 }
 /* header--end */
 
 /* main -- start */
-.classListMain{
-    width: 100%;
-    padding: 13vh 0 10vh;
-    overflow-y: auto;
+.classListMain {
+  width: 100%;
+  padding: 13vh 0 10vh;
+  overflow-y: auto;
 }
 
-.classListContainer{
-    width: 90%;
-    margin: 20px auto;
-    /* border: 1px solid #333; */
-    overflow-y: auto;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* 그리드의 각 아이템 크기를 150px 이상으로 유지 */
-    grid-gap: 15px; /* 그리드 항목들 사이의 간격 */
+.classListContainer {
+  width: 90%;
+  margin: 20px auto;
+  /* border: 1px solid #333; */
+  overflow-y: auto;
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(150px, 1fr)
+  ); /* 그리드의 각 아이템 크기를 150px 이상으로 유지 */
+  grid-gap: 15px; /* 그리드 항목들 사이의 간격 */
 }
 
 .classItem {
-    /* height: 140px; */
-    border-radius: 12px;
-    /* overflow: hidden; */
-    padding: 6px;
-   /*  background: #ededed; */
+  /* height: 140px; */
+  border-radius: 12px;
+  /* overflow: hidden; */
+  padding: 6px;
+  /*  background: #ededed; */
 }
 
 .classImage {
-    width: 100%;
-    height: 100px;
-    object-fit: cover; /* 이미지를 박스에 맞게 채워줌 */
-    border-radius: 8px;
-    background: #fff;
+  width: 100%;
+  height: 100px;
+  object-fit: cover; /* 이미지를 박스에 맞게 채워줌 */
+  border-radius: 8px;
+  background: #fff;
 }
 
 .classInfo {
-    margin: 6px 0 0 8px;
-    text-align: start;
+  margin: 6px 0 0 8px;
+  text-align: start;
 }
 
 .classTitle {
-    font-size: 12px;
-    font-weight: bold;
-    margin: 4px 0;
+  font-size: 12px;
+  font-weight: bold;
+  margin: 4px 0;
 }
 
 .classPrice {
-    font-size: 10px;
-    color: #555;
+  font-size: 10px;
+  color: #555;
 }
 
-.noClassMessage{
-    width: 100%;
-    /* background: #333; */
-    text-align: center;
-    font-size: 12px;
+.noClassMessage {
+  width: 100%;
+  /* background: #333; */
+  text-align: center;
+  font-size: 12px;
 }
 
 /* main -- end */

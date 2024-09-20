@@ -10,12 +10,37 @@ import Navbar from "../main/navbar";
 function Myclass() {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
+  const refreshToken = localStorage.getItem("refresh_token");
   const [courses, setCourses] = useState([]);
   const defaultImageUrl = "/defaultclass.png";
   useEffect(() => {
     getclassList();
   }, []);
+  const onRefreshToken = async () => {
+    const refreshResponse = await fetch(
+      "https://sangsang2.kr:8080/api/memebr/refresh",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          refresh_token: refreshToken,
+        }),
+      }
+    );
 
+    const refreshData = await refreshResponse.json();
+    if (refreshResponse.ok) {
+      // 새로운 액세스 토큰 저장
+      localStorage.setItem("token", refreshData.accessToken);
+      return refreshData.accessToken; // 새로운 토큰 반환
+    } else {
+      alert("로그인 기간이 만료되었습니다.");
+      navigate("/"); // 로그인 페이지로 리다이렉트
+      return null; // 실패 시 null 반환
+    }
+  };
   const getclassList = async () => {
     const baseUrl =
       "https://sangsang2.kr:8080/api/lecture/own?permission=CREATOR";
@@ -36,31 +61,41 @@ function Myclass() {
           } else {
             alert("클래스 내역 불러오기에 실패했습니다."); // 다른 404 에러 처리
           }
+        } else if (response.status === 401 && refreshToken) {
+          const newToken = await onRefreshToken(); // 새로운 토큰 요청
+
+          if (newToken) {
+            // 새로운 토큰이 있으면 재시도
+            return getclassList(); // 다시 호출
+          }
         } else {
           alert("클래스 내역 불러오기에 실패했습니다.");
         }
         return;
       }
 
-    console.log(data,'data')
+      console.log(data, "data");
 
-    const formattedData = data.map((course,i) => {
-      console.log(course.imageUrl,i, 'course imageUrl'); // 디버깅 로그 추가
-      const imageUrl = course.imageUrl && Array.isArray(course.imageUrl) && course.imageUrl.length > 0
-        ? course.imageUrl[0].imageUrl
-        : defaultImageUrl;
-      
-      return {
-        id: course.id,
-        name: course.name,
-        type: course.type,
-        price: course.price,
-        imageUrls: imageUrl,
-      };
-    });
+      const formattedData = data.map((course, i) => {
+        console.log(course.imageUrl, i, "course imageUrl"); // 디버깅 로그 추가
+        const imageUrl =
+          course.imageUrl &&
+          Array.isArray(course.imageUrl) &&
+          course.imageUrl.length > 0
+            ? course.imageUrl[0].imageUrl
+            : defaultImageUrl;
+
+        return {
+          id: course.id,
+          name: course.name,
+          type: course.type,
+          price: course.price,
+          imageUrls: imageUrl,
+        };
+      });
 
       setCourses(formattedData);
-      console.log(formattedData, 'formattedData');
+      console.log(formattedData, "formattedData");
     } catch (error) {
       console.error("Error occurred during delete:", error);
       alert("Error occurred " + error.message);

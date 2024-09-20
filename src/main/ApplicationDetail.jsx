@@ -9,8 +9,9 @@ const ApplicationDetail = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const token = localStorage.getItem("token");
+  const refreshToken = localStorage.getItem("refresh_token");
   const location = useLocation();
-  const classData = location.state?.classData; 
+  const classData = location.state?.classData;
   const [count, setCount] = useState(1);
 
   // classData.date를 초기 선택 날짜로 설정
@@ -18,6 +19,31 @@ const ApplicationDetail = () => {
 
   const [date, setDate] = useState(initialDate);
   const [classTime, setClassTime] = useState(null);
+  const onRefreshToken = async () => {
+    const refreshResponse = await fetch(
+      "https://sangsang2.kr:8080/api/memebr/refresh",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          refresh_token: refreshToken,
+        }),
+      }
+    );
+
+    const refreshData = await refreshResponse.json();
+    if (refreshResponse.ok) {
+      // 새로운 액세스 토큰 저장
+      localStorage.setItem("token", refreshData.accessToken);
+      return refreshData.accessToken; // 새로운 토큰 반환
+    } else {
+      alert("로그인 기간이 만료되었습니다.");
+      navigate("/"); // 로그인 페이지로 리다이렉트
+      return null; // 실패 시 null 반환
+    }
+  };
 
   useEffect(() => {
     console.log("Class Data:", classData);
@@ -27,7 +53,7 @@ const ApplicationDetail = () => {
   useEffect(() => {
     if (classData) {
       // 선택된 날짜와 classData의 날짜가 같은 경우 수강 시간 설정
-      const selectedDate = moment(date).format("YYYY-MM-DD"); 
+      const selectedDate = moment(date).format("YYYY-MM-DD");
       const classDate = classData.date;
 
       if (selectedDate === classDate) {
@@ -90,6 +116,13 @@ const ApplicationDetail = () => {
           } else {
             alert("강의 신청에 실패했습니다."); // 다른 400 에러 처리
           }
+        } else if (response.status === 401 && refreshToken) {
+          const newToken = await onRefreshToken(); // 새로운 토큰 요청
+
+          if (newToken) {
+            // 새로운 토큰이 있으면 재시도
+            return handleApplicationClick(); // 다시 호출
+          }
         }
         {
           alert("강의 신청에 실패했습니다.");
@@ -99,7 +132,7 @@ const ApplicationDetail = () => {
       console.log(data);
       navigate("/home/class_application/completed");
       alert("성공");
-      navigate('/home/class_application/completed');     
+      navigate("/home/class_application/completed");
     } catch (error) {
       console.error("Error occurred during delete:", error);
       alert("Error occurred " + error.message);

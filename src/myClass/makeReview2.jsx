@@ -10,7 +10,6 @@ import "./makeReview.css";
 function MakeReview2() {
   const navigate = useNavigate();
   const location = useLocation();
-  const token = localStorage.getItem("token");
   const rate = location.state?.rating || 0;
   const courseId = location.state?.courseId || null;
   const [image, setImage] = useState(null);

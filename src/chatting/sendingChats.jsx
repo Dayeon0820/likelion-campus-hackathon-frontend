@@ -11,6 +11,7 @@ function SendingChats() {
   const navigate = useNavigate();
   const location = useLocation();
   const token = localStorage.getItem("token");
+  const refreshToken = localStorage.getItem("refresh_token");
   const { search } = useLocation();
   const query = new URLSearchParams(search);
   const id = query.get("chatRoomId");
@@ -20,6 +21,32 @@ function SendingChats() {
   const [date, setDate] = useState("");
   const gobackHome = () => navigate(`/home`);
   const messageEndRef = useRef(null);
+
+  const onRefreshToken = async () => {
+    const refreshResponse = await fetch(
+      "https://sangsang2.kr:8080/api/memebr/refresh",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          refresh_token: refreshToken,
+        }),
+      }
+    );
+
+    const refreshData = await refreshResponse.json();
+    if (refreshResponse.ok) {
+      // 새로운 액세스 토큰 저장
+      localStorage.setItem("token", refreshData.accessToken);
+      return refreshData.accessToken; // 새로운 토큰 반환
+    } else {
+      alert("로그인 기간이 만료되었습니다.");
+      navigate("/"); // 로그인 페이지로 리다이렉트
+      return null; // 실패 시 null 반환
+    }
+  };
 
   const getMessage = async (e) => {
     const baseUrl = `https://sangsang2.kr:8080/api/chat/chatRoom?chatRoomId=${id}`;
@@ -35,6 +62,17 @@ function SendingChats() {
 
       const data = await response.json();
       if (!response.ok) {
+        if (data.error === "이미 채팅방이 존재합니다.") {
+          alert("이미 존재하는 채팅방입니다.");
+          navigate("/chats");
+        } else if (response.status === 401 && refreshToken) {
+          const newToken = await onRefreshToken(); // 새로운 토큰 요청
+
+          if (newToken) {
+            // 새로운 토큰이 있으면 재시도
+            return SendingChats(); // 다시 호출
+          }
+        }
         alert("메세지 불러오기에 실패했습니다.");
 
         console.log("Error Data:", data);
@@ -175,22 +213,22 @@ function SendingChats() {
           </div>
           <div ref={messageEndRef} /> {/* 메시지 끝부분을 가리키는 div */}
         </div>
-        <div id="chatting-footer">
-          <img src="/user.png" id="chatting-img_footer" />
-          <form id="chatting-inputBox" onSubmit={sendMessage}>
-            <input
-              id="chatting-input"
-              type="text"
-              onChange={(e) => {
-                setsending(e.target.value);
-              }}
-              value={sending}
-            />
-            <button>
-              <img src="/send.png" id="input-sendingIcon" type="submit" />
-            </button>
-          </form>
-        </div>
+      </div>
+      <div id="chatting-footer">
+        <img src="/user.png" id="chatting-img_footer" />
+        <form id="chatting-inputBox" onSubmit={sendMessage}>
+          <input
+            id="chatting-input"
+            type="text"
+            onChange={(e) => {
+              setsending(e.target.value);
+            }}
+            value={sending}
+          />
+          <button>
+            <img src="/send.png" id="input-sendingIcon" type="submit" />
+          </button>
+        </form>
       </div>
     </div>
   );

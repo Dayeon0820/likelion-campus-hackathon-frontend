@@ -11,6 +11,7 @@ function MakeReview2() {
   const navigate = useNavigate();
   const [comment, setComment] = useState("");
   const token = localStorage.getItem("token");
+  const refreshToken = localStorage.getItem("refresh_token");
   const location = useLocation();
   const rate = location.state?.rate || 0;
   const courseId = location.state?.courseId || null;
@@ -23,6 +24,32 @@ function MakeReview2() {
     lectureId: lectureId,
   };
 
+  const onRefreshToken = async () => {
+    const refreshResponse = await fetch(
+      "https://sangsang2.kr:8080/api/memebr/refresh",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          refresh_token: refreshToken,
+        }),
+      }
+    );
+
+    const refreshData = await refreshResponse.json();
+    if (refreshResponse.ok) {
+      // 새로운 액세스 토큰 저장
+      localStorage.setItem("token", refreshData.accessToken);
+      return refreshData.accessToken; // 새로운 토큰 반환
+    } else {
+      alert("로그인 기간이 만료되었습니다.");
+      navigate("/"); // 로그인 페이지로 리다이렉트
+      return null; // 실패 시 null 반환
+    }
+  };
+
   const onSubmit = async (e) => {
     e.preventDefault();
 
@@ -33,9 +60,22 @@ function MakeReview2() {
       "review",
       new Blob([JSON.stringify(requestDTO)], { type: "application/json" })
     );
+
     if (image) {
       formData.append("images", image, image.name);
     }
+
+    // // 기본 이미지 경로
+    // const defaultImageUrl = "/defaultReview.png"; // 기본 이미지 URL
+    // const response = await fetch(defaultImageUrl);
+    // const blob = await response.blob(); // Blob으로 변환
+
+    // // 입력된 이미지가 없으면 기본 이미지 사용
+    // if (image && image instanceof File) {
+    //   formData.append("images", image);
+    // } else {
+    //   formData.append("images", blob, "defaultReview.png"); // 기본 이미지 추가 (용량 작은걸로 골라오기)
+    // }
 
     try {
       const response = await fetch(baseUrl, {
@@ -57,6 +97,13 @@ function MakeReview2() {
             alert("이미 리뷰를 작성한 회원입니다.");
           } else {
             alert("리뷰 생성에 실패했습니다."); // 다른 404 에러 처리
+          }
+        } else if (response.status === 401 && refreshToken) {
+          const newToken = await onRefreshToken(); // 새로운 토큰 요청
+
+          if (newToken) {
+            // 새로운 토큰이 있으면 재시도
+            return onSubmit(); // 다시 호출
           }
         } else {
           alert("리뷰 생성에 실패했습니다.");

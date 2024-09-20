@@ -9,29 +9,33 @@ const ReviewInquiry = () => {
   const [review, setReview] = useState([]);
   const [averageScore, setAverageScore] = useState({});
   const [sortOption, setSortOption] = useState("latest");
-  const ratingLabels = [5, 4, 3, 2, 1]; 
+  const ratingLabels = [5, 4, 3, 2, 1];
 
   // 리뷰 데이터 및 평균 스코어 가져오기
   useEffect(() => {
     const fetchReviews = async () => {
       try {
-        const response = await fetch(`https://sangsang2.kr:8080/api/review/?lectureId=${id}`);
+        const response = await fetch(
+          `https://sangsang2.kr:8080/api/review/?lectureId=${id}`
+        );
         const reviewData = await response.json();
         setReview(reviewData);
       } catch (error) {
-        console.error('리뷰 정보를 가져오지 못했습니다:', error);
-        alert('리뷰 정보를 가져오지 못했습니다.');
+        console.error("리뷰 정보를 가져오지 못했습니다:", error);
+        alert("리뷰 정보를 가져오지 못했습니다.");
       }
     };
 
     const fetchAverageScore = async () => {
       try {
-        const response = await fetch(`https://sangsang2.kr:8080/api/review/score/average?lectureId=${id}`);
+        const response = await fetch(
+          `https://sangsang2.kr:8080/api/review/score/average?lectureId=${id}`
+        );
         const averageData = await response.json();
         setAverageScore(averageData);
       } catch (error) {
-        console.error('평균 스코어 정보를 가져오지 못했습니다:', error);
-        alert('평균 스코어 정보를 가져오지 못했습니다.');
+        console.error("평균 스코어 정보를 가져오지 못했습니다:", error);
+        alert("평균 스코어 정보를 가져오지 못했습니다.");
       }
     };
 
@@ -43,11 +47,8 @@ const ReviewInquiry = () => {
     averageScore.scoreFour,
     averageScore.scoreThree,
     averageScore.scoreTwo,
-    averageScore.scoreOne
+    averageScore.scoreOne,
   ]; // 별점에 대한 비율 배열
-
-
-
 
   // 리뷰 정렬
   const sortedReviews = () => {
@@ -78,7 +79,9 @@ const ReviewInquiry = () => {
                   <FontAwesomeIcon
                     key={index}
                     icon={faStar}
-                    className={index < averageScore.averageScore ? "star filled" : "star"}
+                    className={
+                      index < averageScore.averageScore ? "star filled" : "star"
+                    }
                   />
                 ))}
               </div>
@@ -87,19 +90,19 @@ const ReviewInquiry = () => {
           </div>
 
           <div className="averageRatingBox">
-    {ratingLabels.map((label, index) => (
-      <div key={label} className="ratingBarWrapper">
-        <div className="ratingLabel">{label}</div>
-        <div className="ratingBar">
-          <div
-            className="ratingBarFill"
-            style={{ width: `${ratingScores[index]}%` }}
-          ></div>
-        </div>
-        <div className="ratingPercentage">{ratingScores[index]}%</div>
-      </div>
-    ))}
-  </div>
+            {ratingLabels.map((label, index) => (
+              <div key={label} className="ratingBarWrapper">
+                <div className="ratingLabel">{label}</div>
+                <div className="ratingBar">
+                  <div
+                    className="ratingBarFill"
+                    style={{ width: `${ratingScores[index]}%` }}
+                  ></div>
+                </div>
+                <div className="ratingPercentage">{ratingScores[index]}%</div>
+              </div>
+            ))}
+          </div>
         </section>
 
         <div className="reviewBtnBox">
@@ -115,10 +118,13 @@ const ReviewInquiry = () => {
         </div>
 
         <section id="reviewList">
-          {sortedReviews().map(review => (
+          {sortedReviews().map((review) => (
             <div key={review.id} className="reviewItem">
               <div className="reviewProfile">
-                <img src={`${review.memberImageUrl || `https://via.placeholder.com/100`}`} className="reviewItemImg" />
+                <img
+                  src={`${review.memberImageUrl || `/user.png`}`}
+                  className="reviewItemImg"
+                />
                 <div>
                   <h5>{review.memberNickname}</h5>
                   <p>{review.createdTime}</p>
@@ -126,7 +132,11 @@ const ReviewInquiry = () => {
               </div>
               <div className="rating">
                 {Array.from({ length: review.score }, (_, index) => (
-                  <FontAwesomeIcon key={index} icon={faStar} className="individualStar" />
+                  <FontAwesomeIcon
+                    key={index}
+                    icon={faStar}
+                    className="individualStar"
+                  />
                 ))}
               </div>
               <p className="reviewComment">{review.reviewComment}</p>
@@ -139,5 +149,3 @@ const ReviewInquiry = () => {
 };
 
 export default ReviewInquiry;
-
-

@@ -11,6 +11,7 @@ function Profile_CREATOR(props) {
   const navigate = useNavigate();
   const gobackHome = () => navigate("/home");
   const token = localStorage.getItem("token");
+  const refreshToken = localStorage.getItem("refresh_token");
   const userInfo = props.userInfo;
   const tag = userInfo.tag;
   const nickname = userInfo.nickname;
@@ -18,6 +19,32 @@ function Profile_CREATOR(props) {
   const permission = userInfo.permission;
   const imageurl = userInfo.imageUrl;
   const [userImg, setUserImg] = useState("");
+
+  const onRefreshToken = async () => {
+    const refreshResponse = await fetch(
+      "https://sangsang2.kr:8080/api/memebr/refresh",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          refresh_token: refreshToken,
+        }),
+      }
+    );
+
+    const refreshData = await refreshResponse.json();
+    if (refreshResponse.ok) {
+      // 새로운 액세스 토큰 저장
+      localStorage.setItem("token", refreshData.accessToken);
+      return refreshData.accessToken; // 새로운 토큰 반환
+    } else {
+      alert("로그인 기간이 만료되었습니다.");
+      navigate("/"); // 로그인 페이지로 리다이렉트
+      return null; // 실패 시 null 반환
+    }
+  };
 
   useEffect(() => {
     if (imageurl) {
@@ -51,6 +78,13 @@ function Profile_CREATOR(props) {
               alert("사용자 정보를 찾을 수 없습니다.");
             } else {
               alert("로그아웃에 실패했습니다."); // 다른 400 에러 처리
+            }
+          } else if (response.status === 401 && refreshToken) {
+            const newToken = await onRefreshToken(); // 새로운 토큰 요청
+
+            if (newToken) {
+              // 새로운 토큰이 있으면 재시도
+              return onConfirm(); // 다시 호출
             }
           } else {
             alert("로그인에 실패했습니다.");

@@ -10,6 +10,7 @@ function CreateOnedayClass() {
   const location = useLocation();
   const classInfo2 = location.state?.classInfo2;
   const token = localStorage.getItem("token");
+  const refreshToken = localStorage.getItem("refresh_token");
   const [date, setDate] = useState("");
   const [startTime, setStartTime] = useState("");
   const [finTime, setFinTime] = useState("");
@@ -22,6 +23,32 @@ function CreateOnedayClass() {
   const price = classInfo2?.price || "";
   const address = classInfo2?.address || "";
   const detailAddress = classInfo2?.detailAddress || "";
+
+  const onRefreshToken = async () => {
+    const refreshResponse = await fetch(
+      "https://sangsang2.kr:8080/api/memebr/refresh",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          refresh_token: refreshToken,
+        }),
+      }
+    );
+
+    const refreshData = await refreshResponse.json();
+    if (refreshResponse.ok) {
+      // 새로운 액세스 토큰 저장
+      localStorage.setItem("token", refreshData.accessToken);
+      return refreshData.accessToken; // 새로운 토큰 반환
+    } else {
+      alert("로그인 기간이 만료되었습니다.");
+      navigate("/"); // 로그인 페이지로 리다이렉트
+      return null; // 실패 시 null 반환
+    }
+  };
 
   // 한국 시간대로  내일 날짜를 가져오기
   const getTomorrowDateKST = () => {
@@ -65,6 +92,10 @@ function CreateOnedayClass() {
   // 클래스 생성 API 호출
   const onSubmit = async (e) => {
     e.preventDefault();
+    if (date === "" || startTime === "" || finTime === "" || number === 0) {
+      alert("날짜외 시간, 참가 가능 인원 수를 입력해주세요");
+      return;
+    }
     const formData = new FormData();
     const baseUrl = "https://sangsang2.kr:8080/api/lecture/create/oneday";
 
@@ -104,6 +135,13 @@ function CreateOnedayClass() {
             alert("JSON 파싱 중 오류 발생.");
           } else {
             alert("서버에 오류가 발생했습니다."); // 다른 404 에러 처리
+          }
+        } else if (response.status === 401 && refreshToken) {
+          const newToken = await onRefreshToken(); // 새로운 토큰 요청
+
+          if (newToken) {
+            // 새로운 토큰이 있으면 재시도
+            return CreateOnedayClass(); // 다시 호출
           }
         } else {
           alert("클래스 생성에 실패했습니다.");

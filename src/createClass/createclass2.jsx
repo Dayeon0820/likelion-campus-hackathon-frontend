@@ -131,6 +131,7 @@ function CreateClass2() {
             <input
               className="createclass-input"
               placeholder="가격"
+              min={0}
               type="number"
               onChange={(e) => {
                 setPrice(e.target.value);

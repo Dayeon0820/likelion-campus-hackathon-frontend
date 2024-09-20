@@ -50,6 +50,16 @@
 .titleContainer > .classRating {
   font-size: 14px;
 }
+/* 다연이가 수정함 */
+.classRating > .gotoReview {
+  margin-left: 10px;
+  text-decoration: underline;
+}
+
+.classRating > img {
+  height: 11px;
+  margin-left: 5px;
+}
 .titleContainer > h3 {
   font-size: 18px;
 }
@@ -75,6 +85,7 @@
 }
 
 /* 버튼 배열 수정 필요 */
+
 .applicationBtnBox {
   /* width: 100%; */
   height: 8%;
@@ -82,9 +93,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  position: relative;
-  position: fixed;
-  bottom: 0;
+  position: absolute;
+
+  bottom: 10px;
 }
 .applicationBtnBox > * {
   padding: 10px;
@@ -105,6 +116,7 @@
   width: 30px;
   height: 100%;
   position: absolute;
+
   right: 2%;
   /* background-color: #fff; */
   background: url("../img/class_application_chat_icon.svg") no-repeat center;

@@ -98,7 +98,13 @@ function SearchList() {
           <section className="mySearchList-main">
             {/* 마이클래스 ui 가져옴*/}
             {courses.map((course) => (
-              <div key={course.id} className="myclass-contentBox">
+              <div
+                key={course.id}
+                className="myclass-contentBox"
+                onClick={() => {
+                  navigate(`/home/class_application/${course.id}`);
+                }}
+              >
                 <img
                   src={course.imageUrls || defaultImageUrl}
                   alt={course.name}

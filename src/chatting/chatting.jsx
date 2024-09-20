@@ -11,6 +11,7 @@ function Chatting() {
   const navigate = useNavigate();
   const location = useLocation();
   const token = localStorage.getItem("token");
+  const refreshToken = localStorage.getItem("refresh_token");
   const id = location.state?.id;
   const lectureId = parseFloat(id);
   const title = location.state?.name || "";
@@ -21,6 +22,32 @@ function Chatting() {
   const messageEndRef = useRef(null);
   const [flag, setFlag] = useState(false);
   const [chatRoomId, setChatRoomId] = useState(null); // 채팅방 ID 상태 추가
+
+  const onRefreshToken = async () => {
+    const refreshResponse = await fetch(
+      "https://sangsang2.kr:8080/api/memebr/refresh",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          refresh_token: refreshToken,
+        }),
+      }
+    );
+
+    const refreshData = await refreshResponse.json();
+    if (refreshResponse.ok) {
+      // 새로운 액세스 토큰 저장
+      localStorage.setItem("token", refreshData.accessToken);
+      return refreshData.accessToken; // 새로운 토큰 반환
+    } else {
+      alert("로그인 기간이 만료되었습니다.");
+      navigate("/"); // 로그인 페이지로 리다이렉트
+      return null; // 실패 시 null 반환
+    }
+  };
 
   const createChatting = async (e) => {
     const baseUrl = "https://sangsang2.kr:8080/api/chat/create/chatRoom";
@@ -42,29 +69,24 @@ function Chatting() {
         if (data.error === "이미 채팅방이 존재합니다.") {
           alert("이미 존재하는 채팅방입니다.");
           navigate("/chats");
+        } else if (response.status === 401 && refreshToken) {
+          const newToken = await onRefreshToken(); // 새로운 토큰 요청
+
+          if (newToken) {
+            // 새로운 토큰이 있으면 재시도
+            return createChatting(); // 다시 호출
+          }
         }
         console.log("Error Data:", data);
         return;
       }
 
-      console.log("Success:", data);
       const { chatRoomId, created_at, messageList } = data;
+
+      console.log(" create chatting Success", data);
+
       setChatRoomId(chatRoomId);
-      const processedMessages = messageList.map((message) => ({
-        content: message.message,
-        nickname: message.memberNickname,
-        avatar: message.memberImageUrl,
-        type: message.messageType === "SENDER" ? "Sent" : "Received",
-      }));
-
-      const processedData = {
-        chatRoomId, // 채팅방 ID
-        createdAt: created_at, // 채팅 생성 날짜
-        messages: processedMessages, // 가공된 메시지 리스트
-      };
-
-      console.log(" create chatting Success: Processed Data:", processedData);
-      setMessages(processedData);
+      console.log("chatRoodId: ", chatRoomId);
       setFlag(true);
     } catch (error) {
       console.error("Error:", error);
@@ -78,7 +100,7 @@ function Chatting() {
 
   const getMessage = async (e) => {
     if (!chatRoomId) return; // 채팅방 ID가 없으면 getMessage를 실행하지 않음
-    const baseUrl = `https://sangsang2.kr:8080/api/chat/chatRoom?chatRoomId=${id}`;
+    const baseUrl = `https://sangsang2.kr:8080/api/chat/chatRoom?chatRoomId=${chatRoomId}`;
 
     try {
       const response = await fetch(baseUrl, {
@@ -122,11 +144,13 @@ function Chatting() {
   };
 
   useEffect(() => {
-    getMessage(); // 초기 호출
-    const intervalId = setInterval(getMessage, 3000); // 5초마다 호출
-
-    return () => clearInterval(intervalId); // 컴포넌트 언마운트 시 클리어
-  }, [flag, chatRoomId]); // 빈 배열로 초기 마운트 시만 실행되도록
+    if (chatRoomId) {
+      console.log("ChatRoomId 설정 완료:", chatRoomId, flag);
+      getMessage(); // chatRoomId가 설정된 후 처음 한 번 실행
+      const intervalId = setInterval(getMessage, 3000); // 이후 3초마다 메시지 가져오기
+      return () => clearInterval(intervalId); // 컴포넌트 언마운트 시 정리
+    }
+  }, [chatRoomId, flag]); // chatRoomId가 변경될 때만 실행
 
   useEffect(() => {
     // 메시지가 업데이트 될 때마다 스크롤을 가장 아래로 이동
@@ -145,7 +169,7 @@ function Chatting() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          chatRoomId: id,
+          chatRoomId: chatRoomId,
           message: sending,
         }),
       });
