@@ -25,7 +25,7 @@ function CreateClass() {
     setPreviewUrl(URL.createObjectURL(file)); // 미리보기 위해 URL로 변환
   };
   useEffect(() => {
-    // 컴포넌트가 언마운트될 때 URL 해제
+    // 컴포넌트가 언마운트되거나 previewUrl이 변경될 때 URL 해제
     return () => {
       if (previewUrl) {
         URL.revokeObjectURL(previewUrl);

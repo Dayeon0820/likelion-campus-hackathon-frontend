@@ -6,6 +6,8 @@ import { useEffect, useRef } from "react";
 import "../App.css";
 import "./chatting.css";
 import styles from "./chatting.module.css";
+import Modal from "react-modal";
+Modal.setAppElement("#root");
 
 function SendingChats() {
   const navigate = useNavigate();
@@ -21,6 +23,10 @@ function SendingChats() {
   const [date, setDate] = useState("");
   const gobackHome = () => navigate(`/home`);
   const messageEndRef = useRef(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
 
   const onRefreshToken = async () => {
     const refreshResponse = await fetch(
@@ -46,6 +52,34 @@ function SendingChats() {
       navigate("/login"); // 로그인 페이지로 리다이렉트
       return null; // 실패 시 null 반환
     }
+  };
+
+  const deleteChats = async () => {
+    const baseUrl = `https://sangsang2.kr:8080/api/chat/chatRoom/delete?chatRoomId=${id}`;
+
+    try {
+      const response = await fetch(baseUrl, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        alert("채팅방 삭제에 실패했습니다.");
+        console.log("Error Data:", data);
+        return;
+      }
+      const data = await response.text();
+      closeModal();
+      console.log("delete chatrooms success: ", response);
+    } catch (error) {
+      console.error("Error deleting chat room:", error);
+    }
+  };
+  const handleConfirm = () => {
+    deleteChats(); // '네'를 누르면 실행
   };
 
   const getMessage = async (e) => {
@@ -163,7 +197,28 @@ function SendingChats() {
           <div id="chatting-title">
             <h1>{title}</h1>
           </div>
-          <img src="/home.png" id="header-homeIcon" onClick={gobackHome} />
+          <img
+            src="/deleteChats.png"
+            id="header-homeIcon"
+            onClick={openModal}
+          />
+          <Modal
+            isOpen={isModalOpen}
+            onRequestClose={closeModal}
+            contentLabel="채팅방 나가기"
+            className="modal"
+            overlayClassName="overlay"
+          >
+            <h2>채팅방을 나가시겠습니까?</h2>
+            <div className="modal-buttons">
+              <button onClick={handleConfirm} className="confirm-btn">
+                네
+              </button>
+              <button onClick={closeModal} className="cancel-btn">
+                아니요
+              </button>
+            </div>
+          </Modal>
         </header>
         <div id="chatting-date">
           <span>{date}</span>
