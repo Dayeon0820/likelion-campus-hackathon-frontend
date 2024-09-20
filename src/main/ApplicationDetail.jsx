@@ -15,10 +15,12 @@ const ApplicationDetail = () => {
   const [count, setCount] = useState(1);
 
   // classData.date를 초기 선택 날짜로 설정
-  const initialDate = classData ? new Date(classData.date) : new Date();
+  const initialDate = classData && classData.type == "OneDay" 
+  ? new Date(classData.date) : new Date(classData.startDate);
 
   const [date, setDate] = useState(initialDate);
   const [classTime, setClassTime] = useState(null);
+  
   const onRefreshToken = async () => {
     const refreshResponse = await fetch(
       "https://sangsang2.kr:8080/api/memebr/refresh",
@@ -52,14 +54,14 @@ const ApplicationDetail = () => {
 
   useEffect(() => {
     if (classData) {
-      // 선택된 날짜와 classData의 날짜가 같은 경우 수강 시간 설정
+      // 선택된 날짜에 따라 수강 시간을 설정
       const selectedDate = moment(date).format("YYYY-MM-DD");
-      const classDate = classData.date;
-
-      if (selectedDate === classDate) {
-        const startTime = moment(classData.startTime, "HH:mm:ss").format(
-          "HH:mm"
-        );
+      if (classData.type === "OneDay" && selectedDate === classData.date) {
+        const startTime = moment(classData.startTime, "HH:mm:ss").format("HH:mm");
+        const endTime = moment(classData.endTime, "HH:mm:ss").format("HH:mm");
+        setClassTime(`${startTime} - ${endTime}`);
+      } else if (classData.type === "Regular" && selectedDate >= classData.startDate && selectedDate <= classData.endDate) {
+        const startTime = moment(classData.startTime, "HH:mm:ss").format("HH:mm");
         const endTime = moment(classData.endTime, "HH:mm:ss").format("HH:mm");
         setClassTime(`${startTime} - ${endTime}`);
       } else {
@@ -67,18 +69,20 @@ const ApplicationDetail = () => {
       }
     }
   }, [date, classData]);
+
   useEffect(() => {
     console.log("remainingSpace  :", classData.remainingSpace);
   }, []);
 
   const handleDateChange = (date) => {
     setDate(date);
-
-    // 선택된 날짜와 classData의 날짜가 같은 경우 수강 시간 설정
+    // 선택된 날짜에 따라 수강 시간을 설정
     const selectedDate = moment(date).format("YYYY-MM-DD");
-    const classDate = classData?.date;
-
-    if (selectedDate === classDate) {
+    if (classData.type === "OneDay" && selectedDate === classData.date) {
+      const startTime = moment(classData.startTime, "HH:mm:ss").format("HH:mm");
+      const endTime = moment(classData.endTime, "HH:mm:ss").format("HH:mm");
+      setClassTime(`${startTime} - ${endTime}`);
+    } else if (classData.type === "Regular" && selectedDate >= classData.startDate && selectedDate <= classData.endDate) {
       const startTime = moment(classData.startTime, "HH:mm:ss").format("HH:mm");
       const endTime = moment(classData.endTime, "HH:mm:ss").format("HH:mm");
       setClassTime(`${startTime} - ${endTime}`);
@@ -86,6 +90,26 @@ const ApplicationDetail = () => {
       setClassTime(null);
     }
   };
+
+  // 캘린더 특정 날짜에 따라 클래스 네임 반환 함수
+const getTileClassName = (date) => {
+  const dateObject = new Date(date);
+  const formattedDate = moment(dateObject).format("YYYY-MM-DD");
+
+  if (classData.type === "OneDay" && formattedDate === classData.date) {
+    return "selectedDay";
+  } 
+  else if (classData.type === "Regular" && moment(dateObject).isBetween(classData.startDate, classData.endDate, null, "[]")) {
+    return "selectedDay";
+  }
+  // 토요일 클래스 추가
+  if (dateObject.getDay() === 6) {
+    return "saturday"; 
+  }
+  return null;
+};
+
+  
 
   const handleApplicationClick = async () => {
     const baseUrl = `https://sangsang2.kr:8080/api/lecture/join?lecture=${id}&count=${count}`;
@@ -113,6 +137,8 @@ const ApplicationDetail = () => {
             alert("이미 참가한 강의입니다.");
           } else if (data.error === "강의 정원 가득참") {
             alert("강의 정원이 가득 찼습니다.");
+          } else if (data.error === "내가 개최한 강의") { // 추가된 부분
+            alert("본인이 개최한 강의는 신청할 수 없습니다."); // 에러 메시지
           } else {
             alert("강의 신청에 실패했습니다."); // 다른 400 에러 처리
           }
@@ -168,14 +194,16 @@ const ApplicationDetail = () => {
       </header>
       <main id="default-padding" className="detailApplicationMain">
         <section id="calendarBox">
-          <Calendar
+        <Calendar
             formatDay={(locale, date) => moment(date).format("DD")}
             showNeighboringMonth={false} // 현재 월 이외의 날짜는 숨기기
-            tileClassName={({ date }) =>
-              date.getDay() === 6 ? "saturday" : null
-            } // 토요일에 클래스 추가
+            tileClassName={({ date }) => getTileClassName(date)}
             onChange={handleDateChange}
-            value={date} // 캘린더에서 선택된 날짜를 `date`로 설정
+            value={
+              classData.type === "OneDay"
+                ? new Date(classData.date) 
+                : [new Date(classData.startDate), new Date(classData.endDate)] // Regular 클래스일 때 날짜 범위
+            }
           />
         </section>
         {date && (
