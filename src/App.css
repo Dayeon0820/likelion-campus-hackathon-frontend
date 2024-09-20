@@ -60,7 +60,12 @@ body {
   flex-direction: column;
   align-items: center;
   position: relative;
- /*  height: 100vh; */
+  /*  height: 100vh; */
+}
+
+/* 전체 페이지 스크롤바 숨기기 */
+::-webkit-scrollbar {
+  display: none; /* 스크롤바 숨기기 */
 }
 
 @media screen and (max-width: 768px) {
@@ -80,7 +85,7 @@ body {
     box-shadow: none;
     overflow-wrap: break-word;
   }
-  .applicationBtnBox{
+  .applicationBtnBox {
     width: 100%;
   }
 }
@@ -107,7 +112,7 @@ body {
     width: 375px; /* 고정된 너비에 맞게 설정 */
     /* left: calc(50% - 187.5px); */
   }
-  .applicationBtnBox{
+  .applicationBtnBox {
     width: 375px;
   }
 }
