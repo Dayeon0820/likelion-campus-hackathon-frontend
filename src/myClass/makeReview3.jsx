@@ -14,7 +14,7 @@ function MakeReview2() {
   const refreshToken = localStorage.getItem("refresh_token");
   const location = useLocation();
   const rate = location.state?.rate || 0;
-  const courseId = location.state?.courseId || null;
+  const courseId = location.state?.courseId || "";
   const image = location.state?.image || null;
   const rateInt = parseFloat(rate);
   const lectureId = parseFloat(courseId);
