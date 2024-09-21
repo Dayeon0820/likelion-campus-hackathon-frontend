@@ -108,15 +108,12 @@ function CompletedClass() {
         </div>
         <section className="completed-section completedClassSection">
           {courses.map((course) => (
-            <div 
-            key={course.id} 
-            className="completed-contentBox"
-            onClick={() => navigate(`/home/class_application/${course.id}`)}
-            >
+            <div key={course.id} className="completed-contentBox">
               <img
                 src={course.imageUrls}
                 alt={course.name}
                 className="completed-contentBox_img"
+                onClick={() => navigate(`/home/class_application/${course.id}`)}
               />
               <h4>{course.name}</h4>
               <span>${course.price.toLocaleString()}</span>
