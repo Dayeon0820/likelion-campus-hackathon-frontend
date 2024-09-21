@@ -1,7 +1,6 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { useEffect } from "react";
 import "../App.css";
 import "../profile/profile.css";
 import "./createClass.css";
@@ -13,14 +12,21 @@ function CreateClass() {
   const [subtitle, setSubtitle] = useState("");
   const [image, setImage] = useState(null);
   const [previewUrl, setPreviewUrl] = useState("");
+
   const classInfo = {
     title: title,
     category: category,
     subtitle: subtitle,
     image: image,
   };
+
   const handleImageChange = (e) => {
     const file = e.target.files[0]; // 첫 번째 파일을 가져옴
+
+    if (!file) {
+      // 파일이 없을 경우 함수 종료
+      return;
+    }
 
     const maxSize = 10 * 1024 * 1024; // 10MB로 설정
     if (file.size > maxSize) {
@@ -51,6 +57,7 @@ function CreateClass() {
             src="/X.png"
             id="header-arrowIcon"
             onClick={() => navigate("/profile")}
+            alt="뒤로 가기"
           />
           <div id="chatting-title">
             <h1>클래스 개최하기</h1>
@@ -63,7 +70,7 @@ function CreateClass() {
               className="createclass-input"
               placeholder="클래스 제목"
               required
-              type=" text"
+              type="text"
               onChange={(e) => {
                 setTitle(e.target.value);
               }}
@@ -104,13 +111,14 @@ function CreateClass() {
               <img
                 src={previewUrl || "/image.png"}
                 id={previewUrl ? "preview" : undefined}
+                alt="미리보기"
               />
             </label>
           </div>
           <div className="createInput-box createInput-box_image inputBox-white">
             <textarea
               type="text"
-              placeholder="클레스 소개글을 입력하세요..."
+              placeholder="클래스 소개글을 입력하세요..."
               className="createclass-input_P createclass-input"
               onChange={(e) => {
                 setSubtitle(e.target.value);
@@ -128,3 +136,5 @@ function CreateClass() {
 }
 
 export default CreateClass;
+
+
