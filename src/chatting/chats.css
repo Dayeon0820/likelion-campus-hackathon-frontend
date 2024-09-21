@@ -7,12 +7,16 @@
   height: 100%;
   display: flex;
   flex-direction: column;
-
 }
 
 .chatHeader{
-  background: #edbc7c;
-  height: 16%;
+  background: #fca432aa;
+  height: 22%;
+  padding: 0 5%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 #chats_header {
   width: 100%;
@@ -20,7 +24,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 5% 10px;
+  /* padding: 25px 5% 10px; */
 }
 
 #chats_myImg {
@@ -35,7 +39,7 @@
   display: flex;
   justify-content: flex-start;
   margin-bottom: 10px;
-  padding: 0 5%;
+  /* padding: 0 5%; */
 }
 
 #chats_title h1 {
@@ -51,6 +55,7 @@
   display: flex;
   align-items: center;
   flex-direction: column;
+  gap: 5px;
   overflow-y: auto;
   background: #fffcf9;
 }
@@ -91,7 +96,7 @@
 
 #chats_li-title {
   margin-bottom: 0;
-  font-size: 17px;
+  font-size: 14px;
   font-weight: 500;
 }
 
@@ -113,16 +118,25 @@
   justify-content: space-between;
   padding: 0;
   background-color: #fef8fe;
+  /* border: 1px solid #333; */
+  border-radius: 15px 15px 0 0;
   box-shadow: 1px 1px 1px rgba(255,255,255,0.5);
 }
 
 #chatRoomTypeButtons button {
-  width: 28%;
+  width: 100%;
   padding: 6px;
   height: 100%;
   margin: 0;
   font-size: 12px;
   background-color: #fef8fe;
+}
+
+#chatRoomTypeButtons > button > p{
+  border-right: 1px solid rgba(140, 94, 130, 1);
+}
+#chatRoomTypeButtons > button:nth-of-type(3) > p{
+  border-right: none;
 }
 
 .chatBtnActive {

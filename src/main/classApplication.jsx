@@ -130,7 +130,7 @@ const ClassApplication = () => {
               className="classRating"
             >
               {/*리뷰 상세페이지 존재를 모를 것 같아서 수정해봄*/}
-              <span className="star">⭐</span> {averageScore} ({scoreCount})
+              <span className="star">⭐</span> {averageScore} ({scoreCount}개)
               <span className="gotoReview">리뷰 보기</span>
             </Link>
             <h3 className="classTitle">{name}</h3>

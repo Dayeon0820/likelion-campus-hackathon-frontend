@@ -122,19 +122,19 @@ function Chats() {
             onClick={() => setSelectedType("all")}
             className={selectedType === "all" ? "chatBtnActive" : ""}
           >
-            전체
+            <p>전체</p>
           </button>
           <button
             onClick={() => setSelectedType("mine")}
             className={selectedType === "mine" ? "chatBtnActive" : ""}
           >
-            내 문의
+            <p>수강 문의</p>
           </button>
           <button
             onClick={() => setSelectedType("received")}
             className={selectedType === "received" ? "chatBtnActive" : ""}
           >
-            내가 받은 문의
+            <p>개최 문의</p>
           </button>
         </div>
         <div id="chats_list">
