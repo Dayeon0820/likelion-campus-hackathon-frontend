@@ -132,6 +132,7 @@ function Myclass() {
       const data = await response.text();
       closeModal();
       console.log("delete classroom success: ", data);
+      window.location.reload();
     } catch (error) {
       console.error("Error deleting classroom:", error);
       closeModal();
