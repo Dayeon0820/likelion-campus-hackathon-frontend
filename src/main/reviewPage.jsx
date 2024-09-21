@@ -1,5 +1,5 @@
 import { React, useState, useEffect } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams, useLocation } from "react-router-dom";
 import "./css/review.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
@@ -12,6 +12,8 @@ const ReviewInquiry = () => {
   const ratingLabels = [5, 4, 3, 2, 1];
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
+  const { state } = useLocation();
+  const reviewAverageScore = state?.averageScore || 0; // 반올림한 평균값 사용
 
   // 리뷰 데이터 및 평균 스코어 가져오기
   useEffect(() => {
@@ -36,13 +38,6 @@ const ReviewInquiry = () => {
         );
         const averageData = await response.json();
         setAverageScore(averageData);
-
-        // 퍼센테이지 채워지는 애니메이션 효과 위해서 CSS 변수 설정
-        const ratingBars = document.querySelectorAll('.ratingBarFill');
-        ratingBars.forEach((bar, index) => {
-            bar.style.setProperty('--rating-width', `${ratingScores[index]}%`);
-            bar.classList.add('animated');
-        });
       } catch (error) {
         console.error("평균 스코어 정보를 가져오지 못했습니다:", error);
         alert("평균 스코어 정보를 가져오지 못했습니다.");
@@ -52,6 +47,7 @@ const ReviewInquiry = () => {
     fetchReviews();
     fetchAverageScore();
   }, [id]);
+
   const ratingScores = [
     averageScore.scoreFive,
     averageScore.scoreFour,
@@ -115,7 +111,7 @@ const ReviewInquiry = () => {
       <main id="reviewInner">
         <section className="reviewAverage">
           <div className="averageTitleBox">
-            <h3>{averageScore.averageScore}</h3>
+            <h3>{reviewAverageScore}</h3>
             <div className="totalStarBox">
               <div className="averageStar">
                 {[...Array(5)].map((_, index) => (
@@ -123,7 +119,7 @@ const ReviewInquiry = () => {
                     key={index}
                     icon={faStar}
                     className={
-                      index < averageScore.averageScore ? "star filled" : "star"
+                      index < reviewAverageScore ? "star filled" : "star"
                     }
                   />
                 ))}
@@ -199,3 +195,4 @@ const ReviewInquiry = () => {
 };
 
 export default ReviewInquiry;
+

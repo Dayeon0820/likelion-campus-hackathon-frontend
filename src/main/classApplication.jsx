@@ -72,7 +72,6 @@ const ClassApplication = () => {
         console.error("Error fetching class data:", error);
       }
     };
-    console.log(classData, "classData");
 
     fetchClassData();
   }, [id]);
@@ -104,6 +103,8 @@ const ClassApplication = () => {
     remainingSpace,
   } = classData;
 
+  const roundedScore = Math.round(averageScore * 10) / 10; // 별점 반올림
+
   return (
     <div id="mobile-view">
       <header className="app-header applicationHeader defaultHeader">
@@ -128,9 +129,9 @@ const ClassApplication = () => {
             <Link
               to={`/home/class_application/review/${id}`}
               className="classRating"
+              state={{ averageScore: roundedScore }}
             >
-              {/*리뷰 상세페이지 존재를 모를 것 같아서 수정해봄*/}
-              <span className="star">⭐</span> {averageScore} ({scoreCount}개)
+              <span className="star">⭐</span> {roundedScore} ({scoreCount}개)
               <span className="gotoReview">리뷰 보기</span>
             </Link>
             <h3 className="classTitle">{name}</h3>
@@ -139,7 +140,6 @@ const ClassApplication = () => {
                 ? `${startDate} - ${endDate}  ${daysOfWeek}`
                 : date}
               <br />
-              {/*     {type === "Regular" ? `${daysOfWeek}` : ""}<br/> */}
               {`${startTime} - ${endTime}`}
             </p>
             <p className="classDescription">{description}</p>
@@ -169,7 +169,7 @@ const ClassApplication = () => {
           className="applicationBtn"
           onClick={() =>
             navigate(`/home/class_application/detail/${id}`, {
-              state: { classData },
+              state: { classData},
             })
           }
         >
@@ -185,3 +185,4 @@ const ClassApplication = () => {
 };
 
 export default ClassApplication;
+
