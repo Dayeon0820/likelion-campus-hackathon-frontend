@@ -4,6 +4,7 @@ import "./css/applicationDetail.css";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import moment from "moment";
+import Modal from "react-modal";
 
 const ApplicationDetail = () => {
   const navigate = useNavigate();
@@ -13,14 +14,16 @@ const ApplicationDetail = () => {
   const location = useLocation();
   const classData = location.state?.classData;
   const [count, setCount] = useState(1);
-
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
+  
   // classData.date를 초기 선택 날짜로 설정
   const initialDate = classData && classData.type == "OneDay" 
   ? new Date(classData.date) : new Date(classData.startDate);
 
   const [date, setDate] = useState(initialDate);
   const [classTime, setClassTime] = useState(null);
-  
+
   const onRefreshToken = async () => {
     const refreshResponse = await fetch(
       "https://sangsang2.kr:8080/api/memebr/refresh",
@@ -134,13 +137,17 @@ const getTileClassName = (date) => {
           }
         } else if (response.status === 400) {
           if (data.error === "이미 참가한 강의") {
-            alert("이미 참가한 강의입니다.");
+            // alert("이미 참가한 강의입니다.");
+            openModal("이미 참가한 강의입니다."); // 모달로 변경
           } else if (data.error === "강의 정원 가득참") {
-            alert("강의 정원이 가득 찼습니다.");
+            // alert("강의 정원이 가득 찼습니다.");
+            openModal("강의 정원이\n가득 찼습니다."); // 모달로 변경
           } else if (data.error === "내가 개최한 강의") { // 추가된 부분
-            alert("본인이 개최한 강의는 신청할 수 없습니다."); // 에러 메시지
+            openModal("본인이 개최한 강의는\n신청할 수 없습니다.");
+            // alert("본인이 개최한 강의는 신청할 수 없습니다."); // 에러 메시지
           } else {
-            alert("강의 신청에 실패했습니다."); // 다른 400 에러 처리
+            openModal("강의 신청에\n실패했습니다.");
+            // alert("강의 신청에 실패했습니다."); // 다른 400 에러 처리
           }
         } else if (
           data.error === "토큰이 유효하지 않습니다." ||
@@ -154,14 +161,16 @@ const getTileClassName = (date) => {
           }
         }
         {
-          alert("강의 신청에 실패했습니다.");
+          // alert("강의 신청에 실패했습니다.");
+          console.log("강의 신청 실패")
         }
         return;
       }
-      console.log(data);
-      navigate("/home/class_application/completed");
-      alert("성공");
-      navigate("/home/class_application/completed");
+      console.log('신청 성공',data);
+      openModal("신청이 성공적으로\n완료되었습니다!"); // 성공 메시지 모달
+      setTimeout(() => {
+        navigate("/home"); // 2초 후에 페이지 이동
+    }, 2000);
     } catch (error) {
       console.error("Error occurred during delete:", error);
       alert("Error occurred " + error.message);
@@ -182,6 +191,15 @@ const getTileClassName = (date) => {
     if (count > 1) {
       setCount(count - 1);
     }
+  };
+
+  const openModal = (message) => {
+    setModalMessage(message);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
   };
 
   return (
@@ -236,6 +254,21 @@ const getTileClassName = (date) => {
           취소하기
         </button>
       </div>
+
+      <Modal
+        isOpen={isModalOpen}
+        onRequestClose={closeModal}
+        contentLabel="알림"
+        className="modal"
+        overlayClassName="overlay"
+      >
+        <h2>{modalMessage}</h2>
+        <div className="modal-buttons">
+          <button onClick={closeModal} className="confirm-btn">
+            확인
+          </button>
+        </div>
+      </Modal>
     </div>
   );
 };

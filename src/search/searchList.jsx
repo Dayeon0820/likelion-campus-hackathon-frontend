@@ -54,6 +54,8 @@ function SearchList() {
     }
   };
 
+  
+
   return (
     <div id="mobile-view">
       <header className="app-header reviewHeader defaultHeader">
