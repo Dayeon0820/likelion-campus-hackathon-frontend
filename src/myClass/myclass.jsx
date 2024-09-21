@@ -66,6 +66,35 @@ function Myclass() {
       alert("Error occurred " + error.message);
     }
   };
+
+  const onDeleteClass = async (id) => {
+    const baseUrl = `https://sangsang2.kr:8080/api/lecture/delete/${id}`;
+    console.log("id: ", id);
+    try {
+      const response = await fetch(baseUrl, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        alert("강의 삭제에 실패했습니다.");
+        console.log("Error Data:", response);
+        closeModal();
+        return;
+      }
+      const data = await response.text();
+      closeModal();
+      console.log("delete classroom success: ", data);
+      window.location.reload();
+    } catch (error) {
+      console.error("Error deleting classroom:", error);
+      closeModal();
+    }
+  };
+
   return (
     <div id="mobile-view">
       <header className="app-header profileHeader defaultHeader">
