@@ -1,5 +1,4 @@
 #  MOMENT CLASS!
-<img width="1920" height="1080" alt="1" src="https://github.com/user-attachments/assets/eb57b6dd-54e2-4440-a5f6-3fe30f763a05" />
 <img width="1920" height="1080" alt="Image" src="https://github.com/user-attachments/assets/14cd7025-60ad-44ce-9d57-d81dbcf28b14" />
 
 ### 2024 멋쟁이사자처럼 AT 국민대 12기 교내해커톤
