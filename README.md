@@ -1,1 +1,92 @@
-likelion 교내해커톤 프론트엔드 repository
+#  MOMENT CLASS!
+<img width="1920" height="1080" alt="1" src="https://github.com/user-attachments/assets/eb57b6dd-54e2-4440-a5f6-3fe30f763a05" />
+<img width="1920" height="1080" alt="Image" src="https://github.com/user-attachments/assets/14cd7025-60ad-44ce-9d57-d81dbcf28b14" />
+
+### 2024 멋쟁이사자처럼 AT 국민대 12기 교내해커톤
+> 원데이 클래스 부터 정규 수업까지, 성인을 위한 취미 찾기 플랫폼
+</br> 기간 : 24. 8. 3 ~ 25. 9. 21
+</br>
+
+### 𝗣𝗿𝗼𝗷𝗲𝗰𝘁 𝗦𝗰𝗵𝗲𝗱𝘂𝗹𝗲
+
+|    🚩단계           | ⌛기간                 |
+|:----------------:|:---------------------------:|
+| 기획           | 2025. 8.3 ~ 8. 10       |
+| 디자인      | 2025. 8. 5 ~ 8. 15              |
+| 개발           | 2024. 8. 10 ~ 2024. 9. 21     |
+| 최종발표회      | 2024. 9. 21              |
+
+</br>
+
+## 🔥 𝗣𝗿𝗼𝗷𝗲𝗰𝘁 𝗢𝘃𝗲𝗿𝘃𝗶𝗲𝘄
+### 알바생 교육부터 알바생 관리까지, AI 기반 알바 통합 플랫폼 Altong  💪🏻
+<img width="1920" height="1080" alt="Image" src="https://github.com/user-attachments/assets/f8cd1b20-db30-4d24-888d-a1b8d0773ccf" />
+
+
+
+</br>
+
+
+
+### 𝗣𝗿𝗼𝗷𝗲𝗰𝘁 𝗺𝗼𝘁𝗶𝘃𝗮𝘁𝗶𝗼𝗻
+<img width="1920" height="1080" alt="Image" src="https://github.com/user-attachments/assets/ec9cd227-5ea8-4b74-9e4f-819abb4d5c19" />
+
+
+
+
+</br></br>
+
+### 👩‍💻 팀원 (FE)
+| &nbsp;&nbsp;이&nbsp;름&nbsp;&nbsp; |   역할 |                                    역할분담                         |
+| :--------------------------------------: |  :--------------------: | :-------------------------------------------------: |
+| 이다은 |  FE | 홈화면, 카카오지도, 마이페이지, 클래스 상세보기 |
+| 이다연 |  FE | 회원가입/로그인, 마이페이지, 채팅 , 클래스 생성/조회|
+
+
+</br>
+
+### 💡 주요 기능
+<img width="1920" height="1080" alt="Image" src="https://github.com/user-attachments/assets/9a306337-bbe1-4fc7-bff9-1b5c26fae084" />
+<img width="1920" height="1080" alt="Image" src="https://github.com/user-attachments/assets/72a16668-0bad-4a81-b02e-7fa94bc8b769" />
+<img width="1920" height="1080" alt="Image" src="https://github.com/user-attachments/assets/cd66e551-0dbf-4fff-b188-b0ff72e431a8" />
+<img width="1920" height="1080" alt="Image" src="https://github.com/user-attachments/assets/a98c4947-7e86-4321-8f21-36bc87170d6a" />
+<img width="1920" height="1080" alt="Image" src="https://github.com/user-attachments/assets/fa5b3775-178d-400a-a63e-622f1d096a76" />
+<img width="1920" height="1080" alt="Image" src="https://github.com/user-attachments/assets/4570c3a7-9229-422f-a492-8ff11aebbbf2" />
+
+
+
+
+</br>
+
+
+
+</br></br>
+
+### 🛠 기술 스택
+<img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white"> <img src="https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white"> <img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=black"> <img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black">
+
+<img src="https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=white"> <img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white"> <img src="https://img.shields.io/badge/notion-000000?style=for-the-badge&logo=notion&logoColor=white"> <img src="https://img.shields.io/badge/figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white"> <img src="https://img.shields.io/badge/discord-5865F2?style=for-the-badge&logo=discord&logoColor=white"> 
+
+</br>
+
+
+### 🌳 프로젝트 구조
+```
+src/
+ ├── assets/                   # 이미지/아이콘
+ ├── components/               # 공통 UI 컴포넌트
+ ├── pages/                    # 각 페이지 화면
+ │     ├── EducationDetails/   # 교육 상세 (메뉴얼/퀴즈)
+ │     ├── EducationManagement/  # 교육 생성
+ │     ├── Schedule/           # 스케줄
+ │     ├── HomePageEmployee/
+ │     ├── HomePageOwner/
+ │     └── ...
+ ├── router/                   # 라우터 설정
+ ├── styles/                   # 전역 스타일
+ ├── utils/                    # 포맷·헬퍼 함수
+ └── App.tsx
+
+```
+</br>
+
