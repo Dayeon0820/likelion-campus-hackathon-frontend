@@ -18,7 +18,7 @@
 </br>
 
 ## 🔥 𝗣𝗿𝗼𝗷𝗲𝗰𝘁 𝗢𝘃𝗲𝗿𝘃𝗶𝗲𝘄
-### 알바생 교육부터 알바생 관리까지, AI 기반 알바 통합 플랫폼 Altong  💪🏻
+### 일상생활속 행복한 모먼트를 찾고 싶어하는 어른아이들을 위한 취미 찾기 플랫폼 MOMENT 
 <img width="1920" height="1080" alt="Image" src="https://github.com/user-attachments/assets/f8cd1b20-db30-4d24-888d-a1b8d0773ccf" />
 
 
@@ -35,10 +35,10 @@
 
 </br></br>
 
-### 👩‍💻 팀원 (FE)
+### 👩‍💻 팀원 (Front End)
 | &nbsp;&nbsp;이&nbsp;름&nbsp;&nbsp; |   역할 |                                    역할분담                         |
 | :--------------------------------------: |  :--------------------: | :-------------------------------------------------: |
-| 이다은 |  FE | 홈화면, 카카오지도, 마이페이지, 클래스 상세보기 |
+| 이다은 |  FE | 홈화면, 스플레쉬, 카카오지도, 클래스 상세보기, header/navbar 컴포넌트 제작|
 | 이다연 |  FE | 회원가입/로그인, 마이페이지, 채팅 , 클래스 생성/조회|
 
 
@@ -72,18 +72,15 @@
 ### 🌳 프로젝트 구조
 ```
 src/
- ├── assets/                   # 이미지/아이콘
- ├── components/               # 공통 UI 컴포넌트
- ├── pages/                    # 각 페이지 화면
- │     ├── EducationDetails/   # 교육 상세 (메뉴얼/퀴즈)
- │     ├── EducationManagement/  # 교육 생성
- │     ├── Schedule/           # 스케줄
- │     ├── HomePageEmployee/
- │     ├── HomePageOwner/
- │     └── ...
- ├── router/                   # 라우터 설정
- ├── styles/                   # 전역 스타일
- ├── utils/                    # 포맷·헬퍼 함수
+ ├── main/                # 홈화면
+ ├── login/               # 로그인 컴포넌트
+ ├── signup/              # 회원가입 컴포넌트
+ ├── splash/              # 스플레쉬 컴포넌트
+ ├── createClass/         # 클래스 생성 컴포넌트
+ ├── myClass/             # 내 클래스 조회 컴포넌트
+ ├── search/              # 클래스 검색 컴포넌
+ ├── map/                 # 내주변 클래스 찾기 (카카오맵) 컴포넌트
+ ├── utils/               # 클래스 카테고리 정의 objects
  └── App.tsx
 
 ```
